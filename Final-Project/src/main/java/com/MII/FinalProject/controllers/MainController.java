@@ -69,7 +69,7 @@ public class MainController {
     public String dashboard(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            return "index";
+            return "admin-dashboard";
         } else {
             return "login";
         }
