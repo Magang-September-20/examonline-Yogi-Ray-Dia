@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.MII.FinalProject.entities;
 
 import java.io.Serializable;
@@ -156,5 +155,5 @@ public class Module implements Serializable {
     public String toString() {
         return "com.MII.FinalProject.entities.Module[ id=" + id + " ]";
     }
-
+    
 }

@@ -5,10 +5,12 @@
  */
 package com.MII.FinalProject.controllers;
 
+import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.LoginInput;
 import com.MII.FinalProject.entities.RegisterInput;
 import com.MII.FinalProject.entities.rest.LoginOutput;
 import com.MII.FinalProject.entities.rest.RegisterOutput;
+import com.MII.FinalProject.services.ExamService;
 import com.MII.FinalProject.services.LoginService;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -36,8 +38,12 @@ public class MainController {
 
     @Autowired
     LoginService loginService;
+    
     @Autowired
     RegisterService registerService;
+    
+    @Autowired
+    ExamService examService;
 
     @RequestMapping("")//url or path
     public String index() {
@@ -105,5 +111,13 @@ public class MainController {
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
+    }
+    
+//    START ADMIN CONTROLLER
+    @GetMapping("/adminpage")
+    public String exam(Model model){
+        model.addAttribute("exam", new Exam());
+        model.addAttribute("examm", examService.getAll());
+        return "adminpage";
     }
 }

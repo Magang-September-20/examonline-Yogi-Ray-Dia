@@ -69,12 +69,12 @@ public class Exam implements Serializable {
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @JoinColumn(name = "user", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private User user;
     @JoinColumn(name = "code", referencedColumnName = "code")
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Code code;
+    @JoinColumn(name = "user", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private User user;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "exam", fetch = FetchType.LAZY)
     private List<UserAnswer> userAnswerList;
 
@@ -147,20 +147,20 @@ public class Exam implements Serializable {
         this.date = date;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Code getCode() {
         return code;
     }
 
     public void setCode(Code code) {
         this.code = code;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @XmlTransient
