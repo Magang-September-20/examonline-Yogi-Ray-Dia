@@ -12,6 +12,7 @@ import com.MII.FinalProject.entities.rest.LoginOutput;
 import com.MII.FinalProject.entities.rest.RegisterOutput;
 import com.MII.FinalProject.services.ExamService;
 import com.MII.FinalProject.services.LoginService;
+import com.MII.FinalProject.services.QuestionService;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,9 @@ public class MainController {
     
     @Autowired
     ExamService examService;
+    
+    @Autowired
+    QuestionService questionService;
 
     @RequestMapping("")//url or path
     public String index() {
@@ -119,5 +123,11 @@ public class MainController {
         model.addAttribute("exam", new Exam());
         model.addAttribute("examm", examService.getAll());
         return "adminpage";
+    }
+    
+    @GetMapping("/question")
+    public String question(Model model){
+        model.addAttribute("questions", questionService.getAll());
+        return "question";
     }
 }
