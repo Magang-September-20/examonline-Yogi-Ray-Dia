@@ -5,10 +5,13 @@
  */
 package com.MII.FinalProject.services;
 
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author yosef
  */
+@Service
 public class ExamService {
     
 }
