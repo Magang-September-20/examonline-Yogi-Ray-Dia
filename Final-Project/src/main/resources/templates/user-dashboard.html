@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <div th:replace="fragments/user-header :: head"></div>
+
+    <body class="animsition">
+        <div class="page-wrapper">
+            <div th:replace="fragments/user-header :: header"></div>
+            <!-- WELCOME-->
+            <section class="welcome2 p-t-40 p-b-55">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="au-breadcrumb3">
+                                <div class="au-breadcrumb-left">
+                                    <span class="au-breadcrumb-span">You are here:</span>
+                                    <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                        <li class="list-inline-item active">
+                                            <a href="#">Home</a>
+                                        </li>
+                                        <li class="list-inline-item seprate">
+                                            <span>/</span>
+                                        </li>
+                                        <li class="list-inline-item">Dashboard</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="welcome2-inner m-t-60">
+                                <div class="welcome2-greeting">
+                                    <h1 class="title-6">Hi
+                                        <span>John</span>, Welcome back</h1>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                </div>
+                                <form class="form-header form-header2" action="" method="post">
+                                    <input class="au-input au-input--w435" type="text" name="search" placeholder="Search for datas &amp; reports...">
+                                    <button class="au-btn--submit" type="submit">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END WELCOME-->
+
+            <!-- PAGE CONTENT-->
+            <div class="page-container3">
+                <section class="alert-wrap p-t-10 p-b-10">
+                    <div class="container">
+                    </div>
+                </section>
+                <section class="m-t-60">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-3">
+                                <div th:replace="fragments/user-header :: sidebar"></div>
+                            </div>
+                            <div class="col-xl-9">
+                                <!-- PAGE CONTENT-->
+                                <div class="page-content">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <!-- RECENT REPORT-->
+                                            <div class="card text-center">
+                                                <div class="card-header">
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Register Exam</h5>
+                                                    <p class="card-text m-b-30">Select category below</p>
+                                                        <select class="form-control m-b-30 p-30" id="exampleFormControlSelect1">
+                                                            <option>Java</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                            <option>5</option>
+                                                        </select>
+                                                    <a href="#" class="btn btn-primary">Register</a>
+                                                </div>
+                                                <div class="card-footer text-muted">
+                                                </div>
+                                            </div>
+                                            <!-- END RECENT REPORT-->
+                                        </div>
+                                    </div>
+                                    <div th:replace="fragments/user-footer :: footer"> </div>
+                                </div>
+                                <!-- END PAGE CONTENT-->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- END PAGE CONTENT  -->
+
+        </div>
+
+        <div th:replace="fragments/user-footer :: script"></div>
+
+    </body>
+
+</html>
+<!-- end document-->
