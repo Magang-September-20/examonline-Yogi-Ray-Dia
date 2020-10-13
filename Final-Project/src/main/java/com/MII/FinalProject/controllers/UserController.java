@@ -24,4 +24,9 @@ public class UserController {
     public String historyExam() {
         return "history-exam";
     }
+    
+    @GetMapping("/exam")//url or path
+    public String exam() {
+        return "exam";
+    }
 }
