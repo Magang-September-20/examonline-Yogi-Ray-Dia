@@ -8,7 +8,6 @@ package com.MII.FinalProject.controllers;
 import com.MII.FinalProject.entities.LoginInput;
 import com.MII.FinalProject.entities.RegisterInput;
 import com.MII.FinalProject.entities.rest.LoginOutput;
-import com.MII.FinalProject.entities.rest.RegisterOutput;
 import com.MII.FinalProject.services.LoginService;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -35,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
     @Autowired
-    LoginService service;
+    LoginService loginService;
     @Autowired
     RegisterService registerService;
 
@@ -62,13 +61,6 @@ public class MainController {
     
     @GetMapping("/dashboard")//url or path
     public String dashboard(Model model) {
-<<<<<<< Updated upstream
-//        model.addAttribute("account", accountService.getById(authentication.getName()));
-//        model.addAttribute("account", )
-=======
-//        Authentication authentication = getAuthentication();
-//        model.addAttribute("account", service.getById(authentication.getName()));
->>>>>>> Stashed changes
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
             return "index";
@@ -85,7 +77,7 @@ public class MainController {
 
     @PostMapping("/verification")
     public String verification(LoginInput input) {
-        LoginOutput output = service.LoginNew(input);
+        LoginOutput output = loginService.LoginNew(input);
         if (output.getStatus().equalsIgnoreCase("success")) {
             User user = new User(output.getUser().getId(), "", getAuthorities(output.getUser().getRoles()));
             PreAuthenticatedAuthenticationToken authenticationToken = new PreAuthenticatedAuthenticationToken(user, "", user.getAuthorities());
