@@ -12,8 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +21,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -31,22 +28,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "code")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Code.findAll", query = "SELECT c FROM Code c")
-    , @NamedQuery(name = "Code.findById", query = "SELECT c FROM Code c WHERE c.id = :id")
-    , @NamedQuery(name = "Code.findByCode", query = "SELECT c FROM Code c WHERE c.code = :code")
-    , @NamedQuery(name = "Code.findByExpiredDate", query = "SELECT c FROM Code c WHERE c.expiredDate = :expiredDate")
-    , @NamedQuery(name = "Code.findByIsSent", query = "SELECT c FROM Code c WHERE c.isSent = :isSent")
-    , @NamedQuery(name = "Code.findByIsUsed", query = "SELECT c FROM Code c WHERE c.isUsed = :isUsed")})
+    @NamedQuery(name = "Code.findAll", query = "SELECT c FROM Code c")})
 public class Code implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Basic(optional = false)
     @Column(name = "code")
     private String code;
@@ -72,24 +59,15 @@ public class Code implements Serializable {
     public Code() {
     }
 
-    public Code(Integer id) {
-        this.id = id;
+    public Code(String code) {
+        this.code = code;
     }
 
-    public Code(Integer id, String code, Date expiredDate, boolean isSent, boolean isUsed) {
-        this.id = id;
+    public Code(String code, Date expiredDate, boolean isSent, boolean isUsed) {
         this.code = code;
         this.expiredDate = expiredDate;
         this.isSent = isSent;
         this.isUsed = isUsed;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getCode() {
@@ -151,7 +129,7 @@ public class Code implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (code != null ? code.hashCode() : 0);
         return hash;
     }
 
@@ -162,7 +140,7 @@ public class Code implements Serializable {
             return false;
         }
         Code other = (Code) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
             return false;
         }
         return true;
@@ -170,7 +148,7 @@ public class Code implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.Code[ id=" + id + " ]";
+        return "com.MII.FinalProject.entities.Code[ code=" + code + " ]";
     }
     
 }

@@ -7,9 +7,7 @@ package com.MII.FinalProject.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,13 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,16 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "exam")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e")
-    , @NamedQuery(name = "Exam.findById", query = "SELECT e FROM Exam e WHERE e.id = :id")
-    , @NamedQuery(name = "Exam.findByStart", query = "SELECT e FROM Exam e WHERE e.start = :start")
-    , @NamedQuery(name = "Exam.findByEnd", query = "SELECT e FROM Exam e WHERE e.end = :end")
-    , @NamedQuery(name = "Exam.findByScore", query = "SELECT e FROM Exam e WHERE e.score = :score")
-    , @NamedQuery(name = "Exam.findByGrade", query = "SELECT e FROM Exam e WHERE e.grade = :grade")
-    , @NamedQuery(name = "Exam.findByHasPassed", query = "SELECT e FROM Exam e WHERE e.hasPassed = :hasPassed")
-    , @NamedQuery(name = "Exam.findByDate", query = "SELECT e FROM Exam e WHERE e.date = :date")})
+    @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e")})
 public class Exam implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,14 +56,12 @@ public class Exam implements Serializable {
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @JoinColumn(name = "code", referencedColumnName = "code")
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    private Code code;
     @JoinColumn(name = "user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User user;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exam", fetch = FetchType.LAZY)
-    private List<UserAnswer> userAnswerList;
+    @JoinColumn(name = "code", referencedColumnName = "code")
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    private Code code;
 
     public Exam() {
     }
@@ -147,14 +132,6 @@ public class Exam implements Serializable {
         this.date = date;
     }
 
-    public Code getCode() {
-        return code;
-    }
-
-    public void setCode(Code code) {
-        this.code = code;
-    }
-
     public User getUser() {
         return user;
     }
@@ -163,13 +140,12 @@ public class Exam implements Serializable {
         this.user = user;
     }
 
-    @XmlTransient
-    public List<UserAnswer> getUserAnswerList() {
-        return userAnswerList;
+    public Code getCode() {
+        return code;
     }
 
-    public void setUserAnswerList(List<UserAnswer> userAnswerList) {
-        this.userAnswerList = userAnswerList;
+    public void setCode(Code code) {
+        this.code = code;
     }
 
     @Override
