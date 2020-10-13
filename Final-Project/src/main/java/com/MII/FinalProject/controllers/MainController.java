@@ -62,13 +62,12 @@ public class MainController {
     
     @GetMapping("/dashboard")//url or path
     public String dashboard(Model model) {
-<<<<<<< Updated upstream
+
 //        model.addAttribute("account", accountService.getById(authentication.getName()));
 //        model.addAttribute("account", )
-=======
+
 //        Authentication authentication = getAuthentication();
 //        model.addAttribute("account", service.getById(authentication.getName()));
->>>>>>> Stashed changes
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
             return "index";
