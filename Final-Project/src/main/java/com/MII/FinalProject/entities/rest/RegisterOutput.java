@@ -13,4 +13,5 @@ import lombok.Data;
  */
 @Data
 public class RegisterOutput {
+    String status;
 }
