@@ -67,6 +67,7 @@ public class MainController {
     @GetMapping("/dashboard")//url or path
     public String dashboard(Model model) {
 //        model.addAttribute("account", accountService.getById(authentication.getName()));
+//        model.addAttribute("account", )
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
             return "/index";
