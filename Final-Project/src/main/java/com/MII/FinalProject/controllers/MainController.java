@@ -8,6 +8,7 @@ package com.MII.FinalProject.controllers;
 import com.MII.FinalProject.entities.LoginInput;
 import com.MII.FinalProject.entities.RegisterInput;
 import com.MII.FinalProject.entities.rest.LoginOutput;
+import com.MII.FinalProject.entities.rest.RegisterOutput;
 import com.MII.FinalProject.services.LoginService;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -39,12 +40,12 @@ public class MainController {
     RegisterService registerService;
 
     @RequestMapping("")//url or path
-    public String index(Model model) {
+    public String index() {
         return "index";//index.html
     }
 
     @GetMapping("/login")//url or path
-    public String login(Model model) {
+    public String login() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
             return "redirect:/dashboard";
@@ -54,8 +55,13 @@ public class MainController {
     }
 
     @GetMapping("/register")//url or path
-    public String register(Model model) {
-        return "register";
+    public String register() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
+            return "redirect:/dashboard";
+        } else {
+            return "register";
+        }
     }
 
     
@@ -71,8 +77,12 @@ public class MainController {
     
     @PostMapping("/registration")
     public String registration(RegisterInput input) {
-        registerService.RegisterNew(input);
-        return "register";
+        RegisterOutput output = registerService.Register(input);
+        if (output.getStatus().equalsIgnoreCase("success")) {
+            return "redirect:/login";
+        } else {
+            return "redirect:/register";
+        }
     }
 
     @PostMapping("/verification")
@@ -96,7 +106,4 @@ public class MainController {
         }
         return authorities;
     }
-//    private Authentication getAuthentication() {
-//        return SecurityContextHolder.getContext().getAuthentication();
-//    }
 }

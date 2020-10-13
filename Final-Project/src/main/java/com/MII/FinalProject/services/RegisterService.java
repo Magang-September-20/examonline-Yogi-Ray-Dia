@@ -22,7 +22,7 @@ public class RegisterService {
     
     private static final RestTemplate RT = new RestTemplate();
     
-    public RegisterOutput RegisterNew(RegisterInput register){
+    public RegisterOutput Register(RegisterInput register){
 //        System.out.println(register.getName());
 //        System.out.println(register.getEmail());
 //        System.out.println(register.getUsername());
