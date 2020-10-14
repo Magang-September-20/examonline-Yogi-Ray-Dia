@@ -8,9 +8,6 @@ package com.MII.FinalProject.services;
 import com.MII.FinalProject.entities.Question;
 import com.MII.FinalProject.repositories.QuestionRepository;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,27 +25,11 @@ public class QuestionService {
         return repository.findAll();
     }
     
-    //create/update
-    public Question save(Question question) {
-        return repository.save(question);
-    }
-    
-    //search
     public Question getById(Integer id){
         return repository.findById(id).get();
     }
     
     public Integer countQuestion() {
         return repository.countQuestion();
-    }
-
-    //delete 
-    public void delete(Integer id) {
-        Question question = getById(id);
-        repository.delete(question);
-    }
-
-    public void saveAll(List<Question> question) {
-        repository.saveAll(question);
     }
 }
