@@ -6,6 +6,7 @@
 package com.MII.FinalProject.repositories;
 
 import com.MII.FinalProject.entities.Exam;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,7 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     
     @Query(value = "SELECT COUNT(*) FROM exam WHERE has_passed=1", nativeQuery = true)
     Integer countCandidate();
+    
+    @Query(value = "SELECT * FROM exam WHERE exam.user LIKE ?1", nativeQuery = true)
+    public List<Exam> getPerId(Integer id);
 }
