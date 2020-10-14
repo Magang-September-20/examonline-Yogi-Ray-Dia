@@ -7,6 +7,7 @@ package com.MII.FinalProject.controllers;
 
 import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.UserLocal;
+import com.MII.FinalProject.entities.Question;
 import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
 import com.MII.FinalProject.services.ModuleService;
@@ -76,9 +77,16 @@ public class AdminController {
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("questions", questionService.getAll());
         model.addAttribute("modules", moduleService.getAll());
+        model.addAttribute("questionss", questionService.getAll());
         return checkRole(model, "data-question");
     }
 
+    @GetMapping("getIdQuestion/{id}")
+    public String getByIdQuestion(@PathVariable("id") Integer id) throws MessagingException {
+        Question question = questionService.getById(id);
+        return "data-question";
+    }
+    
     @GetMapping("/data-registration")
     public String exam(Model model) {
         model.addAttribute("notif", codeService.notif());

@@ -40,6 +40,10 @@ public class ExamService {
         return er.findById(id).get();
     }
 
+    public List<Exam> getAllPerId(Integer id) {
+        return er.getPerId(id);
+    }
+    
     //create/update
     public Exam save(Exam exam) {
         Exam newExam = er.save(exam);

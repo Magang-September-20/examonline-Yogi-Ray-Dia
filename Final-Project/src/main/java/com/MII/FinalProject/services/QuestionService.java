@@ -25,6 +25,10 @@ public class QuestionService {
         return repository.findAll();
     }
     
+    public Question getById(Integer id){
+        return repository.findById(id).get();
+    }
+    
     public Integer countQuestion() {
         return repository.countQuestion();
     }
