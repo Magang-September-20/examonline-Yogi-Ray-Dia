@@ -143,7 +143,7 @@ public class Module implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.Module[ id=" + id + " ]";
+        return ""+ id;
     }
     
 }

@@ -5,11 +5,11 @@
  */
 package com.MII.FinalProject.entities;
 
+import static com.MII.FinalProject.entities.Question_.userAnswerList;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +20,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -60,12 +59,10 @@ public class Exam implements Serializable {
     private Date date;
     @JoinColumn(name = "user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private User user;
+    private UserLocal user;
     @JoinColumn(name = "code", referencedColumnName = "code")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Code code;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exam", fetch = FetchType.LAZY)
-    private List<UserAnswer> userAnswerList;
 
     public Exam() {
     }
@@ -136,11 +133,11 @@ public class Exam implements Serializable {
         this.date = date;
     }
 
-    public User getUser() {
+    public UserLocal getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserLocal user) {
         this.user = user;
     }
 
@@ -152,13 +149,13 @@ public class Exam implements Serializable {
         this.code = code;
     }
 
-    public List<UserAnswer> getUserAnswerList() {
-        return userAnswerList;
-    }
+//    public List<UserAnswer> getUserAnswerList() {
+//        return userAnswerList;
+//    }
 
-    public void setUserAnswerList(List<UserAnswer> userAnswerList) {
-        this.userAnswerList = userAnswerList;
-    }
+//    public void setUserAnswerList(List<UserAnswer> userAnswerList) {
+//        this.userAnswerList = userAnswerList;
+//    }
 
     @Override
     public int hashCode() {
@@ -182,7 +179,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "" + id;
+        return ""+ id;
     }
     
 }

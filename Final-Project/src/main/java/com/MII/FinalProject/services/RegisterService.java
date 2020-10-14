@@ -23,10 +23,6 @@ public class RegisterService {
     private static final RestTemplate RT = new RestTemplate();
     
     public RegisterOutput Register(RegisterInput register){
-//        System.out.println(register.getName());
-//        System.out.println(register.getEmail());
-//        System.out.println(register.getUsername());
-//        System.out.println(register.getPassword());
         return RT.postForObject(url+"register", register, RegisterOutput.class);
     }
 }

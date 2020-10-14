@@ -5,7 +5,7 @@
  */
 package com.MII.FinalProject.repositories;
 
-import com.MII.FinalProject.entities.Exam;
+import com.MII.FinalProject.entities.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author yosef
  */
 @Repository
-public interface ExamRepository extends JpaRepository<Exam, Integer> {
+public interface QuestionRepository extends JpaRepository<Question, Integer> {
     
 }

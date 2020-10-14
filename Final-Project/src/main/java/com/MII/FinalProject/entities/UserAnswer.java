@@ -105,7 +105,7 @@ public class UserAnswer implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.UserAnswer[ id=" + id + " ]";
+        return ""+ id;
     }
     
 }
