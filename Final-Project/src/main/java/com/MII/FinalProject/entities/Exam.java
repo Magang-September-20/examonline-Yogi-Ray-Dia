@@ -7,9 +7,7 @@ package com.MII.FinalProject.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -64,8 +62,6 @@ public class Exam implements Serializable {
     @JoinColumn(name = "code", referencedColumnName = "code")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Code code;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exam", fetch = FetchType.LAZY)
-    private List<UserAnswer> userAnswerList;
 
     public Exam() {
     }
@@ -182,7 +178,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "" + id;
+        return ""+ id;
     }
     
 }

@@ -107,7 +107,7 @@ public class UserLocal implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.UserLocal[ id=" + id + " ]";
+        return ""+ id;
     }
     
 }

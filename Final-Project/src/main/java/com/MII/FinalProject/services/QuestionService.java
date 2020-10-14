@@ -5,8 +5,8 @@
  */
 package com.MII.FinalProject.services;
 
-import com.MII.FinalProject.entities.Exam;
-import com.MII.FinalProject.repositories.ExamRepository;
+import com.MII.FinalProject.entities.Question;
+import com.MII.FinalProject.repositories.QuestionRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,16 +16,13 @@ import org.springframework.stereotype.Service;
  * @author yosef
  */
 @Service
-public class ExamService {
+public class QuestionService {
     
     @Autowired
-    ExamRepository er;
+    QuestionRepository question;
     
-    public List<Exam> getAll() {
-        return er.findAll();
+    public List<Question> getAll() {
+        return question.findAll();
     }
-
-    public Exam getById(Integer id) {
-        return er.findById(id).get();
-    }
+    
 }

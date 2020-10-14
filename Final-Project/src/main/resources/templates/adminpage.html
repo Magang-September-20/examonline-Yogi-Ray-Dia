@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Kode Pegawai</th>    
+                        <th>Nama</th>    
+                        <th>Date</th>    
+                        <th>Code</th>    
+                        <th>Action</th>    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="as : ${examm}">
+                        <td th:text = "${as.id}"></td> 
+                        <td th:text = "${as.user}"></td> 
+                        <td th:text = "${as.user.name}"></td> 
+                        <td th:text = "${as.date}"></td> 
+                        <td th:text = "${as.code}"></td> 
+                        <td>
+                            <!--<a th:href="@{${as.id}}">get</a>-->
+                        </td> 
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
