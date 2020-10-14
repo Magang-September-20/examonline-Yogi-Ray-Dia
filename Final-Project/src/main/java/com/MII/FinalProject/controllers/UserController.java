@@ -5,17 +5,16 @@
  */
 package com.MII.FinalProject.controllers;
 
-import com.MII.FinalProject.entities.Exam;
+import com.MII.FinalProject.entities.Module;
 import com.MII.FinalProject.services.ExamService;
+import com.MII.FinalProject.services.ModuleService;
 import com.MII.FinalProject.services.UserService;
-import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -29,9 +28,13 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    ModuleService moduleService;
 
     @GetMapping("/user-dashboard")//url or path
     public String userDashboard(Model model) {
+        model.addAttribute("modules", moduleService.getAll());
         return checkRole(model, "user-dashboard");
     }
 

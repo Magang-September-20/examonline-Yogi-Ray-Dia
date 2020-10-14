@@ -10,6 +10,7 @@ import com.MII.FinalProject.repositories.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,7 +28,7 @@ public class UserService {
     private String url;
 
     private static final RestTemplate RT = new RestTemplate();
-
+    
     public int getId(String email) {
         return RT.getForObject(url + "user/getId/" + email, Integer.class);
     }

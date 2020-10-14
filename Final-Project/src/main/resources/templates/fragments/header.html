@@ -30,6 +30,7 @@
 
         <!-- Main CSS-->
         <link href="css/theme.css" rel="stylesheet" media="all">
+        <link href="http://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" media="all">
 
     </head>
 </div>
@@ -66,14 +67,8 @@
                         <a class="js-arrow" href="#">
                             <i class="fas fa-copy"></i>Data Question</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                            <li>
-                                <a th:href="@{/data-question}">Category 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Category 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Category 3</a>
+                            <li th:each = "as : ${modules}">
+                                <a th:href="@{data-question}" th:text='${as.name}'></a>
                             </li>
                         </ul>
                     </li>
@@ -85,14 +80,8 @@
                         <a class="js-arrow" href="#">
                             <i class="fas fa-check-square"></i>Data Candidate</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                            <li>
-                                <a th:href="@{/data-candidate}">Category 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Category 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Category 3</a>
+                            <li th:each = "as : ${modules}">
+                                <a th:href="@{data-candidate}" th:text='${as.name}'></a>
                             </li>
                         </ul>
                     </li>
@@ -123,14 +112,8 @@
                         <a class="js-arrow" href="#">
                             <i class="fas fa-copy"></i>Data Question <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li>
-                                <a th:href="@{data-question}">Category 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Category 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Category 3</a>
+                            <li th:each = "as : ${modules}">
+                                <a th:href="@{data-question}" th:text='${as.name}'></a>
                             </li>
                         </ul>
                     </li>
@@ -142,14 +125,8 @@
                         <a class="js-arrow" href="#">
                             <i class="fas fa-check-square"></i>Data Candidate <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li>
-                                <a th:href="@{data-candidate}">Category 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Category 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Category 3</a>
+                            <li th:each = "as : ${modules}">
+                                <a th:href="@{data-candidate/}" th:text='${as.name}'></a>
                             </li>
                         </ul>
                     </li>

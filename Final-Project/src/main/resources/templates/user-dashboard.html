@@ -32,8 +32,8 @@
                             <div class="welcome2-inner m-t-60">
                                 <div class="welcome2-greeting">
                                     <h1 class="title-6">Hi
-                                        <span>John</span>, Welcome back</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                        <span th:text='${name}'></span>, Welcome back</h1>
+                                    <p>Lets Start your exam</p>
                                 </div>
                                 <form class="form-header form-header2" action="" method="post">
                                     <input class="au-input au-input--w435" type="text" name="search" placeholder="Search for datas &amp; reports...">
@@ -73,11 +73,7 @@
                                                     <h5 class="card-title">Register Exam</h5>
                                                     <p class="card-text m-b-30">Select category below</p>
                                                         <select class="form-control m-b-30 p-30" id="exampleFormControlSelect1">
-                                                            <option>Java</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
+                                                            <option th:each = "as : ${modules}" th:value='${as.id}' th:text='${as.name}'></option>
                                                         </select>
                                                     <a href="#" class="btn btn-primary">Register</a>
                                                 </div>

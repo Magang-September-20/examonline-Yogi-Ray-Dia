@@ -6,9 +6,12 @@
 package com.MII.FinalProject.controllers;
 
 import com.MII.FinalProject.entities.Exam;
+import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
+import com.MII.FinalProject.services.ModuleService;
 import com.MII.FinalProject.services.QuestionService;
+import com.MII.FinalProject.services.UserLocalService;
 import com.MII.FinalProject.services.UserService;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,12 @@ public class AdminController {
     
     @Autowired
     CodeService codeService;
+    
+    @Autowired
+    ModuleService moduleService;
+    
+    @Autowired
+    UserLocalService userLocalService;
 
     @GetMapping("/dashboard")//url or path
     public String dashboard(Model model) {
@@ -47,11 +56,17 @@ public class AdminController {
         model.addAttribute("recentRegister", codeService.recentRegister());
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
+        model.addAttribute("modules", moduleService.getAll());
         return checkRole(model, "admin-dashboard");
     }
 
     @GetMapping("/data-user")
     public String user(Model model) {
+        model.addAttribute("users", userLocalService.getAll());
+        model.addAttribute("modules", moduleService.getAll());
+        for (UserLocal userLocal : userLocalService.getAll()) {
+            System.out.println(userLocal.getEmail());
+        }
         return checkRole(model, "data-user");
     }
 
@@ -60,6 +75,7 @@ public class AdminController {
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("questions", questionService.getAll());
+        model.addAttribute("modules", moduleService.getAll());
         return checkRole(model, "data-question");
     }
 
@@ -69,6 +85,7 @@ public class AdminController {
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("exam", new Exam());
         model.addAttribute("examm", examService.getAll());
+        model.addAttribute("modules", moduleService.getAll());
         return checkRole(model, "data-registration");
     }
 
@@ -76,6 +93,7 @@ public class AdminController {
     public String candidate(Model model) {
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
+        model.addAttribute("modules", moduleService.getAll());
         return checkRole(model, "data-candidate");
     }
 
