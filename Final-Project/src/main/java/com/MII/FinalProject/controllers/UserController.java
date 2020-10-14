@@ -52,6 +52,7 @@ public class UserController {
 
     @GetMapping("/exam")//url or path
     public String exam() {
+        
         return "exam";
     }
 }

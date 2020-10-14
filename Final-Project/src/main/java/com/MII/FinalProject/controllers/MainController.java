@@ -133,18 +133,5 @@ public class MainController {
         }
         return authorities;
     }
-    
-//    START ADMIN CONTROLLER
-    @GetMapping("/adminpage")
-    public String exam(Model model){
-        model.addAttribute("exam", new Exam());
-        model.addAttribute("examm", examService.getAll());
-        return "adminpage";
-    }
-    
-    @GetMapping("/question")
-    public String question(Model model){
-        model.addAttribute("questions", questionService.getAll());
-        return "question";
-    }
+     
 }
