@@ -5,8 +5,10 @@
  */
 package com.MII.FinalProject.entities;
 
+import static com.MII.FinalProject.entities.Question_.userAnswerList;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +20,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -148,13 +149,13 @@ public class Exam implements Serializable {
         this.code = code;
     }
 
-    public List<UserAnswer> getUserAnswerList() {
-        return userAnswerList;
-    }
+//    public List<UserAnswer> getUserAnswerList() {
+//        return userAnswerList;
+//    }
 
-    public void setUserAnswerList(List<UserAnswer> userAnswerList) {
-        this.userAnswerList = userAnswerList;
-    }
+//    public void setUserAnswerList(List<UserAnswer> userAnswerList) {
+//        this.userAnswerList = userAnswerList;
+//    }
 
     @Override
     public int hashCode() {
