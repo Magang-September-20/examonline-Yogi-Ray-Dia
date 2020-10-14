@@ -70,7 +70,7 @@
                                                 <table class="table table-borderless table-data3" id="examHistory">
                                                     <thead>
                                                         <tr>
-                                                            <th>User_ID</th>
+                                                            <!--<th>User_ID</th>-->
                                                             <th>Code</th>
                                                             <th>Date</th>
                                                             <th>Start</th>
@@ -83,7 +83,7 @@
                                                     </thead> 
                                                     <tbody>
                                                         <tr th:each = "history : ${exam}">
-                                                            <td th:text = "${history.user}"></td>
+<!--                                                            <td th:text = "${history.user}"></td>-->
                                                             <td th:text = "${history.code}"></td>
                                                             <td th:text = "${history.date}"></td>
                                                             <td th:text = "${history.start}"></td>
