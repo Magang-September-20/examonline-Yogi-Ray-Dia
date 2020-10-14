@@ -148,7 +148,7 @@ public class Code implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.Code[ code=" + code + " ]";
+        return ""+ code;
     }
     
 }

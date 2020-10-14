@@ -170,7 +170,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.Exam[ id=" + id + " ]";
+        return ""+ id;
     }
     
 }

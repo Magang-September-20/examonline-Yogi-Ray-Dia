@@ -197,7 +197,7 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.Question[ id=" + id + " ]";
+        return ""+ id;
     }
     
 }

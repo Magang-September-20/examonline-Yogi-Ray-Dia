@@ -140,7 +140,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.User[ id=" + id + " ]";
+        return ""+ id;
     }
     
 }
