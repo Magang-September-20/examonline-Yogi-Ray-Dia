@@ -21,29 +21,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author yosef
+ * @author nathanray
  */
 @Entity
 @Table(name = "exam")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e")
-    , @NamedQuery(name = "Exam.findById", query = "SELECT e FROM Exam e WHERE e.id = :id")
-    , @NamedQuery(name = "Exam.findByStart", query = "SELECT e FROM Exam e WHERE e.start = :start")
-    , @NamedQuery(name = "Exam.findByEnd", query = "SELECT e FROM Exam e WHERE e.end = :end")
-    , @NamedQuery(name = "Exam.findByScore", query = "SELECT e FROM Exam e WHERE e.score = :score")
-    , @NamedQuery(name = "Exam.findByGrade", query = "SELECT e FROM Exam e WHERE e.grade = :grade")
-    , @NamedQuery(name = "Exam.findByHasPassed", query = "SELECT e FROM Exam e WHERE e.hasPassed = :hasPassed")
-    , @NamedQuery(name = "Exam.findByDate", query = "SELECT e FROM Exam e WHERE e.date = :date")})
+    @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e")})
 public class Exam implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,7 +62,7 @@ public class Exam implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User user;
     @JoinColumn(name = "code", referencedColumnName = "code")
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Code code;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "exam", fetch = FetchType.LAZY)
     private List<UserAnswer> userAnswerList;
@@ -163,7 +152,6 @@ public class Exam implements Serializable {
         this.code = code;
     }
 
-    @XmlTransient
     public List<UserAnswer> getUserAnswerList() {
         return userAnswerList;
     }
@@ -194,7 +182,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.Exam[ id=" + id + " ]";
+        return "" + id;
     }
     
 }

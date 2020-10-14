@@ -6,26 +6,28 @@
 package com.MII.FinalProject.services;
 
 import com.MII.FinalProject.entities.Exam;
-import com.MII.FinalProject.repositories.ExamRepository;
+import com.MII.FinalProject.entities.UserAnswer;
+import com.MII.FinalProject.repositories.UserAnswerRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author yosef
+ * @author nathanray
  */
 @Service
-public class ExamService {
+public class UserAnswerService {
     
     @Autowired
-    ExamRepository er;
+    UserAnswerRepository uaR;
     
-    public List<Exam> getAll() {
-        return er.findAll();
+        public List<UserAnswer> getAll() {
+        return uaR.findAll();
     }
 
-    public Exam getById(Integer id) {
-        return er.findById(id).get();
+    public void save(UserAnswer answer) {
+        uaR.save(answer);
     }
+    
 }

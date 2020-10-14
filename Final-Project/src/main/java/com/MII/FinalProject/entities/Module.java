@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.MII.FinalProject.entities;
 
 import java.io.Serializable;
@@ -18,23 +17,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author yosef
+ * @author nathanray
  */
 @Entity
 @Table(name = "module")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Module.findAll", query = "SELECT m FROM Module m")
-    , @NamedQuery(name = "Module.findById", query = "SELECT m FROM Module m WHERE m.id = :id")
-    , @NamedQuery(name = "Module.findByName", query = "SELECT m FROM Module m WHERE m.name = :name")
-    , @NamedQuery(name = "Module.findByPassingScore", query = "SELECT m FROM Module m WHERE m.passingScore = :passingScore")
-    , @NamedQuery(name = "Module.findByNumberOfQuestion", query = "SELECT m FROM Module m WHERE m.numberOfQuestion = :numberOfQuestion")
-    , @NamedQuery(name = "Module.findByDuration", query = "SELECT m FROM Module m WHERE m.duration = :duration")})
+    @NamedQuery(name = "Module.findAll", query = "SELECT m FROM Module m")})
 public class Module implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -114,7 +105,6 @@ public class Module implements Serializable {
         this.duration = duration;
     }
 
-    @XmlTransient
     public List<Code> getCodeList() {
         return codeList;
     }
@@ -123,7 +113,6 @@ public class Module implements Serializable {
         this.codeList = codeList;
     }
 
-    @XmlTransient
     public List<Question> getQuestionList() {
         return questionList;
     }
@@ -156,5 +145,5 @@ public class Module implements Serializable {
     public String toString() {
         return "com.MII.FinalProject.entities.Module[ id=" + id + " ]";
     }
-
+    
 }

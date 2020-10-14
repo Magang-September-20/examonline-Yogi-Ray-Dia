@@ -19,22 +19,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author yosef
+ * @author nathanray
  */
 @Entity
 @Table(name = "user")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
-    , @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name")
-    , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-    , @NamedQuery(name = "User.findByIsActive", query = "SELECT u FROM User u WHERE u.isActive = :isActive")})
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -103,7 +96,6 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    @XmlTransient
     public List<Exam> getExamList() {
         return examList;
     }
@@ -112,7 +104,6 @@ public class User implements Serializable {
         this.examList = examList;
     }
 
-    @XmlTransient
     public List<Code> getCodeList() {
         return codeList;
     }
@@ -143,7 +134,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.User[ id=" + id + " ]";
+        return "" + id;
     }
     
 }

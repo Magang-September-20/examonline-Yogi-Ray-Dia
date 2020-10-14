@@ -18,19 +18,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author yosef
+ * @author nathanray
  */
 @Entity
 @Table(name = "user_answer")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "UserAnswer.findAll", query = "SELECT u FROM UserAnswer u")
-    , @NamedQuery(name = "UserAnswer.findById", query = "SELECT u FROM UserAnswer u WHERE u.id = :id")
-    , @NamedQuery(name = "UserAnswer.findByUserAnswer", query = "SELECT u FROM UserAnswer u WHERE u.userAnswer = :userAnswer")})
+    @NamedQuery(name = "UserAnswer.findAll", query = "SELECT u FROM UserAnswer u")})
 public class UserAnswer implements Serializable {
 
     private static final long serialVersionUID = 1L;

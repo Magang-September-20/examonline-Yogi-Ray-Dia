@@ -21,26 +21,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author yosef
+ * @author nathanray
  */
 @Entity
 @Table(name = "question")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Question.findAll", query = "SELECT q FROM Question q")
-    , @NamedQuery(name = "Question.findById", query = "SELECT q FROM Question q WHERE q.id = :id")
-    , @NamedQuery(name = "Question.findByQuestion", query = "SELECT q FROM Question q WHERE q.question = :question")
-    , @NamedQuery(name = "Question.findByA", query = "SELECT q FROM Question q WHERE q.a = :a")
-    , @NamedQuery(name = "Question.findByB", query = "SELECT q FROM Question q WHERE q.b = :b")
-    , @NamedQuery(name = "Question.findByC", query = "SELECT q FROM Question q WHERE q.c = :c")
-    , @NamedQuery(name = "Question.findByD", query = "SELECT q FROM Question q WHERE q.d = :d")
-    , @NamedQuery(name = "Question.findByAnswer", query = "SELECT q FROM Question q WHERE q.answer = :answer")
-    , @NamedQuery(name = "Question.findByIsActive", query = "SELECT q FROM Question q WHERE q.isActive = :isActive")})
+    @NamedQuery(name = "Question.findAll", query = "SELECT q FROM Question q")})
 public class Question implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -158,7 +147,6 @@ public class Question implements Serializable {
         this.isActive = isActive;
     }
 
-    @XmlTransient
     public List<UserAnswer> getUserAnswerList() {
         return userAnswerList;
     }
