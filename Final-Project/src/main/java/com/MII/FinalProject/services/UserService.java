@@ -7,6 +7,7 @@ package com.MII.FinalProject.services;
 
 import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.repositories.UserRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class UserService {
 
     public int getId(String email) {
         return RT.getForObject(url + "user/getId/" + email, Integer.class);
+    }
+    
+    public String getRole(int id) {
+        return RT.getForObject(url + "user/getRole/" + id, String.class);
     }
 
     public UserLocal save(UserLocal user) {

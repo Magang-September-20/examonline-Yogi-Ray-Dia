@@ -52,7 +52,11 @@ public class MainController {
     public String login() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            return "redirect:/dashboard";
+            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
+                return "redirect:admin-dashboard";
+            } else {
+                return "redirect:user-dashboard";
+            }
         } else {
             return "login";
         }
@@ -72,9 +76,13 @@ public class MainController {
     public String dashboard(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
-            model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
-            return "admin-dashboard";
+            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
+                model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
+                model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
+                return "admin-dashboard";
+            } else {
+                return "redirect:/user-dashboard";
+            }
         } else {
             return "login";
         }
