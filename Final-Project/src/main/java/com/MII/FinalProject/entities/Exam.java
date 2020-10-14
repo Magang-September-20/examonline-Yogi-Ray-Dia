@@ -5,10 +5,8 @@
  */
 package com.MII.FinalProject.entities;
 
-import static com.MII.FinalProject.entities.Question_.userAnswerList;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
