@@ -43,4 +43,8 @@ public class UserService {
     public UserLocal getById(int id) {
         return repository.findById(id).get();
     }
+    
+    public Integer countUser() {
+        return repository.countUser();
+    }
 }

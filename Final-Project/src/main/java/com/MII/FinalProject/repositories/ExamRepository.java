@@ -7,6 +7,7 @@ package com.MII.FinalProject.repositories;
 
 import com.MII.FinalProject.entities.Exam;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,4 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExamRepository extends JpaRepository<Exam, Integer> {
     
+    @Query(value = "SELECT COUNT(*) FROM exam WHERE has_passed=1", nativeQuery = true)
+    Integer countCandidate();
 }

@@ -25,7 +25,7 @@ public class ExamService {
 
     @Autowired
     ExamRepository er;
-    
+
     @Autowired
     CodeRepository cr;
 
@@ -52,14 +52,18 @@ public class ExamService {
         return newExam;
 
     }
-    
-    public void sendEmail(Exam exam) throws MessagingException{
+
+    public void sendEmail(Exam exam) throws MessagingException {
         er.save(exam);
         Code code = new Code();
-        code.setCode(exam.getCode()+"");
+        code.setCode(exam.getCode() + "");
         code.setExpiredDate(exam.getDate());
         code.setIsSent(true);
         cr.save(code);
         ns.sendEmail(exam);
+    }
+
+    public Integer countCandidate() {
+        return er.countCandidate();
     }
 }

@@ -1,4 +1,4 @@
-<div th:fragment="head">
+<div th:fragment="head(title)">
     <head>
         <!-- Required meta tags-->
         <meta charset="UTF-8">
@@ -8,7 +8,7 @@
         <meta name="keywords" content="au theme template">
 
         <!-- Title Page-->
-        <title>Dashboard</title>
+        <title th:text="${title}"></title>
 
         <!-- Fontfaces CSS-->
         <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -55,11 +55,11 @@
             <div class="container-fluid">
                 <ul class="navbar-mobile__list list-unstyled">
                     <li class="has-sub">
-                        <a class="js-arrow" href="index.html">
+                        <a class="js-arrow" th:href="@{/dashboard}">
                             <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     </li>
                     <li>
-                        <a href="data-user.html">
+                        <a th:href="@{/data-user}">
                             <i class="fas fa-users"></i>Data User</a>
                     </li>
                     <li class="has-sub">
@@ -67,7 +67,7 @@
                             <i class="fas fa-copy"></i>Data Question</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                             <li>
-                                <a href="data-question.html">Category 1</a>
+                                <a th:href="@{/data-question}">Category 1</a>
                             </li>
                             <li>
                                 <a href="#">Category 2</a>
@@ -78,7 +78,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="data-registration.html">
+                        <a th:href="@{/data-registration}">
                             <i class="fas fa-list-alt"></i>Data Registration</a>
                     </li>
                     <li class="has-sub">
@@ -86,7 +86,7 @@
                             <i class="fas fa-check-square"></i>Data Candidate</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                             <li>
-                                <a href="data-candidate.html">Category 1</a>
+                                <a th:href="@{/data-candidate}">Category 1</a>
                             </li>
                             <li>
                                 <a href="#">Category 2</a>
@@ -112,20 +112,19 @@
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
-                    <li class="active has-sub">
-                        <a class="js-arrow" href="index.html">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/dashboard' ? 'active':''}">
+                        <a class="js-arrow" th:href="@{/dashboard}">
                             <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="data-user.html">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-user' ? 'active':''}">
+                        <a th:href="@{data-user}">
                             <i class="fas fa-users"></i>Data User</a>
                     </li>
-                    <li class="has-sub">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-question' ? 'active has-sub':'has-sub'}">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-copy"></i>Data Question <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="data-question.html">Category 1</a>
+                                <a th:href="@{data-question}">Category 1</a>
                             </li>
                             <li>
                                 <a href="#">Category 2</a>
@@ -135,16 +134,16 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="data-registration.html">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-registration' ? 'active':''}">
+                        <a th:href="@{data-registration}">
                             <i class="far fa-list-alt"></i>Data Registration</a>
                     </li>
-                    <li class="has-sub">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-candidate' ? 'active has-sub':'has-sub'}">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-check-square"></i>Data Candidate <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="data-candidate.html">Category 1</a>
+                                <a th:href="@{data-candidate}">Category 1</a>
                             </li>
                             <li>
                                 <a href="#">Category 2</a>
@@ -177,40 +176,22 @@
                         <div class="noti-wrap">
                             <div class="noti__item js-item-menu">
                                 <i class="zmdi zmdi-notifications"></i>
-                                <span class="quantity">3</span>
+                                <span class="quantity" th:text='${notifCount}'></span>
                                 <div class="notifi-dropdown js-dropdown">
                                     <div class="notifi__title">
-                                        <p>You have 3 Notifications</p>
+                                        <p>You have <b th:text='${notifCount}'></b> Notifications</p>
                                     </div>
-                                    <div class="notifi__item">
+                                    <div th:each = "as : ${notif}" class="notifi__item">
                                         <div class="bg-c1 img-cir img-40">
                                             <i class="zmdi zmdi-email-open"></i>
                                         </div>
                                         <div class="content">
-                                            <p>nama user registered a new exam</p>
-                                            <span class="date">category exam</span>
-                                        </div>
-                                    </div>
-                                    <div class="notifi__item">
-                                        <div class="bg-c2 img-cir img-40">
-                                            <i class="zmdi zmdi-email-open"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>nama user registered a new exam</p>
-                                            <span class="date">category exam</span>
-                                        </div>
-                                    </div>
-                                    <div class="notifi__item">
-                                        <div class="bg-c3 img-cir img-40">
-                                            <i class="zmdi zmdi-email-open"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>nama user registered a new exam</p>
-                                            <span class="date">category exam</span>
+                                            <p th:text='${as.user.name}'></p>
+                                            <p> registered a new exam <span th:text='${as.module.name}'></span></p>
                                         </div>
                                     </div>
                                     <div class="notifi__footer">
-                                        <a href="#">All notifications</a>
+                                        <a th:href="@{/data-registration}">All notifications</a>
                                     </div>
                                 </div>
                             </div>

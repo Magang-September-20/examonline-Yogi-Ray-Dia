@@ -5,7 +5,6 @@
  */
 package com.MII.FinalProject.controllers;
 
-import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.LoginInput;
 import com.MII.FinalProject.entities.RegisterInput;
 import com.MII.FinalProject.entities.rest.LoginOutput;
@@ -27,7 +26,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +42,7 @@ public class MainController {
     
     @Autowired
     RegisterService registerService;
+    
     @Autowired
     UserService userService;
     
@@ -63,7 +62,7 @@ public class MainController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
             if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
-                return "redirect:admin-dashboard";
+                return "redirect:dashboard";
             } else {
                 return "redirect:user-dashboard";
             }
@@ -76,25 +75,13 @@ public class MainController {
     public String register() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            return "redirect:/dashboard";
-        } else {
-            return "register";
-        }
-    }
-
-    @GetMapping("/dashboard")//url or path
-    public String dashboard(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
             if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
-                model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
-                model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
-                return "admin-dashboard";
+                return "redirect:dashboard";
             } else {
-                return "redirect:/user-dashboard";
+                return "redirect:user-dashboard";
             }
         } else {
-            return "login";
+            return "register";
         }
     }
 

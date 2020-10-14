@@ -1,4 +1,4 @@
-<div th:fragment="head">
+<div th:fragment="head(title)">
     <head>
         <!-- Required meta tags-->
         <meta charset="UTF-8">
@@ -8,7 +8,7 @@
         <meta name="keywords" content="au theme template">
 
         <!-- Title Page-->
-        <title>Dashboard</title>
+        <title th:text="${title}"></title>
 
         <!-- Fontfaces CSS-->
         <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -85,16 +85,16 @@
     <aside class="menu-sidebar3 js-spe-sidebar">
         <nav class="navbar-sidebar2 navbar-sidebar3">
             <ul class="list-unstyled navbar__list">
-                <li class="active has-sub">
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/user-dashboard' ? 'active has-sub':'has-sub'}">
                     <a href="/user-dashboard">
                         <i class="fas fa-tachometer-alt"></i>Dashboard
                     </a>
                 </li>
-                <li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/exam' ? 'active has-sub':'has-sub'}">
                     <a href="/exam">
                         <i class="fas fa-book"></i>Exam</a>
                 </li>
-                <li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/history-exam' ? 'active has-sub':'has-sub'}">
                     <a href="/history-exam">
                         <i class="fas fa-table"></i>History Exam</a>
                     <span class="inbox-num">3</span>

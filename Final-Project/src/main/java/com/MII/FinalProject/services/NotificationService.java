@@ -6,7 +6,6 @@
 package com.MII.FinalProject.services;
 
 
-import static com.MII.FinalProject.entities.Code_.code;
 import com.MII.FinalProject.entities.Exam;
 import java.nio.charset.StandardCharsets;
 import javax.mail.MessagingException;
