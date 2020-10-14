@@ -5,7 +5,6 @@
  */
 package com.MII.FinalProject.services;
 
-import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.UserAnswer;
 import com.MII.FinalProject.repositories.UserAnswerRepository;
 import java.util.List;
