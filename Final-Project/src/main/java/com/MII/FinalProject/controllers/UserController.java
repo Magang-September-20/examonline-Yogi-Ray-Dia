@@ -5,14 +5,17 @@
  */
 package com.MII.FinalProject.controllers;
 
+import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.services.ExamService;
 import com.MII.FinalProject.services.UserService;
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -20,39 +23,41 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class UserController {
-    
+
     @Autowired
     ExamService es;
 
-    @Autowired UserService userService;
-    
+    @Autowired
+    UserService userService;
+
     @GetMapping("/user-dashboard")//url or path
     public String userDashboard(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
-                model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
-                model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
-                return "admin-dashboard";
-            } else {
-                model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
-                model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
-                return "user-dashboard";
-            }
-        } else {
-            return "login";
-        }
+        return checkRole(model, "user-dashboard");
     }
 
     @GetMapping("/history-exam")//url or path
     public String historyExam(Model model) {
         model.addAttribute("exam", es.getAll());
-        return "history-exam";
+        return checkRole(model, "history-exam");
     }
 
     @GetMapping("/exam")//url or path
-    public String exam() {
-        
-        return "exam";
+    public String exam(Model model) {
+        return checkRole(model, "exam");
+    }
+
+    public String checkRole(Model model, String page) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
+            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_USER\"]")) {
+                model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
+                model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
+                return page;
+            } else {
+                return "redirect:/dashboard";
+            }
+        } else {
+            return "login";
+        }
     }
 }

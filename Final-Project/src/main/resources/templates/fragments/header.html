@@ -1,4 +1,4 @@
-<div th:fragment="head">
+<div th:fragment="head(title)">
     <head>
         <!-- Required meta tags-->
         <meta charset="UTF-8">
@@ -8,7 +8,7 @@
         <meta name="keywords" content="au theme template">
 
         <!-- Title Page-->
-        <title>Dashboard</title>
+        <title th:text="${title}"></title>
 
         <!-- Fontfaces CSS-->
         <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -55,11 +55,11 @@
             <div class="container-fluid">
                 <ul class="navbar-mobile__list list-unstyled">
                     <li class="has-sub">
-                        <a class="js-arrow" href="index.html">
+                        <a class="js-arrow" th:href="@{/dashboard}">
                             <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     </li>
                     <li>
-                        <a href="data-user.html">
+                        <a th:href="@{/data-user}">
                             <i class="fas fa-users"></i>Data User</a>
                     </li>
                     <li class="has-sub">
@@ -67,7 +67,7 @@
                             <i class="fas fa-copy"></i>Data Question</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                             <li>
-                                <a href="data-question.html">Category 1</a>
+                                <a th:href="@{/data-question}">Category 1</a>
                             </li>
                             <li>
                                 <a href="#">Category 2</a>
@@ -78,7 +78,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="data-registration.html">
+                        <a th:href="@{/data-registration}">
                             <i class="fas fa-list-alt"></i>Data Registration</a>
                     </li>
                     <li class="has-sub">
@@ -86,7 +86,7 @@
                             <i class="fas fa-check-square"></i>Data Candidate</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                             <li>
-                                <a href="data-candidate.html">Category 1</a>
+                                <a th:href="@{/data-candidate}">Category 1</a>
                             </li>
                             <li>
                                 <a href="#">Category 2</a>
@@ -113,11 +113,11 @@
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li class="active has-sub">
-                        <a class="js-arrow" href="index.html">
+                        <a class="js-arrow" th:href="@{/dashboard}">
                             <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     </li>
                     <li>
-                        <a href="data-user.html">
+                        <a th:href="@{data-user}">
                             <i class="fas fa-users"></i>Data User</a>
                     </li>
                     <li class="has-sub">
@@ -125,7 +125,7 @@
                             <i class="fas fa-copy"></i>Data Question <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="data-question.html">Category 1</a>
+                                <a th:href="@{data-question}">Category 1</a>
                             </li>
                             <li>
                                 <a href="#">Category 2</a>
@@ -136,7 +136,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="data-registration.html">
+                        <a th:href="@{data-registration}">
                             <i class="far fa-list-alt"></i>Data Registration</a>
                     </li>
                     <li class="has-sub">
@@ -144,7 +144,7 @@
                             <i class="fas fa-check-square"></i>Data Candidate <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="data-candidate.html">Category 1</a>
+                                <a th:href="@{data-candidate}">Category 1</a>
                             </li>
                             <li>
                                 <a href="#">Category 2</a>
