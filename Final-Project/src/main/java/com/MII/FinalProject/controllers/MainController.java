@@ -9,11 +9,13 @@ import com.MII.FinalProject.entities.LoginInput;
 import com.MII.FinalProject.entities.RegisterInput;
 import com.MII.FinalProject.entities.rest.LoginOutput;
 import com.MII.FinalProject.entities.rest.RegisterOutput;
+import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.services.LoginService;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import com.MII.FinalProject.services.RegisterService;
+import com.MII.FinalProject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +40,8 @@ public class MainController {
     LoginService loginService;
     @Autowired
     RegisterService registerService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping("")//url or path
     public String index() {
@@ -48,7 +52,11 @@ public class MainController {
     public String login() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            return "redirect:/dashboard";
+            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
+                return "redirect:admin-dashboard";
+            } else {
+                return "redirect:user-dashboard";
+            }
         } else {
             return "login";
         }
@@ -64,21 +72,31 @@ public class MainController {
         }
     }
 
-    
     @GetMapping("/dashboard")//url or path
     public String dashboard(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            return "admin-dashboard";
+            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
+                model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
+                model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
+                return "admin-dashboard";
+            } else {
+                return "redirect:/user-dashboard";
+            }
         } else {
             return "login";
         }
     }
-    
+
     @PostMapping("/registration")
     public String registration(RegisterInput input) {
         RegisterOutput output = registerService.Register(input);
         if (output.getStatus().equalsIgnoreCase("success")) {
+            UserLocal user = new UserLocal();
+            user.setId(userService.getId(input.getEmail()));
+            user.setName(input.getName());
+            user.setEmail(input.getEmail());
+            userService.save(user);
             return "redirect:/login";
         } else {
             return "redirect:/register";
@@ -97,7 +115,6 @@ public class MainController {
             return "redirect:/login";
         }
     }
-
 
     private static Collection<? extends GrantedAuthority> getAuthorities(List<String> roles) {
         final List<SimpleGrantedAuthority> authorities = new LinkedList<>();

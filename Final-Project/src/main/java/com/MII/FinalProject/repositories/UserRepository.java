@@ -5,7 +5,7 @@
  */
 package com.MII.FinalProject.repositories;
 
-import com.MII.FinalProject.entities.User;
+import com.MII.FinalProject.entities.UserLocal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author yosef
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
-    
+public interface UserRepository extends JpaRepository<UserLocal, Integer> {
+
 }

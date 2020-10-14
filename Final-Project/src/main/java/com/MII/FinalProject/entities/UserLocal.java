@@ -6,33 +6,26 @@
 package com.MII.FinalProject.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author nathanray
+ * @author NAME
  */
 @Entity
 @Table(name = "user")
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
-public class User implements Serializable {
+    @NamedQuery(name = "UserLocal.findAll", query = "SELECT u FROM UserLocal u")})
+public class UserLocal implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -45,19 +38,15 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_active")
     private boolean isActive;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Exam> examList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Code> codeList;
 
-    public User() {
+    public UserLocal() {
     }
 
-    public User(Integer id) {
+    public UserLocal(Integer id) {
         this.id = id;
     }
 
-    public User(Integer id, String name, String email, boolean isActive) {
+    public UserLocal(Integer id, String name, String email, boolean isActive) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -96,22 +85,6 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    public List<Exam> getExamList() {
-        return examList;
-    }
-
-    public void setExamList(List<Exam> examList) {
-        this.examList = examList;
-    }
-
-    public List<Code> getCodeList() {
-        return codeList;
-    }
-
-    public void setCodeList(List<Code> codeList) {
-        this.codeList = codeList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -122,10 +95,10 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof UserLocal)) {
             return false;
         }
-        User other = (User) object;
+        UserLocal other = (UserLocal) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -134,7 +107,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "" + id;
+        return "com.MII.FinalProject.entities.UserLocal[ id=" + id + " ]";
     }
     
 }

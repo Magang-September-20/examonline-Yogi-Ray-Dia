@@ -60,7 +60,7 @@ public class Exam implements Serializable {
     private Date date;
     @JoinColumn(name = "user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private User user;
+    private UserLocal user;
     @JoinColumn(name = "code", referencedColumnName = "code")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Code code;
@@ -136,11 +136,11 @@ public class Exam implements Serializable {
         this.date = date;
     }
 
-    public User getUser() {
+    public UserLocal getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserLocal user) {
         this.user = user;
     }
 
