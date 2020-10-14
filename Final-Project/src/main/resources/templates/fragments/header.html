@@ -112,15 +112,14 @@
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
-                    <li class="active has-sub">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/dashboard' ? 'active':''}">
                         <a class="js-arrow" th:href="@{/dashboard}">
                             <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                    </li>
-                    <li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-user' ? 'active':''}">
                         <a th:href="@{data-user}">
                             <i class="fas fa-users"></i>Data User</a>
                     </li>
-                    <li class="has-sub">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-question' ? 'active has-sub':'has-sub'}">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-copy"></i>Data Question <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -135,11 +134,11 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-registration' ? 'active':''}">
                         <a th:href="@{data-registration}">
                             <i class="far fa-list-alt"></i>Data Registration</a>
                     </li>
-                    <li class="has-sub">
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-candidate' ? 'active has-sub':'has-sub'}">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-check-square"></i>Data Candidate <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
