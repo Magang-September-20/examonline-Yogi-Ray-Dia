@@ -7,6 +7,7 @@ package com.MII.FinalProject.repositories;
 
 import com.MII.FinalProject.entities.UserLocal;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,5 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserLocal, Integer> {
-
+    
+    @Query(value = "SELECT COUNT(*) FROM user", nativeQuery = true)
+    Integer countUser();
 }

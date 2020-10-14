@@ -6,17 +6,13 @@
 package com.MII.FinalProject.controllers;
 
 import com.MII.FinalProject.entities.Exam;
+import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
 import com.MII.FinalProject.services.QuestionService;
 import com.MII.FinalProject.services.UserService;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +34,19 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    CodeService codeService;
 
     @GetMapping("/dashboard")//url or path
     public String dashboard(Model model) {
+        model.addAttribute("user", userService.countUser());
+        model.addAttribute("question", questionService.countQuestion());
+        model.addAttribute("registration", codeService.countRegistration());
+        model.addAttribute("candidate", examService.countCandidate());
+        model.addAttribute("recentRegister", codeService.recentRegister());
+        model.addAttribute("notif", codeService.notif());
+        model.addAttribute("notifCount", codeService.notifCount());
         return checkRole(model, "admin-dashboard");
     }
 
@@ -51,12 +57,16 @@ public class AdminController {
 
     @GetMapping("/data-question")
     public String question(Model model) {
+        model.addAttribute("notif", codeService.notif());
+        model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("questions", questionService.getAll());
         return checkRole(model, "data-question");
     }
 
     @GetMapping("/data-registration")
     public String exam(Model model) {
+        model.addAttribute("notif", codeService.notif());
+        model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("exam", new Exam());
         model.addAttribute("examm", examService.getAll());
         return checkRole(model, "data-registration");
@@ -64,6 +74,8 @@ public class AdminController {
 
     @GetMapping("/data-candidate")
     public String candidate(Model model) {
+        model.addAttribute("notif", codeService.notif());
+        model.addAttribute("notifCount", codeService.notifCount());
         return checkRole(model, "data-candidate");
     }
 

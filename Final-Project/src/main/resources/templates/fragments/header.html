@@ -176,40 +176,22 @@
                         <div class="noti-wrap">
                             <div class="noti__item js-item-menu">
                                 <i class="zmdi zmdi-notifications"></i>
-                                <span class="quantity">3</span>
+                                <span class="quantity" th:text='${notifCount}'></span>
                                 <div class="notifi-dropdown js-dropdown">
                                     <div class="notifi__title">
-                                        <p>You have 3 Notifications</p>
+                                        <p>You have <b th:text='${notifCount}'></b> Notifications</p>
                                     </div>
-                                    <div class="notifi__item">
+                                    <div th:each = "as : ${notif}" class="notifi__item">
                                         <div class="bg-c1 img-cir img-40">
                                             <i class="zmdi zmdi-email-open"></i>
                                         </div>
                                         <div class="content">
-                                            <p>nama user registered a new exam</p>
-                                            <span class="date">category exam</span>
-                                        </div>
-                                    </div>
-                                    <div class="notifi__item">
-                                        <div class="bg-c2 img-cir img-40">
-                                            <i class="zmdi zmdi-email-open"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>nama user registered a new exam</p>
-                                            <span class="date">category exam</span>
-                                        </div>
-                                    </div>
-                                    <div class="notifi__item">
-                                        <div class="bg-c3 img-cir img-40">
-                                            <i class="zmdi zmdi-email-open"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>nama user registered a new exam</p>
-                                            <span class="date">category exam</span>
+                                            <p th:text='${as.user.name}'></p>
+                                            <p> registered a new exam <span th:text='${as.module.name}'></span></p>
                                         </div>
                                     </div>
                                     <div class="notifi__footer">
-                                        <a href="#">All notifications</a>
+                                        <a th:href="@{/data-registration}">All notifications</a>
                                     </div>
                                 </div>
                             </div>

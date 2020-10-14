@@ -29,7 +29,7 @@
                                                     <i class="zmdi zmdi-account-o"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>10368</h2>
+                                                    <h2 th:text='${user}'></h2>
                                                     <span>Total Accounts</span>
                                                 </div>
                                             </div>
@@ -47,7 +47,7 @@
                                                     <i class="zmdi zmdi-book"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>388,688</h2>
+                                                    <h2 th:text='${question}'></h2>
                                                     <span>Total Questions</span>
                                                 </div>
                                             </div>
@@ -65,8 +65,8 @@
                                                     <i class="zmdi zmdi-chart"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>1,086</h2>
-                                                    <span>Total Registrations</span>
+                                                    <h2 th:text='${registration}'></h2>
+                                                    <span>Total Regis</span>
                                                 </div>
                                             </div>
                                             <div class="overview-chart">
@@ -83,7 +83,7 @@
                                                     <i class="zmdi zmdi-check-circle"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>1,060,386</h2>
+                                                    <h2 th:text='${candidate}'></h2>
                                                     <span>Total Candidates</span>
                                                 </div>
                                             </div>
@@ -107,60 +107,12 @@
                                                 <p>User Data</p>
                                             </div>
                                             <div class="au-task-list js-scrollbar3">
-                                                <div class="au-task__item au-task__item--danger">
+                                                <div th:each = "as : ${recentRegister}" class="au-task__item au-task__item--danger">
                                                     <div class="au-task__item-inner">
                                                         <h5 class="task">
-                                                            <a href="#">Nama User 1</a>
+                                                            <a th:text='${as.user.name}'></a>
                                                         </h5>
-                                                        <span class="time">exam category</span>
-                                                    </div>
-                                                </div>
-                                                <div class="au-task__item au-task__item--warning">
-                                                    <div class="au-task__item-inner">
-                                                        <h5 class="task">
-                                                            <a href="#">Nama User 2</a>
-                                                        </h5>
-                                                        <span class="time">exam category</span>
-                                                    </div>
-                                                </div>
-                                                <div class="au-task__item au-task__item--primary">
-                                                    <div class="au-task__item-inner">
-                                                        <h5 class="task">
-                                                            <a href="#">Nama User 3</a>
-                                                        </h5>
-                                                        <span class="time">exam category</span>
-                                                    </div>
-                                                </div>
-                                                <div class="au-task__item au-task__item--success">
-                                                    <div class="au-task__item-inner">
-                                                        <h5 class="task">
-                                                            <a href="#">Nama User 4</a>
-                                                        </h5>
-                                                        <span class="time">exam category</span>
-                                                    </div>
-                                                </div>
-                                                <div class="au-task__item au-task__item--danger js-load-item">
-                                                    <div class="au-task__item-inner">
-                                                        <h5 class="task">
-                                                            <a href="#">Nama User 5</a>
-                                                        </h5>
-                                                        <span class="time">exam category</span>
-                                                    </div>
-                                                </div>
-                                                <div class="au-task__item au-task__item--warning js-load-item">
-                                                    <div class="au-task__item-inner">
-                                                        <h5 class="task">
-                                                            <a href="#">Nama User 6</a>
-                                                        </h5>
-                                                        <span class="time">exam category</span>
-                                                    </div>
-                                                </div>
-                                                <div class="au-task__item au-task__item--success">
-                                                    <div class="au-task__item-inner">
-                                                        <h5 class="task">
-                                                            <a href="#">Nama User 7</a>
-                                                        </h5>
-                                                        <span class="time">exam category</span>
+                                                        <span class="time" th:text='${as.module.name}'></span>
                                                     </div>
                                                 </div>
                                             </div>

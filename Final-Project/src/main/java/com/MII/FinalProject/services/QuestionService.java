@@ -19,10 +19,13 @@ import org.springframework.stereotype.Service;
 public class QuestionService {
     
     @Autowired
-    QuestionRepository question;
+    QuestionRepository repository;
     
     public List<Question> getAll() {
-        return question.findAll();
+        return repository.findAll();
     }
     
+    public Integer countQuestion() {
+        return repository.countQuestion();
+    }
 }
