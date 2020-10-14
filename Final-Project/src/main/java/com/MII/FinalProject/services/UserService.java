@@ -5,8 +5,9 @@
  */
 package com.MII.FinalProject.services;
 
-import com.MII.FinalProject.entities.RegisterInput;
-import com.MII.FinalProject.entities.rest.RegisterOutput;
+import com.MII.FinalProject.entities.UserLocal;
+import com.MII.FinalProject.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,13 +17,25 @@ import org.springframework.web.client.RestTemplate;
  * @author NAME
  */
 @Service
-public class RegisterService {
+public class UserService {
+
+    @Autowired
+    UserRepository repository;
+
     @Value("${data.api.url}")
     private String url;
-    
+
     private static final RestTemplate RT = new RestTemplate();
+
+    public int getId(String email) {
+        return RT.getForObject(url + "user/getId/" + email, Integer.class);
+    }
+
+    public UserLocal save(UserLocal user) {
+        return repository.save(user);
+    }
     
-    public RegisterOutput Register(RegisterInput register){
-        return RT.postForObject(url+"register", register, RegisterOutput.class);
+    public UserLocal getById(int id) {
+        return repository.findById(id).get();
     }
 }

@@ -2,12 +2,12 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.MII_Final-Project_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.MII.FinalProject.entities.UserAnswer</class>
-    <class>com.MII.FinalProject.entities.Exam</class>
-    <class>com.MII.FinalProject.entities.Code</class>
-    <class>com.MII.FinalProject.entities.Question</class>
     <class>com.MII.FinalProject.entities.Module</class>
-    <class>com.MII.FinalProject.entities.User</class>
+    <class>com.MII.FinalProject.entities.UserAnswer</class>
+    <class>com.MII.FinalProject.entities.Code</class>
+    <class>com.MII.FinalProject.entities.Exam</class>
+    <class>com.MII.FinalProject.entities.Question</class>
+    <class>com.MII.FinalProject.entities.UserLocal</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_examonline?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

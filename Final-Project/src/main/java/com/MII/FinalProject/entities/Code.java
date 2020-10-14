@@ -64,7 +64,7 @@ public class Code implements Serializable {
     private Exam exam;
     @JoinColumn(name = "user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private User user;
+    private UserLocal user;
     @JoinColumn(name = "module", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Module module;
@@ -132,11 +132,11 @@ public class Code implements Serializable {
         this.exam = exam;
     }
 
-    public User getUser() {
+    public UserLocal getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserLocal user) {
         this.user = user;
     }
 
