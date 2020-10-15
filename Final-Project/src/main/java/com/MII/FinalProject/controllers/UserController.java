@@ -61,11 +61,17 @@ public class UserController {
     public String exam(Model model) {
         return checkRole(model, "exam");
     }
+    
+    @GetMapping("/start-exam")//url or path
+    public String startExam(Model model) {
+        return checkRole(model, "start-exam");
+    }
 
     public String checkRole(Model model, String page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
             if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_USER\"]")) {
+                System.out.println(auth.getName());
                 model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
                 model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
                 return page;
