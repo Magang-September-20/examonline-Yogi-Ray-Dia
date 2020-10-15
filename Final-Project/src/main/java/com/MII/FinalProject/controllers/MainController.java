@@ -52,7 +52,7 @@ public class MainController {
     @Autowired
     QuestionService questionService;
 
-    @RequestMapping("")//url or path
+    @GetMapping("")//url or path
     public String index() {
         return "index";//index.html
     }
