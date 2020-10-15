@@ -69,6 +69,10 @@ public class ExamService {
         return er.getAllCondidate(id);
     }
     
+    public void registerExam(String code, String user) {
+        er.registerExam(code, user);
+    }
+    
     public void updateUseCode(String code){
        er.updateUseCode(code);
     }
