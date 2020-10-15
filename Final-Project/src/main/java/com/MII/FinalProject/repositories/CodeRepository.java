@@ -36,4 +36,12 @@ public interface CodeRepository extends JpaRepository<Code, String>{
     @Transactional
     @Query(value = "UPDATE code SET is_sent=1, expired_date=DATE_ADD(NOW(), INTERVAL 1 DAY) WHERE code=?1", nativeQuery = true)
     void sendMail(String code);
+    
+    @Query(value = "SELECT COUNT(*) FROM code WHERE code=?1 AND user=?2 AND is_sent=1 AND is_used=0", nativeQuery = true)
+    Integer verifyCode(String code, int user);
+    
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE code SET is_used=1 WHERE code=?1", nativeQuery = true)
+    void updateUseCode(String code);
 }

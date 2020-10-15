@@ -69,4 +69,8 @@ public class ExamService {
         return er.getAllCondidate(id);
     }
     
+    public void updateUseCode(String code){
+       er.updateUseCode(code);
+    }
+    
 }

@@ -32,7 +32,7 @@
                             <div class="welcome2-inner m-t-60">
                                 <div class="welcome2-greeting">
                                     <h1 class="title-6">Hi
-                                        <span>John</span>, Welcome back</h1>
+                                         <span th:text='${name}'></span>, Welcome back</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                                 </div>
                                 <form class="form-header form-header2" action="" method="post">
@@ -72,13 +72,15 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title">Start Exam</h5>
                                                     <p class="card-text m-b-30">Input your to enter the exam</p>
-                                                    <div class="mx-sm-3 p-b-10">
-                                                        <div class="form-group">
-                                                            <label for="code">Code</label>
-                                                            <input type="text" class="form-control" id="code" placeholder="enter code">
+                                                    <form th:object="${code}" method="POST" th:action="@{/verifyExam}">
+                                                        <div class="mx-sm-3 p-b-10">
+                                                            <div class="form-group">
+                                                                <label for="code">Code</label>
+                                                                <input type="text" th:field="*{code}" class="form-control" id="code" placeholder="enter code">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <a href="#" class="btn btn-primary">Verify</a>
+                                                        <button type="submit" class="btn btn-primary">Verify</button>
+                                                    </form>
                                                 </div>
                                                 <div class="card-footer text-muted">
                                                 </div>
