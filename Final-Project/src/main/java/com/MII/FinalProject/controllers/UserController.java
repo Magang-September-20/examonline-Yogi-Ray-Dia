@@ -6,12 +6,13 @@
 package com.MII.FinalProject.controllers;
 
 import com.MII.FinalProject.entities.Code;
-import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.Module;
+import com.MII.FinalProject.entities.Question;
 import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
 import com.MII.FinalProject.services.ModuleService;
+import com.MII.FinalProject.services.QuestionService;
 import com.MII.FinalProject.services.UserService;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -43,6 +45,9 @@ public class UserController {
 
     @Autowired
     CodeService codeService;
+    
+    @Autowired
+    QuestionService questionService;
 
     @GetMapping("/user-dashboard")//url or path
     public String userDashboard(Model model) {
@@ -71,14 +76,15 @@ public class UserController {
         if (codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())) == 1) {
             codeService.updateUseCode(code.getCode());
             examService.updateUseCode(code.getCode());
-            return checkRole(model, "start-exam");
+            return checkRole(model, "redirect:/start-exam/"+code);
         } else {
             return checkRole(model, "exam");
         }
     }
 
-    @GetMapping("/start-exam")//url or path
-    public String startExam(Model model) {
+    @GetMapping("/start-exam/{code}")//url or path
+    public String startExam(@PathVariable("code") String code, Model model) {
+        model.addAttribute("questions", questionService.getQuestionsWhere(new String(code).substring(0,3)));
         return checkRole(model, "start-exam");
     }
 
