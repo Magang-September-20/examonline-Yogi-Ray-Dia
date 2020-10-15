@@ -81,17 +81,18 @@ public class AdminController {
         model.addAttribute("ques", new Question());
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
-        model.addAttribute("questions", questionService.getAll());
         model.addAttribute("modules", moduleService.getAll());
+        model.addAttribute("questionss", questionService.getAll());
+        model.addAttribute("questions", questionService.getQuestionWhere(id));
         model.addAttribute("selectModule", moduleService.getById(id).getName());
         return checkRole(model, "data-question");
     }
 
-    @GetMapping("getIdQuestion/{id}")
-    public String getByIdQuestion(@PathVariable("id") Integer id) {
-        Question question = questionService.getById(id);
-        return "data-question";
-    }
+//    @GetMapping("getIdQuestion/{id}")
+//    public String getByIdQuestion(@PathVariable("id") Integer id) {
+//        Question question = questionService.getById(id);
+//        return "data-question";
+//    }
 
     
     @GetMapping("/data-registration")
@@ -148,12 +149,12 @@ public class AdminController {
         return questionService.save(question);
     }
 
-//    @ResponseBody
-//    @GetMapping("getById")
-//    public Question getByIdQuestion(Integer id) {
-//        Question result = questionService.getById(id);
-//        return result;
-//    }
+    @ResponseBody
+    @GetMapping("getIdQuestion/{id}")
+    public Question getByIdQuestion(@PathVariable("id") Integer id) {
+        Question result = questionService.getById(id);
+        return result;
+    }
 
     @ResponseBody
     @GetMapping("deleteById")

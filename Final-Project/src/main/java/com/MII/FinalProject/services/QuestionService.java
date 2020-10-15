@@ -25,6 +25,10 @@ public class QuestionService {
         return repository.findAll();
     }
     
+    public List<Question> getQuestionWhere(String id){
+        return repository.getQuestionWhere(id);
+    }
+    
     //create/update
     public Question save(Question question) {
         return repository.save(question);
