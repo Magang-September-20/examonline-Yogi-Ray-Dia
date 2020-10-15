@@ -8,9 +8,6 @@ package com.MII.FinalProject.services;
 import com.MII.FinalProject.entities.Question;
 import com.MII.FinalProject.repositories.QuestionRepository;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,5 +47,9 @@ public class QuestionService {
 
     public void saveAll(List<Question> question) {
         repository.saveAll(question);
+    }
+    
+    public List<Question> getQuestionsWhere(String module) {
+        return repository.getQuestionWhere(module);
     }
 }
