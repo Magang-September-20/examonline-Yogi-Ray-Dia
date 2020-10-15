@@ -8,23 +8,27 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="insertForm" th:object="${ques}">
+            <form id="insertForm">
                 <div class="modal-body">
 
                     <label id="labelId">Id :</label>
-                    <input type="text" id="textId" class="form-control" th:field="*{id}">
+                    <input type="text" id="textId" class="form-control">
                     <label id="labelQuestion">Question :</label>
-                    <input type="text" id="textQuestion" class="form-control" th:field="*{question}">
+                    <input type="text" id="textQuestion" class="form-control">
                     <label id="labelA">A :</label>
-                    <input type="text" id="textA" class="form-control" th:field="*{a}">
+                    <input type="text" id="textA" class="form-control">
                     <label id="labelB">B :</label>
-                    <input type="text" id="textB" class="form-control" th:field="*{b}">
+                    <input type="text" id="textB" class="form-control">
                     <label id="labelC">C :</label>
-                    <input type="text" id="textC" class="form-control" th:field="*{c}">
+                    <input type="text" id="textC" class="form-control">
                     <label id="labelD">D :</label>
-                    <input type="text" id="textD" class="form-control" th:field="*{d}">
-                    <label id="labelAge">Answer :</label>
-                    <input type="text" id="textAnswer" class="form-control" th:field="*{answer}">
+                    <input type="text" id="textD" class="form-control">
+                    <label id="labelAnswer">Answer :</label>
+                    <input type="text" id="textAnswer" class="form-control">
+                    <label id="labelActive">Is_Active :</label>
+                    <input type="text" id="textActive" class="form-control">
+                    <label id="labelModule">Module :</label>
+                    <input type="text" id="textModule" class="form-control">
 
                 </div>
                 <div class="modal-footer">
