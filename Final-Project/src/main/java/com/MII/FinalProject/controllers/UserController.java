@@ -114,7 +114,8 @@ public class UserController {
         code.setIsUsed(false);
         code.setExpiredDate(dt);
         code.setUser(user);
-
+        codeService.save(code);
+        
         System.out.println(date);
         System.out.println(module.getId() + userId + sb.toString()); //code
         return checkRole(model, "exam");
