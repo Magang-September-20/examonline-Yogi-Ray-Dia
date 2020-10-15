@@ -60,9 +60,23 @@ public class UserController {
 
     @GetMapping("/exam")//url or path
     public String exam(Model model) {
+        model.addAttribute("code", new Code());
         return checkRole(model, "exam");
     }
-    
+
+    @PostMapping("/verifyExam")//url or path
+    public String verifyExam(Model model, @Validated Code code) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())));
+        if (codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())) == 1) {
+            codeService.updateUseCode(code.getCode());
+            examService.updateUseCode(code.getCode());
+            return checkRole(model, "start-exam");
+        } else {
+            return checkRole(model, "exam");
+        }
+    }
+
     @GetMapping("/start-exam")//url or path
     public String startExam(Model model) {
         return checkRole(model, "start-exam");
@@ -100,7 +114,7 @@ public class UserController {
             int character = (int) (Math.random() * AlphaNumericString.length());
             sb.append(AlphaNumericString.charAt(character));
         }
-        
+
         //tomorrow's date
         Date dt = new Date();
         Calendar c = Calendar.getInstance();

@@ -73,4 +73,8 @@ public class ExamService {
         er.registerExam(code, user);
     }
     
+    public void updateUseCode(String code){
+       er.updateUseCode(code);
+    }
+    
 }

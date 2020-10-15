@@ -39,4 +39,12 @@ public class CodeService {
     public Integer notifCount(){
         return repository.notifCount();
     }
+    
+    public Integer verifyCode(String code, int user){
+        return repository.verifyCode(code, user);
+    }
+    
+    public void updateUseCode(String code){
+       repository.updateUseCode(code);
+    }
 }

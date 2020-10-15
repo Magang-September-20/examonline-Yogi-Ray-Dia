@@ -81,8 +81,8 @@ public class AdminController {
         model.addAttribute("ques", new Question());
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
-        model.addAttribute("questions", questionService.getAll());
         model.addAttribute("modules", moduleService.getAll());
+        model.addAttribute("questions", questionService.getQuestionWhere(id));
         model.addAttribute("selectModule", moduleService.getById(id).getName());
         return checkRole(model, "data-question");
     }

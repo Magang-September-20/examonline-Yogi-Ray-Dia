@@ -34,4 +34,9 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     @Transactional
     @Query(value = "INSERT INTO exam (code, date, user) VALUES (?1 , DATE_ADD(NOW(), INTERVAL 0 DAY) , ?2)", nativeQuery = true)
     void registerExam(String code, String user);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE exam SET start=DATE_ADD(NOW(), INTERVAL 0 DAY) WHERE code=?1", nativeQuery = true)
+    void updateUseCode(String code);
 }
