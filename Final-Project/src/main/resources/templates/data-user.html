@@ -36,7 +36,7 @@
                                         <tr th:each="as : ${users}">
                                             <td th:text = "${as.name}"></td>
                                             <td th:text = "${as.email}"></td>
-                                            <td th:text = "${as.isActive}"></td>
+                                            <td th:text = "${as.isActive} ? 'Active' : 'Disable'"></td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-primary"><span class="fas fa-edit"></span></a>
                                                 <a href="#" class="btn btn-sm btn-danger"><span class="fas fa-trash"></span></a>

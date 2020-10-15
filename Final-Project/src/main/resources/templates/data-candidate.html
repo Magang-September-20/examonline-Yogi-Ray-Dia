@@ -34,8 +34,8 @@
                                         <tr th:each='as : ${candidates}'>
                                             <td th:text='${as.user.name}'></td>
                                             <td th:text='${as.user.email}'></td>
-                                            <td th:text='${as.code}'></td>
-                                            <td th:text='${as.hasPassed}'></td>
+                                            <td th:text='${#strings.substring(as.code,0,3)}'></td>
+                                            <td th:text="${as.hasPassed} ? 'Passed' : 'Failed'"></td>
                                         </tr>
                                     </tbody>
                                 </table>
