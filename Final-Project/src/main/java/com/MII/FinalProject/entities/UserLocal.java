@@ -5,6 +5,9 @@
  */
 package com.MII.FinalProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -29,6 +32,7 @@ import javax.persistence.Table;
 public class UserLocal implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @Column(name = "id")
@@ -42,6 +46,7 @@ public class UserLocal implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_active")
     private boolean isActive;
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private List<Exam> examList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)

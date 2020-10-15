@@ -5,6 +5,9 @@
  */
 package com.MII.FinalProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -46,6 +49,7 @@ public class Module implements Serializable {
     @Column(name = "duration")
     private int duration;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "module", fetch = FetchType.LAZY)
+//    @JsonIgnoreProperties
     private List<Code> codeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "module", fetch = FetchType.LAZY)
     private List<Question> questionList;

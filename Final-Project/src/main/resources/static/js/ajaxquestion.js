@@ -1,29 +1,5 @@
 var save_method;
 
-$(document).ready(function () {
-    var questionTable = $('#questionTable').DataTable({
-        "sAjaxSource": "/question/getAll",
-        "sAjaxDataProp": "",
-        "columns": [
-            {"mData": "id"},
-            {"mData": "question"},
-            {"mData": "a"},
-            {"mData": "b"},
-            {"mData": "c"},
-            {"mData": "d"},
-            {"mData": "answer"},
-            {
-                "data": "id",
-                "orderable": false,
-                "render": function (data, type, row) {
-                    return '<button onclick = "update(' + row.id + ')"  class="btn btn-warning" type="button" data-toggle="modal" data-target ="#questionModal" style="color:white;"> Update</button>\
-                       <button onclick = "hapus(' + row.id + ')" class="btn btn-danger" type="button"> Delete </button>'
-                }
-            }
-        ]
-    })
-});
-
 function insert() {
     save_method = 'add';
     document.getElementById('labelId').hidden = true;
@@ -57,14 +33,14 @@ function update(getId) {
 }
 
 function saveQuestion() {
-    var person = new Object();
-    person.id = document.getElementById("textId").value;
-    person.name = document.getElementById("textQuestion").value;
-    person.a = document.getElementById("textA").value;
-    person.b = document.getElementById("textB").value;
-    person.c = document.getElementById("textC").value;
-    person.d = document.getElementById("textD").value;
-    person.answer = document.getElementById("textAnswer").value;
+    var question = new Object();
+    question.id = document.getElementById("textId").value;
+    question.question = document.getElementById("textQuestion").value;
+    question.a = document.getElementById("textA").value;
+    question.b = document.getElementById("textB").value;
+    question.c = document.getElementById("textC").value;
+    question.d = document.getElementById("textD").value;
+    question.answer = document.getElementById("textAnswer").value;
     var Simpan;
 
     if (save_method == 'add') {
@@ -80,7 +56,7 @@ function saveQuestion() {
         data: JSON.stringify(question),
         contentType: "application/json; charset=utf-8",
         success: function () {
-            $('#questionTable').DataTable().ajax.reload();
+            $('#table').DataTable().ajax.reload();
             Swal.fire({
                 icon: 'success',
                 title: 'Data successfull ' + Simpan,
@@ -96,7 +72,7 @@ function saveQuestion() {
 }
 
 function hapus(getId) {
-    var questionTable = $('#questionTable').DataTable
+    var questionTable = $('#table').DataTable
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -111,7 +87,7 @@ function hapus(getId) {
             type: "GET",
             data: {id: getId},
             success: function () {
-                $('#questionTable').DataTable().ajax.reload();
+                $('#table').DataTable().ajax.reload();
                 Swal.fire({
                     icon: 'success',
                     title: 'Data successfull deleted',
@@ -124,4 +100,5 @@ function hapus(getId) {
             }
         });
     })
+    
 }   

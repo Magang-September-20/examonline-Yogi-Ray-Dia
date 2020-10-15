@@ -5,6 +5,9 @@
  */
 package com.MII.FinalProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -46,11 +49,14 @@ public class Code implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_used")
     private boolean isUsed;
+    @JsonBackReference
     @OneToOne(mappedBy = "code", fetch = FetchType.LAZY)
     private Exam exam;
     @JoinColumn(name = "user", referencedColumnName = "id")
+    
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserLocal user;
+
     @JoinColumn(name = "module", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Module module;

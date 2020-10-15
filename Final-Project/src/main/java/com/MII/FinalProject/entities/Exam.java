@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,11 +6,14 @@
  */
 package com.MII.FinalProject.entities;
 
+//import static com.MII.FinalProject.entities.Question_.userAnswerList;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,15 +24,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author NAME
+ * @author nathanray
  */
 @Entity
 @Table(name = "exam")
@@ -42,11 +44,9 @@ public class Exam implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date start;
-    @Basic(optional = false)
     @Column(name = "end")
     @Temporal(TemporalType.TIMESTAMP)
     private Date end;
@@ -54,20 +54,21 @@ public class Exam implements Serializable {
     private Integer score;
     @Column(name = "grade")
     private String grade;
+    @Basic(optional = false)
     @Column(name = "has_passed")
-    private Boolean hasPassed;
+    private boolean hasPassed;
     @Basic(optional = false)
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "user", referencedColumnName = "id")
+    @JsonBackReference
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserLocal user;
+    @JsonManagedReference
     @JoinColumn(name = "code", referencedColumnName = "code")
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Code code;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exam", fetch = FetchType.LAZY)
-    private List<UserAnswer> userAnswerList;
 
     public Exam() {
     }
@@ -76,10 +77,9 @@ public class Exam implements Serializable {
         this.id = id;
     }
 
-    public Exam(Integer id, Date start, Date end, Date date) {
+    public Exam(Integer id, boolean hasPassed, Date date) {
         this.id = id;
-        this.start = start;
-        this.end = end;
+        this.hasPassed = hasPassed;
         this.date = date;
     }
 
@@ -123,11 +123,11 @@ public class Exam implements Serializable {
         this.grade = grade;
     }
 
-    public Boolean getHasPassed() {
+    public boolean getHasPassed() {
         return hasPassed;
     }
 
-    public void setHasPassed(Boolean hasPassed) {
+    public void setHasPassed(boolean hasPassed) {
         this.hasPassed = hasPassed;
     }
 
@@ -155,13 +155,13 @@ public class Exam implements Serializable {
         this.code = code;
     }
 
-    public List<UserAnswer> getUserAnswerList() {
-        return userAnswerList;
-    }
+//    public List<UserAnswer> getUserAnswerList() {
+//        return userAnswerList;
+//    }
 
-    public void setUserAnswerList(List<UserAnswer> userAnswerList) {
-        this.userAnswerList = userAnswerList;
-    }
+//    public void setUserAnswerList(List<UserAnswer> userAnswerList) {
+//        this.userAnswerList = userAnswerList;
+//    }
 
     @Override
     public int hashCode() {
@@ -185,7 +185,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return ""+id;
+        return ""+ id;
     }
     
 }

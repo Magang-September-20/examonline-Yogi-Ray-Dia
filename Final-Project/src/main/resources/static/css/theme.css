@@ -67,6 +67,7 @@ input, textarea {
     border: none;
 }
 
+
 button {
     border: none;
     background: none;
@@ -14648,4 +14649,8 @@ section {
 
 .vue-lists ul, .vue-lists ol {
     padding-left: 30px;
+}
+
+.modal-backdrop {
+  z-index: -1;
 }
