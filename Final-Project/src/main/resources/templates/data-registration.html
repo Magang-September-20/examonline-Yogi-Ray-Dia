@@ -40,7 +40,7 @@
                                             <td th:text = "${as.user.name}"></td>
                                             <td th:text = "${as.date}"></td> 
                                             <td th:text = "${as.code.code}"></td> 
-                                            <td th:text = "${as.code.isSent} ? 'Sent' : 'Pending'"></td> 
+                                            <td th:class = "${as.code.isSent} ? 'text-success' : 'text-primary'" th:text = "${as.code.isSent} ? 'Sent' : 'Pending'"></td> 
                                             <td>
                                                 <a th:text="${as.code.isSent} ? '' : 'Send Code '" th:class="${as.code.isSent} ? '' : 'btn btn-sm btn-success'" th:href="@{sentEmail/{id} (id=${as.id})}"><span class="fas fa-envelope"></span></a>
                                             </td> 

@@ -77,7 +77,7 @@
                                                             <th>End</th>
                                                             <th>Score</th>
                                                             <th>Grade</th>
-                                                            <th>HAS PASSED</th>
+                                                            <th>Status</th>
                                                             <th style="width: 10;">Option</th>
                                                         </tr>
                                                     </thead> 
@@ -90,7 +90,7 @@
                                                             <td th:text = "${history.end}"></td>
                                                             <td th:text = "${history.score}"></td>
                                                             <td th:text = "${history.grade}"></td>
-                                                            <td th:text = "${history.hasPassed}"></td>
+                                                            <td th:class="${history.hasPassed} ? 'text-success' : 'text-danger'" th:text = "${history.hasPassed} ? 'Passed' : 'Failed'"></td>
                                                             <td><a href="#"><span class="fas fa-eye"></span></a></td>
                                                         </tr>
                                                     </tbody>
