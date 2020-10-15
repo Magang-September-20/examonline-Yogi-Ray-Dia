@@ -17,18 +17,12 @@
                                 <div class="col-md-12">
                                     <div class="overview-wrap">
                                         <h2 class="title-1">Category <span th:text="${selectModule}"></span></h2>
-                                        <button type="button" class="au-btn au-btn-icon au-btn--green" data-toggle="modal" data-target="#addModal">
+                                        <button type="button" class="au-btn au-btn-icon au-btn--green" data-toggle="modal" data-target="#questionModal" onclick="insert();">
                                             <i class="zmdi zmdi-plus"></i>Add</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="m-t-25">
-
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#questionModal" onclick="insert();"> 
-                                    Insert Data
-                                </button>
-                                
                                 <table class="table" id="questionTable">
                                     <thead>
                                         <tr>    
@@ -44,19 +38,19 @@
                                     </thead>
                                     <tbody>
                                     <tbody>
-                                        <!--                                        <tr th:each="as : ${questionss}">
-                                                                                    <td th:text = "${as.id}"></td> 
-                                                                                    <td th:text = "${as.question}"></td> 
-                                                                                    <td th:text = "${as.a}"></td> 
-                                                                                    <td th:text = "${as.b}"></td> 
-                                                                                    <td th:text = "${as.c}"></td> 
-                                                                                    <td th:text = "${as.d}"></td> 
-                                                                                    <td th:text = "${as.answer}"></td> 
-                                                                                    <td>
-                                                                                        <a th:href="@{getIdQuestion/{id} (id=${as.id})}" class="btn btn-sm btn-success">Send Code <span class="fas fa-envelope"></span></a>
-                                                                                    </td> 
-                                        
-                                                                                </tr> -->
+                                        <tr th:each="as : ${questionss}">
+                                            <td th:text = "${as.id}"></td> 
+                                            <td th:text = "${as.question}"></td> 
+                                            <td th:text = "${as.a}"></td> 
+                                            <td th:text = "${as.b}"></td> 
+                                            <td th:text = "${as.c}"></td> 
+                                            <td th:text = "${as.d}"></td> 
+                                            <td th:text = "${as.answer}"></td> 
+                                            <td>
+                                                <a th:href="@{getIdQuestion/{id} (id=${as.id})}" class="btn btn-sm btn-success">Send Code <span class="fas fa-envelope"></span></a>
+                                            </td> 
+
+                                        </tr> 
                                     </tbody>
                                 </table>
                             </div>

@@ -85,7 +85,6 @@ public class AdminController {
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("questions", questionService.getAll());
         model.addAttribute("modules", moduleService.getAll());
-        model.addAttribute("questionss", questionService.getAll());
         model.addAttribute("selectModule", moduleService.getById(id).getName());
         return checkRole(model, "data-question");
     }
@@ -151,12 +150,12 @@ public class AdminController {
         return questionService.save(question);
     }
 
-    @ResponseBody
-    @GetMapping("getById")
-    public Question getByIdQuestion(Integer id) {
-        Question result = questionService.getById(id);
-        return result;
-    }
+//    @ResponseBody
+//    @GetMapping("getById")
+//    public Question getByIdQuestion(Integer id) {
+//        Question result = questionService.getById(id);
+//        return result;
+//    }
 
     @ResponseBody
     @GetMapping("deleteById")
