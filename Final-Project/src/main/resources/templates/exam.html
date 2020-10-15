@@ -33,7 +33,7 @@
                                 <div class="welcome2-greeting">
                                     <h1 class="title-6">Hi
                                          <span th:text='${name}'></span>, Welcome back</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    <p>Lets Start your exam</p>
                                 </div>
                                 <form class="form-header form-header2" action="" method="post">
                                     <input class="au-input au-input--w435" type="text" name="search" placeholder="Search for datas &amp; reports...">
@@ -72,7 +72,7 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title">Start Exam</h5>
                                                     <p class="card-text m-b-30">Input your to enter the exam</p>
-                                                    <form th:object="${code}" method="POST" th:action="@{/verifyExam}">
+                                                    <form th:object="${codes}" method="POST" th:action="@{/verifyExam}">
                                                         <div class="mx-sm-3 p-b-10">
                                                             <div class="form-group">
                                                                 <label for="code">Code</label>

@@ -60,7 +60,7 @@ public class UserController {
 
     @GetMapping("/exam")//url or path
     public String exam(Model model) {
-        model.addAttribute("code", new Code());
+        model.addAttribute("codes", new Code());
         return checkRole(model, "exam");
     }
 
