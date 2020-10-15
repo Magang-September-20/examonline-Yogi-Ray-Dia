@@ -72,10 +72,13 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title">Register Exam</h5>
                                                     <p class="card-text m-b-30">Select category below</p>
-                                                        <select class="form-control m-b-30 p-30" id="exampleFormControlSelect1">
+                                                    <form th:object="${module}" method="POST" th:action="@{/exam-registeration}">
+                                                        <select class="form-control m-b-30 p-30" id="exampleFormControlSelect1" th:field="*{id}">
                                                             <option th:each = "as : ${modules}" th:value='${as.id}' th:text='${as.name}'></option>
                                                         </select>
-                                                    <a href="#" class="btn btn-primary">Register</a>
+                                                    
+                                                        <button type="submit" class="btn btn-primary">Register</button>
+                                                    </form>
                                                 </div>
                                                 <div class="card-footer text-muted">
                                                 </div>
