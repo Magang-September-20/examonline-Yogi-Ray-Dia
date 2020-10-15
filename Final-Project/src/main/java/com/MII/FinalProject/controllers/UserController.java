@@ -72,13 +72,12 @@ public class UserController {
     @PostMapping("/verifyExam")//url or path
     public String verifyExam(Model model, @Validated Code code) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())));
         if (codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())) == 1) {
             codeService.updateUseCode(code.getCode());
             examService.updateUseCode(code.getCode());
             return checkRole(model, "redirect:/start-exam/"+code);
         } else {
-            return checkRole(model, "exam");
+            return checkRole(model, "redirect:/exam");
         }
     }
 
@@ -144,6 +143,6 @@ public class UserController {
         
         examService.registerExam(module.getId() + userId + sb.toString(), auth.getName());
         
-        return checkRole(model, "exam");
+        return checkRole(model, "redirect:/exam");
     }
 }
