@@ -11,25 +11,25 @@
         <title th:text="${title}"></title>
 
         <!-- Fontfaces CSS-->
-        <link href="css/font-face.css" rel="stylesheet" media="all">
-        <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-        <link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-        <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+        <link href="../css/font-face.css" rel="stylesheet" media="all">
+        <link href="../vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+        <link href="../vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+        <link href="../vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
         <!-- Bootstrap CSS-->
-        <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+        <link href="../vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
 
         <!-- Vendor CSS-->
-        <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-        <link href="vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
-        <link href="vendor/wow/animate.css" rel="stylesheet" media="all">
-        <link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
-        <link href="vendor/slick/slick.css" rel="stylesheet" media="all">
-        <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-        <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+        <link href="../vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+        <link href="../vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+        <link href="../vendor/wow/animate.css" rel="stylesheet" media="all">
+        <link href="../vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+        <link href="../vendor/slick/slick.css" rel="stylesheet" media="all">
+        <link href="../vendor/select2/select2.min.css" rel="stylesheet" media="all">
+        <link href="../vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
         <!-- Main CSS-->
-        <link href="css/theme.css" rel="stylesheet" media="all">
+        <link href="../css/theme.css" rel="stylesheet" media="all">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" media="all">
         <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="all">
 
@@ -43,7 +43,7 @@
             <div class="container-fluid">
                 <div class="header-mobile-inner">
                     <a class="logo" href="index.html">
-                        <img src="images/mii_land.png" height="179" width="250" />
+                        <img src="../images/mii_land.png" height="179" width="250" />
                     </a>
                     <button class="hamburger hamburger--slider" type="button">
                         <span class="hamburger-box">
@@ -57,11 +57,11 @@
             <div class="container-fluid">
                 <ul class="navbar-mobile__list list-unstyled">
                     <li class="has-sub">
-                        <a class="js-arrow" th:href="@{/dashboard}">
+                        <a class="js-arrow" th:href="@{../dashboard}">
                             <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     </li>
                     <li>
-                        <a th:href="@{/data-user}">
+                        <a th:href="@{../data-user}">
                             <i class="fas fa-users"></i>Data User</a>
                     </li>
                     <li class="has-sub">
@@ -69,12 +69,12 @@
                             <i class="fas fa-copy"></i>Data Question</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                             <li th:each = "as : ${modules}">
-                                <a th:href="@{data-question/{id} (id=${as.id})}" th:text='${as.name}'></a>
+                                <a th:href="@{../data-question/{id} (id=${as.id})}" th:text='${as.name}'></a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a th:href="@{/data-registration}">
+                        <a th:href="@{../data-registration}">
                             <i class="fas fa-list-alt"></i>Data Registration</a>
                     </li>
                     <li class="has-sub">
@@ -82,7 +82,7 @@
                             <i class="fas fa-check-square"></i>Data Candidate</a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                             <li th:each = "as : ${modules}">
-                                <a th:href="@{data-candidate/{id} (id=${as.id})}" th:text='${as.name}'></a>
+                                <a th:href="@{../data-candidate/{id} (id=${as.id})}" th:text='${as.name}'></a>
                             </li>
                         </ul>
                     </li>
@@ -96,17 +96,17 @@
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
             <a href="#">
-                <img src="images/mii_land.png"/>
+                <img src="../images/mii_land.png"/>
             </a>
         </div>
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li th:classappend="${#httpServletRequest.getRequestURI() == '/dashboard' ? 'active':''}">
-                        <a class="js-arrow" th:href="@{/dashboard}">
+                        <a class="js-arrow" th:href="@{../dashboard}">
                             <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-user' ? 'active':''}">
-                        <a th:href="@{data-user}">
+                        <a th:href="@{../data-user}">
                             <i class="fas fa-users"></i>Data User</a>
                     </li>
                     <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-question' ? 'active has-sub':'has-sub'}">
@@ -114,12 +114,12 @@
                             <i class="fas fa-copy"></i>Data Question <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li th:each = "as : ${modules}">
-                                <a th:href="@{data-question/{id} (id=${as.id})}" th:text='${as.name}'></a>
+                                <a th:href="@{../data-question/{id} (id=${as.id})}" th:text='${as.name}'></a>
                             </li>
                         </ul>
                     </li>
                     <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-registration' ? 'active':''}">
-                        <a th:href="@{data-registration}">
+                        <a th:href="@{../data-registration}">
                             <i class="far fa-list-alt"></i>Data Registration</a>
                     </li>
                     <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-candidate' ? 'active has-sub':'has-sub'}">
@@ -127,7 +127,7 @@
                             <i class="fas fa-check-square"></i>Data Candidate <i class="fas fa-caret-down"></i></a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li th:each = "as : ${modules}">
-                                <a th:href="@{data-candidate/{id} (id=${as.id})}" th:text='${as.name}'></a>
+                                <a th:href="@{../data-candidate/{id} (id=${as.id})}" th:text='${as.name}'></a>
                             </li>
                         </ul>
                     </li>
@@ -177,7 +177,7 @@
                         <div class="account-wrap">
                             <div class="account-item clearfix js-item-menu">
                                 <div class="image">
-                                    <img src="images/admin.png"/>
+                                    <img src="../images/admin.png"/>
                                 </div>
                                 <div class="content">
                                     <a class="js-acc-btn" href="#" th:text="${name}"></a>
@@ -186,7 +186,7 @@
                                     <div class="info clearfix">
                                         <div class="image">
                                             <a href="#">
-                                                <img src="images/admin.png"/>
+                                                <img src="../images/admin.png"/>
                                             </a>
                                         </div>
                                         <div class="content">

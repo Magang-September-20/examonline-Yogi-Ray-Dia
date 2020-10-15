@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <div th:replace="fragments/header :: head(title='Data Question')"></div>
+    <div th:replace="fragments/header-uri :: head(title='Data Question')"></div>
 
     <body class="animsition">
         <div class="page-wrapper">
-            <div th:replace="fragments/header :: header_mobile"></div>
+            <div th:replace="fragments/header-uri :: header_mobile"></div>
             <!-- PAGE CONTAINER-->
             <div class="page-container">
-                <div th:replace="fragments/header :: header_desktop"></div>
+                <div th:replace="fragments/header-uri :: header_desktop"></div>
                 <!-- MAIN CONTENT-->
                 <div class="main-content">
                     <div class="section__content section__content--p30">
@@ -16,7 +16,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="overview-wrap">
-                                        <h2 class="title-1">Category Name</h2>
+                                        <h2 class="title-1">Category <span th:text="${selectModule}"></span></h2>
                                         <button type="button" class="au-btn au-btn-icon au-btn--green" data-toggle="modal" data-target="#addModal">
                                             <i class="zmdi zmdi-plus"></i>Add</button>
                                     </div>
@@ -54,7 +54,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div th:replace="fragments/footer :: footer"></div>
+                            <div th:replace="fragments/footer-uri :: footer"></div>
                         </div>
                     </div>
                 </div>
@@ -64,8 +64,12 @@
 
         </div>
 
-        <div th:replace="fragments/footer :: script"></div>
-
+        <div th:replace="fragments/footer-uri :: script"></div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#table').DataTable();
+            });
+        </script>
     </body>
 
 </html>

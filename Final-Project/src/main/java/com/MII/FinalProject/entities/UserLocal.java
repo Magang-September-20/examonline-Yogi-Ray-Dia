@@ -6,12 +6,16 @@
 package com.MII.FinalProject.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -38,6 +42,10 @@ public class UserLocal implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_active")
     private boolean isActive;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Exam> examList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Code> codeList;
 
     public UserLocal() {
     }
@@ -85,6 +93,22 @@ public class UserLocal implements Serializable {
         this.isActive = isActive;
     }
 
+    public List<Exam> getExamList() {
+        return examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
+    }
+
+    public List<Code> getCodeList() {
+        return codeList;
+    }
+
+    public void setCodeList(List<Code> codeList) {
+        this.codeList = codeList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -107,7 +131,7 @@ public class UserLocal implements Serializable {
 
     @Override
     public String toString() {
-        return ""+ id;
+        return "com.MII.FinalProject.entities.UserLocal[ id=" + id + " ]";
     }
     
 }

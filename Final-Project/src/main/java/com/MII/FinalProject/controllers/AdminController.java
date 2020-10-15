@@ -14,6 +14,10 @@ import com.MII.FinalProject.services.ModuleService;
 import com.MII.FinalProject.services.QuestionService;
 import com.MII.FinalProject.services.UserLocalService;
 import com.MII.FinalProject.services.UserService;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -38,13 +43,13 @@ public class AdminController {
 
     @Autowired
     UserService userService;
-    
+
     @Autowired
     CodeService codeService;
-    
+
     @Autowired
     ModuleService moduleService;
-    
+
     @Autowired
     UserLocalService userLocalService;
 
@@ -71,37 +76,40 @@ public class AdminController {
         return checkRole(model, "data-user");
     }
 
-    @GetMapping("/data-question")
-    public String question(Model model) {
+    @GetMapping("/data-question/{id}")
+    public String question(@PathVariable("id") String id, Model model) {
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("questions", questionService.getAll());
         model.addAttribute("modules", moduleService.getAll());
         model.addAttribute("questionss", questionService.getAll());
+        model.addAttribute("selectModule", moduleService.getById(id).getName());
         return checkRole(model, "data-question");
     }
 
     @GetMapping("getIdQuestion/{id}")
-    public String getByIdQuestion(@PathVariable("id") Integer id) throws MessagingException {
+    public String getByIdQuestion(@PathVariable("id") Integer id) {
         Question question = questionService.getById(id);
         return "data-question";
     }
-    
+
     @GetMapping("/data-registration")
     public String exam(Model model) {
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("exam", new Exam());
-        model.addAttribute("examm", examService.getAll());
+        model.addAttribute("exams", examService.getAll());
         model.addAttribute("modules", moduleService.getAll());
         return checkRole(model, "data-registration");
     }
 
-    @GetMapping("/data-candidate")
-    public String candidate(Model model) {
+    @GetMapping("/data-candidate/{id}")
+    public String candidate(@PathVariable("id") String id, Model model) {
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("modules", moduleService.getAll());
+        model.addAttribute("selectModule", moduleService.getById(id).getName());
+        model.addAttribute("candidates", examService.getAllCandidate(id));
         return checkRole(model, "data-candidate");
     }
 
@@ -121,9 +129,10 @@ public class AdminController {
     }
 
     @GetMapping("sentEmail/{id}")
-    public String getById(@PathVariable("id") Integer id) throws MessagingException {
+    public String getById(@PathVariable("id") Integer id) throws MessagingException, ParseException {
         Exam exam = examService.getById(id);
         examService.sendEmail(exam);
-        return "data-registration";
+        return "redirect:/data-registration";
     }
+
 }

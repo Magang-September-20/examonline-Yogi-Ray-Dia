@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author nathanray
+ * @author NAME
  */
 @Entity
 @Table(name = "module")
@@ -143,7 +143,7 @@ public class Module implements Serializable {
 
     @Override
     public String toString() {
-        return ""+ id;
+        return "com.MII.FinalProject.entities.Module[ id=" + id + " ]";
     }
     
 }

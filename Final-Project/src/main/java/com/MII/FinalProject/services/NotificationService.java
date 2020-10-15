@@ -41,10 +41,9 @@ public class NotificationService {
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                 StandardCharsets.UTF_8.name());
 
-        System.out.println(exam.getCode());
-        System.out.println(exam.getUser().getEmail());
         Context context = new Context();
-        context.setVariable("name", exam.getCode());
+        context.setVariable("name", exam.getUser().getName());
+        context.setVariable("code", exam.getCode());
         String html = templateEngine.process("/component/email1", context);
 
         helper.setTo(exam.getUser().getEmail());

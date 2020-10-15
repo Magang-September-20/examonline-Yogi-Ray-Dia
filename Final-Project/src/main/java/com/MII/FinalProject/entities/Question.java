@@ -24,7 +24,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author nathanray
+ * @author NAME
  */
 @Entity
 @Table(name = "question")
@@ -185,7 +185,7 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return ""+ id;
+        return "com.MII.FinalProject.entities.Question[ id=" + id + " ]";
     }
     
 }

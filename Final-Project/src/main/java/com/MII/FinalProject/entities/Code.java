@@ -7,9 +7,7 @@ package com.MII.FinalProject.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,14 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author nathanray
+ * @author NAME
  */
 @Entity
 @Table(name = "code")
@@ -48,8 +46,8 @@ public class Code implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_used")
     private boolean isUsed;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "code", fetch = FetchType.LAZY)
-    private List<Exam> examList;
+    @OneToOne(mappedBy = "code", fetch = FetchType.LAZY)
+    private Exam exam;
     @JoinColumn(name = "user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserLocal user;
@@ -103,12 +101,12 @@ public class Code implements Serializable {
         this.isUsed = isUsed;
     }
 
-    public List<Exam> getExamList() {
-        return examList;
+    public Exam getExam() {
+        return exam;
     }
 
-    public void setExamList(List<Exam> examList) {
-        this.examList = examList;
+    public void setExam(Exam exam) {
+        this.exam = exam;
     }
 
     public UserLocal getUser() {
@@ -149,7 +147,7 @@ public class Code implements Serializable {
 
     @Override
     public String toString() {
-        return ""+ code;
+        return ""+code;
     }
     
 }

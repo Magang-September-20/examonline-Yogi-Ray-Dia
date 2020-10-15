@@ -24,4 +24,8 @@ public class ModuleService {
     public List<Module> getAll(){
         return moduleService.findAll();
     }
+    
+    public Module getById(String id){
+        return moduleService.findById(id).get();
+    }
 }
