@@ -26,6 +26,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -78,6 +80,7 @@ public class AdminController {
 
     @GetMapping("/data-question/{id}")
     public String question(@PathVariable("id") String id, Model model) {
+        model.addAttribute("ques", new Question());
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("questions", questionService.getAll());
@@ -93,6 +96,7 @@ public class AdminController {
         return "data-question";
     }
 
+    
     @GetMapping("/data-registration")
     public String exam(Model model) {
         model.addAttribute("notif", codeService.notif());
@@ -135,4 +139,30 @@ public class AdminController {
         return "redirect:/data-registration";
     }
 
+    @ResponseBody
+    @GetMapping("/question/getAll")
+    public List<Question> getAll() {
+        return questionService.getAll();
+    }
+    
+    @ResponseBody
+    @PostMapping("/save")
+    public Question save(@RequestBody Question question) {
+        return questionService.save(question);
+    }
+
+    @ResponseBody
+    @GetMapping("getById")
+    public Question getByIdQuestion(Integer id) {
+        Question result = questionService.getById(id);
+        return result;
+    }
+
+    @ResponseBody
+    @GetMapping("deleteById")
+    public void deleteById(Integer id) {
+        questionService.delete(id);
+        String result = "Test delete";
+
+    }
 }

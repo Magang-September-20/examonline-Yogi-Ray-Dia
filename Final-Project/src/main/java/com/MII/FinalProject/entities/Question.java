@@ -6,9 +6,7 @@
 package com.MII.FinalProject.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,12 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author NAME
+ * @author yosef
  */
 @Entity
 @Table(name = "question")
@@ -59,8 +56,6 @@ public class Question implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_active")
     private boolean isActive;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.LAZY)
-    private List<UserAnswer> userAnswerList;
     @JoinColumn(name = "module", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Module module;
@@ -147,14 +142,6 @@ public class Question implements Serializable {
         this.isActive = isActive;
     }
 
-    public List<UserAnswer> getUserAnswerList() {
-        return userAnswerList;
-    }
-
-    public void setUserAnswerList(List<UserAnswer> userAnswerList) {
-        this.userAnswerList = userAnswerList;
-    }
-
     public Module getModule() {
         return module;
     }
@@ -185,7 +172,7 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.Question[ id=" + id + " ]";
+        return ""+ id;
     }
     
 }
