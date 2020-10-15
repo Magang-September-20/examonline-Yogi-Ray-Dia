@@ -6,6 +6,7 @@
 package com.MII.FinalProject.controllers;
 
 import com.MII.FinalProject.entities.Code;
+import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.Module;
 import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.services.CodeService;
@@ -71,7 +72,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
             if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_USER\"]")) {
-                System.out.println(auth.getName());
+//                System.out.println(auth.getName());
                 model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
                 model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
                 return page;
@@ -106,14 +107,13 @@ public class UserController {
         c.setTime(dt);
         c.add(Calendar.DATE, 1);
         dt = c.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = sdf.format(dt);
         
         
         //user id
         UserLocal user = new UserLocal();
         user.setId(Integer.parseInt(auth.getName()));
         
+        //table Code
         code.setCode(module.getId() + userId + sb.toString());
         code.setModule(module);
         code.setIsSent(false);
@@ -122,8 +122,8 @@ public class UserController {
         code.setUser(user);
         codeService.save(code);
         
-        System.out.println(date);
-        System.out.println(module.getId() + userId + sb.toString()); //code
+        examService.registerExam(module.getId() + userId + sb.toString(), auth.getName());
+        
         return checkRole(model, "exam");
     }
 }
