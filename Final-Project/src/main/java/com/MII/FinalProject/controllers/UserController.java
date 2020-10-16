@@ -120,7 +120,7 @@ public class UserController {
                 + "0123456789"
                 + "abcdefghijklmnopqrstuvxyz";
         StringBuilder sb = new StringBuilder();
-        int n = 3;
+        int n = 17;
         while (n-- != 0) {
             int character = (int) (Math.random() * AlphaNumericString.length());
             sb.append(AlphaNumericString.charAt(character));
@@ -138,7 +138,7 @@ public class UserController {
         user.setId(Integer.parseInt(auth.getName()));
 
         //table Code
-        code.setCode(module.getId() + userId + sb.toString());
+        code.setCode(module.getId() + sb.toString());
         code.setModule(module);
         code.setIsSent(false);
         code.setIsUsed(false);
@@ -146,7 +146,7 @@ public class UserController {
         code.setUser(user);
         codeService.save(code);
 
-        examService.registerExam(module.getId() + userId + sb.toString(), auth.getName());
+        examService.registerExam(module.getId() + sb.toString(), auth.getName());
 
         return checkRole(model, "redirect:/exam");
     }
