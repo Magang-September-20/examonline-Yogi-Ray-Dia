@@ -6,8 +6,8 @@
 package com.MII.FinalProject.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -49,14 +49,11 @@ public class Code implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_used")
     private boolean isUsed;
-    @JsonBackReference
-    @OneToOne(mappedBy = "code", fetch = FetchType.LAZY)
-    private Exam exam;
+//    @OneToOne(mappedBy = "code", fetch = FetchType.LAZY)
+//    private Exam exam;
     @JoinColumn(name = "user", referencedColumnName = "id")
-    
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserLocal user;
-
     @JoinColumn(name = "module", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Module module;
@@ -107,13 +104,13 @@ public class Code implements Serializable {
         this.isUsed = isUsed;
     }
 
-    public Exam getExam() {
-        return exam;
-    }
-
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
+//    public Exam getExam() {
+//        return exam;
+//    }
+//
+//    public void setExam(Exam exam) {
+//        this.exam = exam;
+//    }
 
     public UserLocal getUser() {
         return user;
@@ -123,6 +120,7 @@ public class Code implements Serializable {
         this.user = user;
     }
 
+    @JsonBackReference
     public Module getModule() {
         return module;
     }

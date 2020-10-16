@@ -5,9 +5,9 @@
  */
 package com.MII.FinalProject.entities;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -144,7 +144,8 @@ public class Question implements Serializable {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
-
+    
+    @JsonBackReference
     public Module getModule() {
         return module;
     }

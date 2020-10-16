@@ -14654,3 +14654,11 @@ section {
 .modal-backdrop {
   z-index: -1;
 }
+
+td.details-control {
+    background: url('../images/plus2.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.details td.details-control {
+    background: url('../images/x2.png') no-repeat center center;
+}

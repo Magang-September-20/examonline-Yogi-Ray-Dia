@@ -8,11 +8,10 @@ package com.MII.FinalProject.entities;
 
 //import static com.MII.FinalProject.entities.Question_.userAnswerList;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,13 +61,11 @@ public class Exam implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "user", referencedColumnName = "id")
-    @JsonBackReference
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserLocal user;
-    @JsonManagedReference
-    @JoinColumn(name = "code", referencedColumnName = "code")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Code code;
+//    @JoinColumn(name = "code", referencedColumnName = "code")
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    private Code code;
 
     public Exam() {
     }
@@ -147,13 +144,13 @@ public class Exam implements Serializable {
         this.user = user;
     }
 
-    public Code getCode() {
-        return code;
-    }
-
-    public void setCode(Code code) {
-        this.code = code;
-    }
+//    public Code getCode() {
+//        return code;
+//    }
+//
+//    public void setCode(Code code) {
+//        this.code = code;
+//    }
 
 //    public List<UserAnswer> getUserAnswerList() {
 //        return userAnswerList;

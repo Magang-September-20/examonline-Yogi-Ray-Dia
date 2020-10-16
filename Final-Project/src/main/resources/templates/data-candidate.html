@@ -17,6 +17,7 @@
                                 <div class="col-md-12">
                                     <div class="overview-wrap">
                                         <h2 class="title-1">Category <span th:text="${selectModule}"></span></h2>
+                                        <input type="hidden" id="id" th:value="${id}">
                                     </div>
                                 </div>
                             </div>
@@ -26,18 +27,18 @@
                                         <tr>
                                             <th>Fullname</th>
                                             <th>Email</th>
-                                            <th>Code</th>
+                                            <th>Date</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each='as : ${candidates}'>
+<!--                                        <tr th:each='as : ${candidates}'>
                                             <td th:text='${as.user.name}'></td>
                                             <td th:text='${as.user.email}'></td>
-                                            <!--<td th:text='${#strings.substring(as.code,0,3)}'></td>-->
+                                            <td th:text='${#strings.substring(as.code,0,3)}'></td>
                                             <td th:text='${as.code}'></td>
                                             <td th:class = "${as.hasPassed} ? 'text-success' : 'text-danger'" th:text="${as.hasPassed} ? 'Passed' : 'Failed'"></td>
-                                        </tr>
+                                        </tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -54,10 +55,21 @@
         <div th:replace="fragments/footer-uri :: script"></div>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#table').DataTable();
+                var id = document.getElementById("id").value;
+                var table = $('#table').DataTable({
+                    "ajax": {
+                        "url": "../candidate/get-where-module/"+id,
+                        "dataSrc": ""},
+                    "columns": [
+                        {"data": "user"},
+                        {"data": "date"},
+                        {"data": "date"},
+                        {"data": "hasPassed"}
+                    ],
+                    "order": [1, 'asc']
+                });
             });
         </script>
     </body>
-
 </html>
 <!-- end document-->

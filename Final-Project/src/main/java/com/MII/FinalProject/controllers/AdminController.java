@@ -82,18 +82,10 @@ public class AdminController {
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("modules", moduleService.getAll());
-        model.addAttribute("questionss", questionService.getAll());
-        model.addAttribute("questions", questionService.getQuestionWhere(id));
         model.addAttribute("selectModule", moduleService.getById(id).getName());
+        model.addAttribute("id", moduleService.getById(id).getId());
         return checkRole(model, "data-question");
     }
-
-//    @GetMapping("getIdQuestion/{id}")
-//    public String getByIdQuestion(@PathVariable("id") Integer id) {
-//        Question question = questionService.getById(id);
-//        return "data-question";
-//    }
-
     
     @GetMapping("/data-registration")
     public String exam(Model model) {
@@ -111,7 +103,7 @@ public class AdminController {
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("modules", moduleService.getAll());
         model.addAttribute("selectModule", moduleService.getById(id).getName());
-        model.addAttribute("candidates", examService.getAllCandidate(id));
+        model.addAttribute("id", moduleService.getById(id).getId());
         return checkRole(model, "data-candidate");
     }
 
@@ -136,31 +128,19 @@ public class AdminController {
         examService.sendEmail(exam);
         return "redirect:/data-registration";
     }
-
+    
+    //CRUD QUESTION
     @ResponseBody
-    @GetMapping("/question/getAll")
-    public List<Question> getAll() {
-        return questionService.getAll();
+    @GetMapping("question/get-where-module/{id}")
+    public List<Question> getByIdQuestion(@PathVariable("id") String id) {
+        return questionService.getQuestionWhere(id);
     }
     
+    //CRUD CANDIDATE
     @ResponseBody
-    @PostMapping("/save")
-    public Question save(@RequestBody Question question) {
-        return questionService.save(question);
+    @GetMapping("candidate/get-where-module/{id}")
+    public List<Exam> getByIdCandidate(@PathVariable("id") String id) {
+        return examService.getAllCandidate(id);
     }
 
-    @ResponseBody
-    @GetMapping("getIdQuestion/{id}")
-    public Question getByIdQuestion(@PathVariable("id") Integer id) {
-        Question result = questionService.getById(id);
-        return result;
-    }
-
-    @ResponseBody
-    @GetMapping("deleteById")
-    public void deleteById(Integer id) {
-        questionService.delete(id);
-        String result = "Test delete";
-
-    }
 }
