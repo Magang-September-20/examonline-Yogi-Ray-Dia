@@ -102,6 +102,7 @@ public class AdminController {
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
         model.addAttribute("modules", moduleService.getAll());
+        model.addAttribute("candidates", examService.getAllCandidate(id));
         model.addAttribute("selectModule", moduleService.getById(id).getName());
         model.addAttribute("id", moduleService.getById(id).getId());
         return checkRole(model, "data-candidate");
@@ -134,13 +135,6 @@ public class AdminController {
     @GetMapping("question/get-where-module/{id}")
     public List<Question> getByIdQuestion(@PathVariable("id") String id) {
         return questionService.getQuestionWhere(id);
-    }
-    
-    //CRUD CANDIDATE
-    @ResponseBody
-    @GetMapping("candidate/get-where-module/{id}")
-    public List<Exam> getByIdCandidate(@PathVariable("id") String id) {
-        return examService.getAllCandidate(id);
     }
 
 }
