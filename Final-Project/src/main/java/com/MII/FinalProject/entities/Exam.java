@@ -61,6 +61,7 @@ public class Exam implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "user", referencedColumnName = "id")
+    @JsonBackReference
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserLocal user;
 //    @JoinColumn(name = "code", referencedColumnName = "code")
