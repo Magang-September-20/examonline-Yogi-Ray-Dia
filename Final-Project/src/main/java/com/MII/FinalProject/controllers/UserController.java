@@ -45,7 +45,7 @@ public class UserController {
 
     @Autowired
     CodeService codeService;
-    
+
     @Autowired
     QuestionService questionService;
 
@@ -76,7 +76,7 @@ public class UserController {
         if (codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())) == 1) {
             codeService.updateUseCode(code.getCode());
             examService.updateUseCode(code.getCode());
-            return checkRole(model, "redirect:/start-exam/"+code);
+            return checkRole(model, "redirect:/start-exam/" + code);
         } else {
             return checkRole(model, "redirect:/exam");
         }
@@ -84,7 +84,10 @@ public class UserController {
 
     @GetMapping("/start-exam/{code}")//url or path
     public String startExam(@PathVariable("code") String code, Model model) {
-        model.addAttribute("questions", questionService.getQuestionsWhere(new String(code).substring(0,3)));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("user", userService.getById(Integer.parseInt(auth.getName())));
+        model.addAttribute("modules", moduleService.getById(new String(code).substring(0, 3)));
+        model.addAttribute("questions", questionService.getQuestionsWhere(new String(code).substring(0, 3)));
         return checkRole(model, "start-exam");
     }
 
@@ -127,12 +130,11 @@ public class UserController {
         c.setTime(dt);
         c.add(Calendar.DATE, 1);
         dt = c.getTime();
-        
-        
+
         //user id
         UserLocal user = new UserLocal();
         user.setId(Integer.parseInt(auth.getName()));
-        
+
         //table Code
         code.setCode(module.getId() + userId + sb.toString());
         code.setModule(module);
@@ -141,9 +143,9 @@ public class UserController {
         code.setExpiredDate(dt);
         code.setUser(user);
         codeService.save(code);
-        
+
         examService.registerExam(module.getId() + userId + sb.toString(), auth.getName());
-        
+
         return checkRole(model, "redirect:/exam");
     }
 }
