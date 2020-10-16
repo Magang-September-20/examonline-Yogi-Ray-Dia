@@ -27,8 +27,12 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     public List<Exam> getPerId(Integer id);
     
     @Transactional
-    @Query(value = "SELECT * FROM exam WHERE code LIKE ?1%", nativeQuery = true)
+    @Query(value = "SELECT * FROM exam WHERE grade IS NOT NULL AND score IS NOT NULL AND code LIKE ?1%", nativeQuery = true)
     public List<Exam> getAllCondidate(String id);
+    
+//    @Transactional
+//    @Query(value = "SELECT u.name AS name, u.email AS email, e.date AS date, e.has_passed AS has_passed FROM exam e JOIN user u ON e.id=u.id WHERE grade IS NOT NULL AND score IS NOT NULL AND code LIKE ?1%", nativeQuery = true)
+//    public List<Exam> getAllCondidate(String id);
     
     @Modifying
     @Transactional

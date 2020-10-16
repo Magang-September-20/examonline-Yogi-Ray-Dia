@@ -5,9 +5,7 @@
  */
 package com.MII.FinalProject.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -29,6 +27,7 @@ import javax.persistence.Table;
 @Table(name = "module")
 @NamedQueries({
     @NamedQuery(name = "Module.findAll", query = "SELECT m FROM Module m")})
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Module implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,9 +48,10 @@ public class Module implements Serializable {
     @Column(name = "duration")
     private int duration;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "module", fetch = FetchType.LAZY)
-//    @JsonIgnoreProperties
+    @JsonManagedReference
     private List<Code> codeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "module", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Question> questionList;
 
     public Module() {
