@@ -85,8 +85,10 @@ public class UserController {
     @GetMapping("/start-exam/{code}")//url or path
     public String startExam(@PathVariable("code") String code, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("user", userService.getById(Integer.parseInt(auth.getName())));
-        model.addAttribute("modules", moduleService.getById(new String(code).substring(0, 3)));
+        model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
+        model.addAttribute("countques", questionService.countByModule(new String(code).substring(0, 3)));
+        model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
+        model.addAttribute("duration", moduleService.getById(new String(code).substring(0, 3)).getDuration());
         model.addAttribute("questions", questionService.getQuestionsWhere(new String(code).substring(0, 3)));
         return checkRole(model, "start-exam");
     }

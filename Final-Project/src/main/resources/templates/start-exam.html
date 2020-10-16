@@ -28,14 +28,14 @@ and open the template in the editor.
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="input-group">
-                                        <label class="col-md-12 control-label" for="Name"><i class="fa fa-user"></i>&nbsp; Name (Full name)</label>  
+                                        <label class="col-md-12 control-label" for="Name"><i class="fa fa-user"></i>&nbsp; <span th:text="${name}"></span></label>  
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="input-group">
-                                        <label class="col-md-12 control-label" for="Name"><i class="fa fa-bookmark-o"></i>&nbsp; Java <span>(00:40:00)</label>  
+                                        <label class="col-md-12 control-label" for="Name"><i class="fa fa-bookmark-o"></i>&nbsp; <span th:text="${module}"></span> (<span th:text="${duration}"></span> Minutes)</label>  
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@ and open the template in the editor.
                     <div class="border">
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row justify-content-between align-items-center mcq">
-                                <img src="../images/mii_land.png"  height="69" width="300" /><span>(Total Questions <span> 20</span>)</span>
+                                <img src="../images/mii_land.png"  height="69" width="300" /><span>(Total Questions <span th:text="${countques}"></span>)</span>
                             </div>
                         </div>
                         <div class="question bg-white p-3 border-bottom">

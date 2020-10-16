@@ -56,4 +56,8 @@ public class QuestionService {
     public List<Question> getQuestionsWhere(String module) {
         return repository.getQuestionWhere(module);
     }
+    
+    public Integer countByModule(String module){
+        return repository.countByModule(module);
+    }
 }
