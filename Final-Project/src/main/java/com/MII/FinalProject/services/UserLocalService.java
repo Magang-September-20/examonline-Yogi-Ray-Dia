@@ -24,4 +24,8 @@ public class UserLocalService {
     public List<UserLocal> getAll() {
         return repository.findAll();
     }
+    
+    public UserLocal getById(Integer id){
+        return repository.findById(id).get();
+    }
 }
