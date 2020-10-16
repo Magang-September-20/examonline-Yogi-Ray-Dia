@@ -15,12 +15,45 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container mt-5">
-            <div class="d-flex justify-content-center row">
-                <div class="col-md-10 col-lg-10">
+            <div class="row">
+                <div class="overflow-auto col-md-3 col-lg-3">
+                    <div class="border">
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title mb-1">
+                                <h3 class="text-danger">Q</h3>
+                                <h5 class="mt-1 ml-2">Information</h5>
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <label class="col-md-12 control-label" for="Name"><i class="fa fa-user"></i>&nbsp; Name (Full name)</label>  
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <label class="col-md-12 control-label" for="Name"><i class="fa fa-bookmark-o"></i>&nbsp; Java</label>  
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <label class="col-md-12 control-label" for="Name"><i class="fa fa-clock-o"></i>&nbsp; 00:30:21</label>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-lg-8">
                     <div class="border">
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row justify-content-between align-items-center mcq">
-                                <img src="../images/mii_land.png"  height="69" width="300" /><span>(5 of 20)</span>
+                                <img src="../images/mii_land.png"  height="69" width="300" /><span>(Total Questions <span> 20</span>)</span>
                             </div>
                         </div>
                         <div class="question bg-white p-3 border-bottom">
@@ -49,7 +82,8 @@ and open the template in the editor.
                                 </form>
                             </div>
                         </div>
-                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary d-flex align-items-center btn-danger" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button><button class="btn btn-primary border-success align-items-center btn-success" type="button">Next<i class="fa fa-angle-right ml-2"></i></button></div>
+                        <!--<div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary d-flex align-items-center btn-danger" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button><button class="btn btn-primary border-success align-items-center btn-success" type="button">Next<i class="fa fa-angle-right ml-2"></i></button></div>-->
+                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary border-success align-items-center btn-success" type="button">Finish<i class="fa fa-angle-right ml-2"></i></button></div>
                     </div>
                 </div>
             </div>
