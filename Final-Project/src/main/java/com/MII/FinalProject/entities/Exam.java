@@ -64,9 +64,10 @@ public class Exam implements Serializable {
     @JsonBackReference
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserLocal user;
-//    @JoinColumn(name = "code", referencedColumnName = "code")
-//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-//    private Code code;
+    @JsonIgnore
+    @JoinColumn(name = "code", referencedColumnName = "code")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Code code;
 
     public Exam() {
     }
@@ -145,13 +146,13 @@ public class Exam implements Serializable {
         this.user = user;
     }
 
-//    public Code getCode() {
-//        return code;
-//    }
-//
-//    public void setCode(Code code) {
-//        this.code = code;
-//    }
+    public Code getCode() {
+        return code;
+    }
+
+    public void setCode(Code code) {
+        this.code = code;
+    }
 
 //    public List<UserAnswer> getUserAnswerList() {
 //        return userAnswerList;
