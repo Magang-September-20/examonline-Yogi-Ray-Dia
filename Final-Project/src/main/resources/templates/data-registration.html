@@ -42,7 +42,7 @@
                                             <td th:text = "${as.code.code}"></td> 
                                             <td th:class = "${as.code.isSent} ? 'text-success' : 'text-primary'" th:text = "${as.code.isSent} ? 'Sent' : 'Pending'"></td> 
                                             <td>
-                                                <a th:text="${as.code.isSent} ? '' : 'Send Code '" th:class="${as.code.isSent} ? '' : 'btn btn-sm btn-success'" th:href="@{sentEmail/{id} (id=${as.id})}"><span class="fas fa-envelope"></span></a>
+                                                <a th:onclick="|sendEmail('${as.id}')|"  th:text="${as.code.isSent} ? '' : 'Send Code '" th:class="${as.code.isSent} ? '' : 'btn btn-sm btn-success text-white'"><span th:class="fas fa-envelope"></span></a>
                                             </td> 
 
                                         </tr> 
@@ -64,6 +64,31 @@
             $(document).ready(function () {
                 $('#table').DataTable();
             });
+            function sendEmail(id) {
+                $.ajax({
+                    url: "../sendEmail",
+                    type: "GET",
+                    data: {id: id},
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Email has been sent!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setTimeout(function () {
+                            window.location.reload(1);
+                        }, 1500);
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to send email'
+                        })
+                    }
+                });
+            }
         </script>
     </body>
 

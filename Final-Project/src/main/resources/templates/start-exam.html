@@ -11,7 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel="stylesheet" media="all">
         <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel="stylesheet" media="all">
-        <link href='css/exam.css' rel="stylesheet" media="all">
+        <link href='../css/exam.css' rel="stylesheet" media="all">
     </head>
     <body>
         <div class="container mt-5">
@@ -83,8 +83,35 @@ and open the template in the editor.
                                 </form>
                             </div>
                         </div>
-                        <!--<div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary d-flex align-items-center btn-danger" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button><button class="btn btn-primary border-success align-items-center btn-success" type="button">Next<i class="fa fa-angle-right ml-2"></i></button></div>-->
-                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary border-success align-items-center btn-success" type="button">Finish<i class="fa fa-angle-right ml-2"></i></button></div>
+<!--                        <div class="question bg-white p-3 border-bottom">
+                            <div>
+                                <div class="d-flex flex-row align-items-center question-title mb-3">
+                                    <input type="hidden" id="module" th:value="${id}">
+                                    <h3 class="text-danger">Q.</h3>
+                                    <h5 class="mt-1 ml-2" id="question"></h5>
+                                </div>
+                                <form class="was-validated">
+                                    <div class="form-check ml-3 mb-3">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                        <label class="form-check-label" for="exampleRadios1"></label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                        <label class="form-check-label" for="exampleRadios2"></label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                        <label class="form-check-label" for="exampleRadios1"></label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                        <label class="form-check-label" for="exampleRadios2"></label>
+                                    </div>
+                                </form>
+                            </div>-->
+                        </div>
+                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary d-flex align-items-center btn-danger" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button><button class="btn btn-primary border-success align-items-center btn-success" type="button">Next<i class="fa fa-angle-right ml-2"></i></button></div>
+                        <!--<div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary border-success align-items-center btn-success" type="button">Finish<i class="fa fa-angle-right ml-2"></i></button></div>-->
                     </div>
                 </div>
             </div>
@@ -92,4 +119,33 @@ and open the template in the editor.
     </body>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+    <script type="text/javascript">
+        var id = document.getElementById("module").value;
+        var questions = $.ajax({
+            url: "../getQuestionById/" + id,
+            type: "GET",
+            data: {id: id},
+            success: function (data) {
+//                console.log(data);
+               $('.question').text(data.question);
+            },
+            error: function (errormessage) {
+                alert(errormessage);
+            }
+        });
+//        console.log(questions[1]);
+        var currentQuestion = 1;
+        const nexQuestion = function () {
+            currentQuestion++;
+            renderQuestion();
+        };
+        var questionTemplate = $('#question script').text();
+//        const renderQuestion = function () {
+//            var questionHtml = ejs.render(questionTemplate, {
+//                question: questions[currentQuestion - 1]
+//            });
+//            $('#question').html(questionHtml);
+//        };
+//        renderQuestion();
+    </script>
 </html>

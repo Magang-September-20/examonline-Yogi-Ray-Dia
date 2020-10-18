@@ -30,10 +30,6 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     @Query(value = "SELECT * FROM exam WHERE grade IS NOT NULL AND score IS NOT NULL AND code LIKE ?1%", nativeQuery = true)
     public List<Exam> getAllCondidate(String id);
     
-//    @Transactional
-//    @Query(value = "SELECT u.name AS name, u.email AS email, e.date AS date, e.has_passed AS has_passed FROM exam e JOIN user u ON e.id=u.id WHERE grade IS NOT NULL AND score IS NOT NULL AND code LIKE ?1%", nativeQuery = true)
-//    public List<Exam> getAllCondidate(String id);
-    
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO exam (code, date, user) VALUES (?1 , DATE_ADD(NOW(), INTERVAL 0 DAY) , ?2)", nativeQuery = true)

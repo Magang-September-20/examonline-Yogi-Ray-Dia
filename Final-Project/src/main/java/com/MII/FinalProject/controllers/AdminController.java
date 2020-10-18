@@ -24,8 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -70,6 +68,8 @@ public class AdminController {
     public String user(Model model) {
         model.addAttribute("users", userLocalService.getAll());
         model.addAttribute("modules", moduleService.getAll());
+        model.addAttribute("notif", codeService.notif());
+        model.addAttribute("notifCount", codeService.notifCount());
         for (UserLocal userLocal : userLocalService.getAll()) {
             System.out.println(userLocal.getEmail());
         }
@@ -123,10 +123,10 @@ public class AdminController {
         }
     }
 
-    @GetMapping("sentEmail/{id}")
-    public String getById(@PathVariable("id") Integer id) throws MessagingException, ParseException {
-        Exam exam = examService.getById(id);
-        examService.sendEmail(exam);
+    @ResponseBody
+    @GetMapping("sendEmail")
+    public String sendEmail(int id) throws MessagingException, ParseException {
+        examService.sendEmail(examService.getById(id));
         return "redirect:/data-registration";
     }
     

@@ -49,7 +49,7 @@ public class NotificationService {
         helper.setTo(exam.getUser().getEmail());
         helper.setText(html, true);
         helper.setSubject("Verification Code");
-        helper.setFrom("magangbatch3@gmail.com");
+        helper.setFrom("ExamOnline@gmail.com");
 
         javaMailSender.send(message);
 

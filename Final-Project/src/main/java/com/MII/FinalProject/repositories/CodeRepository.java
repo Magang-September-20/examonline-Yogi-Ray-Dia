@@ -23,13 +23,13 @@ public interface CodeRepository extends JpaRepository<Code, String>{
     @Query(value = "SELECT COUNT(*) FROM code", nativeQuery = true)
     Integer countRegistration();
     
-    @Query(value = "SELECT * FROM code ORDER BY code DESC LIMIT 6", nativeQuery = true)
+    @Query(value = "SELECT * FROM code ORDER BY expired_date DESC LIMIT 6", nativeQuery = true)
     List<Code> recentRegister();
     
-    @Query(value = "SELECT * FROM code WHERE is_sent=0 LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM code WHERE is_sent=0 ORDER BY expired_date ASC LIMIT 3", nativeQuery = true)
     List<Code> notif();
     
-    @Query(value = "SELECT COUNT(*) FROM code WHERE is_sent=0 LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM code WHERE is_sent=0", nativeQuery = true)
     Integer notifCount();
     
     @Modifying

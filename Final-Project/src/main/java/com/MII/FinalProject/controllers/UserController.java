@@ -17,6 +17,7 @@ import com.MII.FinalProject.services.UserService;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +27,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -82,6 +85,18 @@ public class UserController {
         }
     }
 
+    @GetMapping("/pre-exam/{code}")//url or path
+    public String preExam(@PathVariable("code") String code, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
+        model.addAttribute("countques", questionService.countByModule(new String(code).substring(0, 3)));
+        model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
+        model.addAttribute("passingscore", moduleService.getById(new String(code).substring(0, 3)).getPassingScore());
+        model.addAttribute("duration", moduleService.getById(new String(code).substring(0, 3)).getDuration());
+        model.addAttribute("code", code);
+        return checkRole(model, "pre-exam");
+    }
+    
     @GetMapping("/start-exam/{code}")//url or path
     public String startExam(@PathVariable("code") String code, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -90,6 +105,7 @@ public class UserController {
         model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
         model.addAttribute("duration", moduleService.getById(new String(code).substring(0, 3)).getDuration());
         model.addAttribute("questions", questionService.getQuestionsWhere(new String(code).substring(0, 3)));
+        model.addAttribute("id", new String(code).substring(0, 3));
         return checkRole(model, "start-exam");
     }
 
@@ -142,12 +158,18 @@ public class UserController {
         code.setModule(module);
         code.setIsSent(false);
         code.setIsUsed(false);
-        code.setExpiredDate(dt);
+        code.setExpiredDate(null);
         code.setUser(user);
         codeService.save(code);
 
         examService.registerExam(module.getId() + userId + sb.toString(), auth.getName());
 
         return checkRole(model, "redirect:/exam");
+    }
+    
+    @ResponseBody
+    @GetMapping("getQuestionById/{id}")
+    public List<Question> getById(@PathVariable("id") String id){
+        return questionService.getQuestionsWhere(id);
     }
 }

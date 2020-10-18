@@ -39,7 +39,7 @@ public class Code implements Serializable {
     @Basic(optional = false)
     @Column(name = "code")
     private String code;
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "expired_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiredDate;
