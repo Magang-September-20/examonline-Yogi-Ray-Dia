@@ -74,13 +74,33 @@ and open the template in the editor.
         var id = document.getElementById("module").value;
         var currentQuestion = 0;
          function nextQuestion () {
+            selected();
             currentQuestion++;
             renderQuestion();
         };
          function prevQuestion () {
+            selected();
             currentQuestion--;
             renderQuestion();
         };
+        function selected(){
+                var radioA = document.getElementsByName("a"); // list of radio buttons
+                var val = localStorage.getItem('a'); // local storage value
+//                var radioB = document.getElementsByName("a"); // list of radio buttons
+//                var val = localStorage.getItem('b'); // local storage value
+//                var radioC = document.getElementsByName("a"); // list of radio buttons
+//                var val = localStorage.getItem('c'); // local storage value
+//                var radioD = document.getElementsByName("a"); // list of radio buttons
+//                var val = localStorage.getItem('d'); // local storage value
+                for(var i=0;i<radioA.length;i++){
+                  if(radioA[i].value == val){
+                      radioA[i].checked = true; // marking the required radio as checked
+//                      radioB[i].checked = true; // marking the required radio as checked
+//                      radioC[i].checked = true; // marking the required radio as checked
+//                      radioD[i].checked = true; // marking the required radio as checked
+                  }
+                }
+        }
         renderQuestion();
         function renderQuestion() {
             $(document).ready(function() {
@@ -90,25 +110,26 @@ and open the template in the editor.
             data: {id: id},
             success: function (data) {
 //                console.log(data.length);
-                for (var i = currentQuestion; i < currentQuestion+5; i++) {
+                for (var i = currentQuestion; i < currentQuestion+1; i++) {
+                    var j = 1+i;
                 $('#showQuestions').html(
                         '<div class="d-flex flex-row align-items-center question-title mb-3">\n\
-                <h3 class="text-danger">Q.</h3>\n\
+                <h3 class="text-danger">'+j+'.</h3>\n\
                 <h5 class="mt-1 ml-2">' + data[i].question + '</h5>\n\
                 </div>\n\
-                <form class="was - validated">\n\
+                <form class="was - validated" onsubmit="selected()">\n\
                 <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">\n\
-                <label class="form-check-label" for="exampleRadios1">' + data[i].a + '</label></div>\n\
+                <input class="form-check-input" type="radio" name="a" id="a" value="A">\n\
+                <label class="form-check-label" for="a"><b>A. </b>' + data[i].a + '</label></div>\n\
                 <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">\n\
-                <label class="form-check-label" for="exampleRadios2">' + data[i].b + '</label></div>\n\
+                <input class="form-check-input" type="radio" name="b" id="b" value="B">\n\
+                <label class="form-check-label" for="b"><b>B. </b>' + data[i].b + '</label></div>\n\
                 <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">\n\
-                <label class="form-check-label" for="exampleRadios2">' + data[i].c + '</label></div>\n\
+                <input class="form-check-input" type="radio" name="c" id="c" value="C">\n\
+                <label class="form-check-label" for="c"><b>C. </b>' + data[i].c + '</label></div>\n\
                 <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">\n\
-                <label class="form-check-label" for="exampleRadios2">' + data[i].d + '</label></div>\n\
+                <input class="form-check-input" type="radio" name="d" id="d" value="D">\n\
+                <label class="form-check-label" for="d"><b>D. </b>' + data[i].d + '</label></div>\n\
                 </form>');
                 }
             },
