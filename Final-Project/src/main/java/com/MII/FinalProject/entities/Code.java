@@ -49,8 +49,9 @@ public class Code implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_used")
     private boolean isUsed;
-//    @OneToOne(mappedBy = "code", fetch = FetchType.LAZY)
-//    private Exam exam;
+    @JsonIgnore
+    @OneToOne(mappedBy = "code", fetch = FetchType.LAZY)
+    private Exam exam;
     @JoinColumn(name = "user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserLocal user;
