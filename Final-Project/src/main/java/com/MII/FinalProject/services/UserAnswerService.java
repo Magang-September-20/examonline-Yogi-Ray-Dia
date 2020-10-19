@@ -29,4 +29,19 @@ public class UserAnswerService {
         uaR.save(answer);
     }
     
+    public Integer calculateScore(Integer exam) {
+        return uaR.calculateScore(exam);
+    }
+    
+    public Integer getExamId(String code) {
+        return uaR.getExamId(code);
+    }
+    
+    public void updateExam(Float score, String grade, String code) {
+        uaR.updateExam(score, grade, code);
+    }
+    
+    public void updateHasPassed(Integer option, String code) {
+        uaR.updateHasPassed(option, code);
+    }
 }

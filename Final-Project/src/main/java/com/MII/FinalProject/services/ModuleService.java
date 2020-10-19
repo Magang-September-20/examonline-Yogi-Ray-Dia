@@ -28,4 +28,9 @@ public class ModuleService {
     public Module getById(String id){
         return moduleService.findById(id).get();
     }
+    
+    public Integer getNumberOfQuestions(String id) {
+        return moduleService.getNumberOfQuestions(id);
+    }
+    
 }
