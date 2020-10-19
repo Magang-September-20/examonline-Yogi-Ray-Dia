@@ -77,4 +77,8 @@ public class ExamService {
        er.updateUseCode(code);
     }
     
+    public int countHistoryExam(int id){
+        return er.countHistoryExam(id);
+    }
+    
 }

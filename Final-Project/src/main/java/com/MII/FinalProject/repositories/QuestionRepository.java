@@ -9,6 +9,7 @@ import com.MII.FinalProject.entities.Question;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,11 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Integer countByModule(String module);
     
     @Transactional
-    @Query(value = "SELECT * FROM question WHERE module =?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM question WHERE module=?1 AND is_active=1", nativeQuery = true)
     public List<Question> getQuestionWhere(String id);
+    
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE question SET is_active=0 WHERE id=?1", nativeQuery = true)
+    public void deleteQuestionById(int id);
 }

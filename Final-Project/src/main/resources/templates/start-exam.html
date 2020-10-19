@@ -102,6 +102,37 @@ and open the template in the editor.
                 }
         }
         renderQuestion();
+        
+        function render(){
+            for (var i = currentQuestion; i < currentQuestion+1; i++) {
+                    var j = 1+i;
+                $('#showQuestions').html(
+                        '<div class="d-flex flex-row align-items-center question-title mb-3">\n\
+                <h3 class="text-danger">'+j+'.</h3>\n\
+                <h5 class="mt-1 ml-2">' + myVariable[i].question + '</h5>\n\
+                </div>\n\
+                <form class="was - validated" onsubmit="selected(setLoca)">\n\
+                <div class="form-check ml-3 mb-3">\n\
+                <input class="form-check-input" type="radio" name="a" id="a" value="A">\n\
+                <label class="form-check-label" for="a"><b>A. </b>' + myVariable[i].a + '</label></div>\n\
+                <div class="form-check ml-3 mb-3">\n\
+                <input class="form-check-input" type="radio" name="b" id="b" value="B">\n\
+                <label class="form-check-label" for="b"><b>B. </b>' + myVariable[i].b + '</label></div>\n\
+                <div class="form-check ml-3 mb-3">\n\
+                <input class="form-check-input" type="radio" name="c" id="c" value="C">\n\
+                <label class="form-check-label" for="c"><b>C. </b>' + myVariable[i].c + '</label></div>\n\
+                <div class="form-check ml-3 mb-3">\n\
+                <input class="form-check-input" type="radio" name="d" id="d" value="D">\n\
+                <label class="form-check-label" for="d"><b>D. </b>' + myVariable[i].d + '</label></div>\n\
+                </form>');
+                }
+        }
+        var myVariable;
+        function callback(response) {
+//            console.log(response);
+          return myVariable = response;
+        }
+        console.log(myVariable);
         function renderQuestion() {
             $(document).ready(function() {
             $.ajax({
@@ -109,29 +140,8 @@ and open the template in the editor.
             type: "GET",
             data: {id: id},
             success: function (data) {
-//                console.log(data.length);
-                for (var i = currentQuestion; i < currentQuestion+1; i++) {
-                    var j = 1+i;
-                $('#showQuestions').html(
-                        '<div class="d-flex flex-row align-items-center question-title mb-3">\n\
-                <h3 class="text-danger">'+j+'.</h3>\n\
-                <h5 class="mt-1 ml-2">' + data[i].question + '</h5>\n\
-                </div>\n\
-                <form class="was - validated" onsubmit="selected()">\n\
-                <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="a" id="a" value="A">\n\
-                <label class="form-check-label" for="a"><b>A. </b>' + data[i].a + '</label></div>\n\
-                <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="b" id="b" value="B">\n\
-                <label class="form-check-label" for="b"><b>B. </b>' + data[i].b + '</label></div>\n\
-                <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="c" id="c" value="C">\n\
-                <label class="form-check-label" for="c"><b>C. </b>' + data[i].c + '</label></div>\n\
-                <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="d" id="d" value="D">\n\
-                <label class="form-check-label" for="d"><b>D. </b>' + data[i].d + '</label></div>\n\
-                </form>');
-                }
+//                console.log(data);
+                    callback(data);
             },
             error: function (errormessage) {
                 alert(errormessage);

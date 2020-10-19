@@ -96,8 +96,8 @@
                         {"data": "id",
                             "orderable": false,
                             "render": function (data, type, row) {
-                                return '<a id="btnUpdate" onclick="updateClick(' + row.id + ')" href="#exampleModal" data-toggle="modal" class="edit btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="update"><i class="fa fa-edit"></i></a>\n\
-                            <a onclick="deleteClick(' + row.id + ')" class="delete btn-sm btn-danger"  data-toggle="tooltip" data-placement="top" title="delete"><i class="fa fa-trash"></i></a>';
+                                return '<a id="btnUpdate" onclick="update(' + row.id + ')" href="#questionModal" data-toggle="modal" class="edit btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="update"><i class="fa fa-edit"></i></a>\n\
+                            <a onclick="hapus(' + row.id + ')" class="delete btn-sm btn-danger"  data-toggle="tooltip" data-placement="top" title="delete"><i class="fa fa-trash"></i></a>';
                             }
                         }
                     ],
@@ -124,18 +124,19 @@
                 save_method = 'add';
                 document.getElementById('labelId').hidden = true;
                 document.getElementById('textId').hidden = true;
+                document.getElementById('insertForm').reset();
             }
 
-            function update(getId) {
+            function update(id) {
                 save_method = 'update';
                 document.getElementById('labelId').hidden = false;
                 document.getElementById('textId').hidden = false;
                 document.getElementById('textId').readOnly = "true";
                 $.ajax({
-                    url: "getById",
+                    url: "/getQuestionById",
                     type: "GET",
                     dataType: "json",
-                    data: {id: getId},
+                    data: {id: id},
                     success: function (result) {
                         $("#textId").val(result.id);
                         $("#textQuestion").val(result.question);
@@ -144,8 +145,8 @@
                         $("#textC").val(result.c);
                         $("#textD").val(result.d);
                         $("#textAnswer").val(result.answer);
-                        $("#textActive").val(result.isActive);
-                        $("#textModule").val(result.module);
+//                        $("#textActive").val(result.isActive);
+                        $("#textModule").val(document.getElementById("id").value);
                     },
                     error: function (errormessage) {
                         alert(errormessage.responseText);
@@ -163,7 +164,7 @@
                 question.d = document.getElementById("textD").value;
                 question.answer = document.getElementById("textAnswer").value;
                 question.isActive = 1;
-                question.module = document.getElementById("textModule").value;
+                question.module = document.getElementById("id").value;
                 var Simpan;
                 if (save_method == 'add') {
                     Simpan = 'Added';
@@ -173,12 +174,12 @@
 
                 $.ajax({
 
-                    url: "/save",
-                    type: "POST",
+                    url: "/saveQuestion",
+                    method: "POST",
                     data: JSON.stringify(question),
                     contentType: "application/json; charset=utf-8",
                     success: function () {
-//                        $('#table').DataTable().ajax.reload();
+                        $('#table').DataTable().ajax.reload();
                         Swal.fire({
                             icon: 'success',
                             title: 'Data successfull ' + Simpan,
@@ -205,8 +206,8 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     $.ajax({
-                        url: "deleteById",
-                        type: "GET",
+                        url: "/deleteQuestionById",
+                        method: "POST",
                         data: {id: getId},
                         success: function () {
                             $('#table').DataTable().ajax.reload();

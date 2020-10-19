@@ -60,4 +60,8 @@ public class QuestionService {
     public Integer countByModule(String module){
         return repository.countByModule(module);
     }
+    
+    public void deleteQuestionById(int id){
+        repository.deleteQuestionById(id);
+    }
 }

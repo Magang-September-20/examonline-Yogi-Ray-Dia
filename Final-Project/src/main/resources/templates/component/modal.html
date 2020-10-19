@@ -10,7 +10,6 @@
             </div>
             <form id="insertForm">
                 <div class="modal-body">
-
                     <label id="labelId">Id :</label>
                     <input type="text" id="textId" class="form-control">
                     <label id="labelQuestion">Question :</label>
@@ -25,11 +24,13 @@
                     <input type="text" id="textD" class="form-control">
                     <label id="labelAnswer">Answer :</label>
                     <input type="text" id="textAnswer" class="form-control">
-                    <label id="labelActive">Is_Active :</label>
-                    <input type="text" id="textActive" class="form-control">
+<!--                    <label id="labelActive">Is_Active :</label>
+                    <input type="text" id="textActive" class="form-control">-->
                     <label id="labelModule">Module :</label>
-                    <input type="text" id="textModule" class="form-control">
-
+                    <select class="form-control" id="textModule">
+                        <option>-- Select Module --</option>
+                        <option th:each = "as : ${modules}" th:value='${as.id}' th:text='${as.name}'></option>
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

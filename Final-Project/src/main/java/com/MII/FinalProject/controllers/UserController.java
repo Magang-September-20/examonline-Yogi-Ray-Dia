@@ -55,8 +55,10 @@ public class UserController {
     //Kok Error
     @GetMapping("/user-dashboard")//url or path
     public String userDashboard(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("modules", moduleService.getAll());
         model.addAttribute("module", new Module());
+        model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
         return checkRole(model, "user-dashboard");
     }
 
@@ -64,12 +66,15 @@ public class UserController {
     public String historyExam(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("exam", examService.getAllPerId(Integer.parseInt(auth.getName())));
+        model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
         return checkRole(model, "history-exam");
     }
 
     @GetMapping("/exam")//url or path
     public String exam(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("codes", new Code());
+        model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
         return checkRole(model, "exam");
     }
 
@@ -79,6 +84,7 @@ public class UserController {
         if (codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())) == 1) {
             codeService.updateUseCode(code.getCode());
             examService.updateUseCode(code.getCode());
+            model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
             return checkRole(model, "redirect:/start-exam/" + code);
         } else {
             return checkRole(model, "redirect:/exam");
@@ -96,7 +102,7 @@ public class UserController {
         model.addAttribute("code", code);
         return checkRole(model, "pre-exam");
     }
-    
+
     @GetMapping("/start-exam/{code}")//url or path
     public String startExam(@PathVariable("code") String code, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -166,10 +172,10 @@ public class UserController {
 
         return checkRole(model, "redirect:/exam");
     }
-    
+
     @ResponseBody
     @GetMapping("getQuestionById/{id}")
-    public List<Question> getById(@PathVariable("id") String id){
+    public List<Question> getById(@PathVariable("id") String id) {
         return questionService.getQuestionsWhere(id);
     }
 }

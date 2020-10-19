@@ -39,4 +39,9 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     @Transactional
     @Query(value = "UPDATE exam SET start=DATE_ADD(NOW(), INTERVAL 0 DAY) WHERE code=?1", nativeQuery = true)
     void updateUseCode(String code);
+    
+    @Transactional
+    @Query(value = "SELECT COUNT(*) FROM exam WHERE user=?1 AND start IS NULL", nativeQuery = true)
+    Integer countHistoryExam(int id);
+    
 }

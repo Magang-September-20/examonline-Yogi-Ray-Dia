@@ -97,7 +97,7 @@
                 <li th:classappend="${#httpServletRequest.getRequestURI() == '/history-exam' ? 'active has-sub':'has-sub'}">
                     <a href="/history-exam">
                         <i class="fas fa-table"></i>History Exam</a>
-                    <span class="inbox-num">3</span>
+                    <span class="inbox-num" th:text="${countHistoryExam}"></span>
                 </li>
                 <li>
                     <a th:href="@{/logout}">
