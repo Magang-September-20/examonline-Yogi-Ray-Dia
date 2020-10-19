@@ -112,30 +112,44 @@ and open the template in the editor.
                             var currentQuestion = 0;
                             var userAnswer = new Object();
                             var answer = new Array();
+                            localStorage.removeItem(-2);
+                            localStorage.removeItem(-1);
+                            localStorage.removeItem(-0);
                             function nextQuestion() {
-                                currentQuestion++;
                                 var radioValue = $("input[name='materialExampleRadios']:checked").val();
                                 if (radioValue) {
-                                    localStorage.setItem(currentQuestion, radioValue);
-                                    console.log(localStorage.getItem(currentQuestion));
+                                    var i = currentQuestion;
+                                    localStorage.setItem(i, radioValue);
                                 }
-                                $(".materialExampleRadios").prop("checked", false);
+                                currentQuestion++;
                                 //SET UNCHECK
                                 $("#a").prop("checked", false);
                                 $("#b").prop("checked", false);
                                 $("#c").prop("checked", false);
                                 $("#d").prop("checked", false);
                                 //SET CHECK
-                                $("#" + localStorage.getItem(currentQuestion) + "").prop("checked", true);
+                                if (localStorage.getItem(currentQuestion) !== null) {
+                                    var p = localStorage.getItem(currentQuestion);
+                                    $("#" + p + "").prop("checked", true);
+                                }
                                 renderQuestion();
                             }
                             ;
                             function prevQuestion() {
+                                var radioValue = $("input[name='materialExampleRadios']:checked").val();
+                                if (radioValue) {
+                                    var i = currentQuestion;
+                                    localStorage.setItem(i, radioValue);
+                                }
                                 currentQuestion--;
                                 $("#a").prop("checked", false);
                                 $("#b").prop("checked", false);
                                 $("#c").prop("checked", false);
                                 $("#d").prop("checked", false);
+                                //SET CHECK
+                                if (localStorage.getItem(currentQuestion) !== null) {
+                                    $("#" + localStorage.getItem(currentQuestion) + "").prop("checked", true);
+                                }
                                 renderQuestion();
                             }
                             ;
@@ -151,6 +165,11 @@ and open the template in the editor.
                                     $('#pilb').text("B. " + questions[i].b);
                                     $('#pilc').text("C. " + questions[i].c);
                                     $('#pild').text("D. " + questions[i].d);
+                                    //SET CHECK
+                                    if (localStorage.getItem(currentQuestion) !== null) {
+                                        var p = localStorage.getItem(currentQuestion);
+                                        $("#" + p + "").prop("checked", true);
+                                    }
                                 }
                             }
 //        function renderQuestion(){
