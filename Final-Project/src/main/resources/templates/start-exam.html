@@ -72,6 +72,21 @@ and open the template in the editor.
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
     <script type="text/javascript">
         var id = document.getElementById("module").value;
+        var questions = function () {
+        var tmp = null;
+        $.ajax({
+            'async': false,
+            'type': "GET",
+            'global': false,
+            'url': "../getQuestionById/"+id,
+            'data': {id: id},
+            'success': function (data) {
+                tmp = data;
+            }
+        });
+        return tmp;
+    }();
+//    console.log(questions);
         var currentQuestion = 0;
          function nextQuestion () {
             currentQuestion++;
@@ -82,42 +97,36 @@ and open the template in the editor.
             renderQuestion();
         };
         renderQuestion();
-        function renderQuestion() {
-            $(document).ready(function() {
-            $.ajax({
-            url: "../getQuestionById/" + id,
-            type: "GET",
-            data: {id: id},
-            success: function (data) {
-                for (var i = currentQuestion; i < currentQuestion+1; i++) {
+        
+        function renderQuestion(){
+            for (var i = currentQuestion; i < currentQuestion+1; i++) {
                     var j = 1+i;
                 $('#showQuestions').html(
-                        '<div class="d-flex flex-row align-items-center question-title mb-3">\n\
-                <h3 class="text-danger">'+j+'.</h3>\n\
-                <h5 class="mt-1 ml-2">' + data[i].question + '</h5>\n\
+                '<div class="d-flex flex-row align-items-center question-title mb-1">\n\
+                    <h3 class="text-danger">'+j+'.</h3>\n\
+                    <h5 class="mt-1 ml-2">' + questions[i].question + '</h5>\n\
                 </div>\n\
-                <form class="was - validated" onsubmit="selected(setLoca)">\n\
-                <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="a" id="a" value="A">\n\
-                <label class="form-check-label" for="a"><b>A. </b>' + data[i].a + '</label></div>\n\
-                <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="b" id="b" value="B">\n\
-                <label class="form-check-label" for="b"><b>B. </b>' + data[i].b + '</label></div>\n\
-                <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="c" id="c" value="C">\n\
-                <label class="form-check-label" for="c"><b>C. </b>' + data[i].c + '</label></div>\n\
-                <div class="form-check ml-3 mb-3">\n\
-                <input class="form-check-input" type="radio" name="d" id="d" value="D">\n\
-                <label class="form-check-label" for="d"><b>D. </b>' + data[i].d + '</label></div>\n\
+                <form action="" method="POST" class="was - validated">\n\
+                    <div class="form-check ml-3 mt-1">\n\
+                      <input type="radio" value="a" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">\n\
+                      <label class="form-check-label" for="materialUnchecked"><b>A. </b>' + questions[i].a + '</label>\n\
+                    </div>\n\
+                    <div class="form-check ml-3  mt-1">\n\
+                      <input type="radio" value="b" class="form-check-input" id="materialChecked" name="materialExampleRadios">\n\
+                      <label class="form-check-label" for="materialChecked"><b>B. </b>' + questions[i].b + '</label>\n\
+                    </div>\n\
+                    <div class="form-check ml-3 mt-1">\n\
+                      <input type="radio" value="c" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">\n\
+                      <label class="form-check-label" for="materialUnchecked"><b>C. </b>' + questions[i].c + '</label>\n\
+                    </div>\n\
+                    <div class="form-check ml-3 mt-1">\n\
+                      <input type="radio" value="d" class="form-check-input" id="materialChecked" name="materialExampleRadios">\n\
+                      <label class="form-check-label" for="materialChecked"><b>D. </b>' + questions[i].d + '</label>\n\
+                    </div>\n\
                 </form>');
                 }
-            },
-            error: function (errormessage) {
-                alert(errormessage);
-                }
-            });
-        });
-     };
+        }
+
     </script>
     <script>
         // Set the date we're counting down to

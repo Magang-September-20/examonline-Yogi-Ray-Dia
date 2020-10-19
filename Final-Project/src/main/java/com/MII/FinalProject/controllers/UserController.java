@@ -112,6 +112,7 @@ public class UserController {
         model.addAttribute("duration", moduleService.getById(new String(code).substring(0, 3)).getDuration());
         model.addAttribute("questions", questionService.getQuestionsWhere(new String(code).substring(0, 3)));
         model.addAttribute("id", new String(code).substring(0, 3));
+        model.addAttribute("code", code);
         return checkRole(model, "start-exam");
     }
 
