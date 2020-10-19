@@ -219,7 +219,7 @@ public class UserController {
 
         userAnswerService.updateExam(score, grade, code);
 
-        return checkRole(model, "exam-result" + code);
+        return checkRole(model, "redirect:/exam-result/" + code);
     }
 
     @GetMapping("/exam-result/{code}")//url or path
