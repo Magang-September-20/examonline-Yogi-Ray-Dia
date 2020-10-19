@@ -88,7 +88,7 @@ public class UserController {
             codeService.updateUseCode(code.getCode());
             examService.updateUseCode(code.getCode());
             model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
-            return checkRole(model, "redirect:/start-exam/" + code);
+            return checkRole(model, "redirect:/pre-exam/" + code);
         } else {
             return checkRole(model, "redirect:/exam");
         }
@@ -122,13 +122,12 @@ public class UserController {
     public String checkRole(Model model, String page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_USER\"]")) {
-//                System.out.println(auth.getName());
+            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_USER\"]") && userService.getById(Integer.parseInt(auth.getName())).getIsActive()) {
                 model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
                 model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
                 return page;
             } else {
-                return "redirect:/dashboard";
+                return "redirect:/login";
             }
         } else {
             return "login";

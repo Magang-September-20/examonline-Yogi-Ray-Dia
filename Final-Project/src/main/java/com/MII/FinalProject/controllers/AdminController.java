@@ -72,9 +72,6 @@ public class AdminController {
         model.addAttribute("modules", moduleService.getAll());
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
-        for (UserLocal userLocal : userLocalService.getAll()) {
-            System.out.println(userLocal.getEmail());
-        }
         return checkRole(model, "data-user");
     }
 
@@ -113,7 +110,7 @@ public class AdminController {
     public String checkRole(Model model, String page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
+            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]") && userService.getById(Integer.parseInt(auth.getName())).getIsActive()) {
                 model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
                 model.addAttribute("email", userService.getById(Integer.parseInt(auth.getName())).getEmail());
                 return page;
@@ -155,10 +152,14 @@ public class AdminController {
     @ResponseBody
     @PostMapping("/deleteQuestionById")
     public void deleteQuestionById(int id) {
-        System.out.println(id);
         questionService.deleteQuestionById(id);
     }
     
+    //CRUD User
+    @ResponseBody
+    @PostMapping("/updateUser")
+    public void updateUser(@RequestBody UserLocal local) {
+        userLocalService.updateUser(local.getIsActive(), local.getId());
+    }
     
-
 }

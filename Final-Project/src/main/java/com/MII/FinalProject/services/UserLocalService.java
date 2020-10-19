@@ -25,6 +25,10 @@ public class UserLocalService {
         return repository.findAll();
     }
     
+    public void updateUser(boolean isActive, int id) {
+        repository.updateUser(isActive, id);
+    }
+    
     public UserLocal getById(Integer id){
         return repository.findById(id).get();
     }

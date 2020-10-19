@@ -34,10 +34,7 @@
                                             <td th:text = "${as.name}"></td>
                                             <td th:text = "${as.email}"></td>
                                             <td>
-                                                <label class="switch">
-                                                    <input id="status" th:value="${as.isActive}" th:checked = "${as.isActive} ? 'checked' : ''" type="checkbox">
-                                                    <span class="slider round"></span>
-                                                </label>
+                                                <a th:onclick="|update(${as.id},${as.isActive})|" href="#" th:class = "${as.isActive} ? 'badge badge-sm badge-success text-white' : 'badge badge-sm badge-danger text-white'" th:text = "${as.isActive} ? 'Active' : 'Disable'"><span class="fas fa-edit"></span></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -58,22 +55,42 @@
             $(document).ready(function () {
                 $('#table').DataTable();
             });
-            var id = document.getElementById("status").value;
-            $(document).ready(function () {
-                //set initial state.
-                $('#status').val(id);
 
-                $('#status').change(function () {
-                    if (this.checked) {
-                        var returnVal = confirm("Are you sure?");
-                        $(this).prop("checked", returnVal);
-                    } else {
-                        var returnVal = confirm("Are you sure?");
-                        $(this).prop("", returnVal);
+            function update(id, active) {
+                var status;
+                if (active === false) {
+                    status = true;
+                } else{
+                    status = false;
+                }
+                var userLocal = new Object();
+                userLocal.isActive = status;
+                userLocal.id = id;
+                $.ajax({
+                    url: "/updateUser",
+                    method: "POST",
+                    data: JSON.stringify(userLocal),
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'User Status Updated!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        setTimeout(function () {
+                            window.location.reload(1);
+                        }, 1500);
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to Update'
+                        });
                     }
-                    $('#textbox1').val(this.checked);
                 });
-            });
+            }
         </script>
     </body>
 

@@ -23,7 +23,7 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     @Query(value = "SELECT COUNT(*) FROM exam WHERE has_passed=1", nativeQuery = true)
     Integer countCandidate();
     
-    @Query(value = "SELECT * FROM exam WHERE exam.user LIKE ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM exam WHERE start IS NOT NULL AND exam.user LIKE ?1", nativeQuery = true)
     public List<Exam> getPerId(Integer id);
     
     @Transactional
@@ -41,7 +41,7 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     void updateUseCode(String code);
     
     @Transactional
-    @Query(value = "SELECT COUNT(*) FROM exam WHERE user=?1 AND start IS NULL", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM exam WHERE user=?1 AND start IS NOT NULL", nativeQuery = true)
     Integer countHistoryExam(int id);
     
 }

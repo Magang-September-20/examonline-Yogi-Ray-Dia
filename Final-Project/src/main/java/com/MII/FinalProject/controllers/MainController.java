@@ -39,16 +39,16 @@ public class MainController {
 
     @Autowired
     LoginService loginService;
-    
+
     @Autowired
     RegisterService registerService;
-    
+
     @Autowired
     UserService userService;
-    
+
     @Autowired
     ExamService examService;
-    
+
     @Autowired
     QuestionService questionService;
 
@@ -61,10 +61,12 @@ public class MainController {
     public String login() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth.getName().equalsIgnoreCase("anonymousUser")) {
-            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]")) {
+            if (userService.getRole(Integer.parseInt(auth.getName())).equalsIgnoreCase("[\"ROLE_ADMIN\"]") && userService.getById(Integer.parseInt(auth.getName())).getIsActive()) {
                 return "redirect:dashboard";
-            } else {
+            } else if (userService.getById(Integer.parseInt(auth.getName())).getIsActive()) {
                 return "redirect:user-dashboard";
+            } else {
+                return "login";
             }
         } else {
             return "login";
@@ -120,5 +122,5 @@ public class MainController {
         }
         return authorities;
     }
-     
+
 }
