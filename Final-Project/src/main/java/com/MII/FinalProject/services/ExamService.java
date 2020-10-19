@@ -8,6 +8,7 @@ package com.MII.FinalProject.services;
 import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.repositories.CodeRepository;
 import com.MII.FinalProject.repositories.ExamRepository;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.List;
 import javax.mail.MessagingException;
@@ -91,5 +92,21 @@ public class ExamService {
     
     public Boolean getHasPassed(String code) {
         return er.getHasPassed(code);
+    }
+    
+    public Integer getDuration(String start, String end) {
+        return er.getDuration(start, end);
+    }
+    
+    public String getStart(String code) {
+        return er.getStart(code);
+    }
+    
+    public String getEnd(String code) {
+        return er.getEnd(code);
+    }
+    
+    public String subTime(String time) {
+        return er.subTime(time);
     }
 }

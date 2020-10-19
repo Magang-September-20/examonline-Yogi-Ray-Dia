@@ -17,8 +17,6 @@ import com.MII.FinalProject.services.QuestionService;
 import com.MII.FinalProject.services.UserAnswerService;
 import com.MII.FinalProject.services.UserService;
 import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -69,7 +67,8 @@ public class UserController {
     @GetMapping("/history-exam")//url or path
     public String historyExam(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("exam", examService.getAllPerId(Integer.parseInt(auth.getName())));
+        model.addAttribute("exam", examService.getAll());
+//        model.addAttribute("exam", examService.getAllPerId(Integer.parseInt(auth.getName())));
         model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
         return checkRole(model, "history-exam");
     }
@@ -87,7 +86,6 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())) == 1) {
             codeService.updateUseCode(code.getCode());
-            examService.updateUseCode(code.getCode());
             model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
             return checkRole(model, "redirect:/pre-exam/" + code);
         } else {
@@ -110,6 +108,7 @@ public class UserController {
     @GetMapping("/start-exam/{code}")//url or path
     public String startExam(@PathVariable("code") String code, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        examService.updateUseCode(code);
         model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
         model.addAttribute("countques", questionService.countByModule(new String(code).substring(0, 3)));
         model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
@@ -153,11 +152,11 @@ public class UserController {
         }
 
         //tomorrow's date
-        Date dt = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(dt);
-        c.add(Calendar.DATE, 1);
-        dt = c.getTime();
+//        Date dt = new Date();
+//        Calendar c = Calendar.getInstance();
+//        c.setTime(dt);
+//        c.add(Calendar.DATE, 1);
+//        dt = c.getTime();
 
         //user id
         UserLocal user = new UserLocal();
@@ -186,7 +185,7 @@ public class UserController {
     @GetMapping("/submit")
     public String calculateScore(Model model, @Validated Exam exam) {
         String code = exam.getCode() + "";
-//        code = "CPPcX1pgETeeCFVeFVMf";
+        code = "CPPcX1pgETeeCFVeFVMf";
         DecimalFormat df = new DecimalFormat("#");
         df.setMaximumFractionDigits(2);
         String codeId = code.substring(0, 3);
@@ -216,15 +215,16 @@ public class UserController {
         } else {
             userAnswerService.updateHasPassed(0, code);
         }
-
+        
         userAnswerService.updateExam(score, grade, code);
-
+        
+        
         return checkRole(model, "redirect:/exam-result/" + code);
     }
 
     @GetMapping("/exam-result/{code}")//url or path
     public String examResult(@PathVariable("code") String code, Model model) {
-//        code = "CPPcX1pgETeeCFVeFVMf";
+        code = "CPPcX1pgETeeCFVeFVMf";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
         model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
@@ -233,7 +233,16 @@ public class UserController {
         model.addAttribute("numberOfQuestions", questionService.countByModule(new String(code).substring(0, 3)));
         model.addAttribute("grade", examService.getGrade(code));
         model.addAttribute("hasPassed", examService.getHasPassed(code));
-//        model.addAttribute("duration", moduleService.getById(new String(code).substring(0, 3)).getDuration());
+        String start = examService.getStart(code);
+        String startSubbed = examService.subTime(start);
+        
+        String end = examService.getEnd(code);
+        String endSubbed = examService.subTime(end);
+        model.addAttribute("duration", examService.getDuration(startSubbed, endSubbed));
+        
+//        System.out.println(startSubbed);
+//        System.out.println(endSubbed);
+//        System.out.println(examService.getDuration(startSubbed, endSubbed));
         return checkRole(model, "exam-result");
     }
 
