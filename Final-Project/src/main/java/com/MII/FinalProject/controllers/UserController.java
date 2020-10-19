@@ -185,7 +185,7 @@ public class UserController {
     @GetMapping("/submit")
     public String calculateScore(Model model, @Validated Exam exam) {
         String code = exam.getCode() + "";
-        code = "CPPcX1pgETeeCFVeFVMf";
+//        code = "CPPcX1pgETeeCFVeFVMf";
         DecimalFormat df = new DecimalFormat("#");
         df.setMaximumFractionDigits(2);
         String codeId = code.substring(0, 3);
@@ -224,7 +224,7 @@ public class UserController {
 
     @GetMapping("/exam-result/{code}")//url or path
     public String examResult(@PathVariable("code") String code, Model model) {
-        code = "CPPcX1pgETeeCFVeFVMf";
+//        code = "CPPcX1pgETeeCFVeFVMf";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
         model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
