@@ -41,4 +41,5 @@ public class LoginService {
     public LoginOutput LoginNew(LoginInput login){
         return RT.postForObject(url+"login", login, LoginOutput.class);
     }
+    
 }

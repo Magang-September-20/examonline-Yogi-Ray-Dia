@@ -44,4 +44,12 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     @Query(value = "SELECT COUNT(*) FROM exam WHERE user=?1 AND start IS NOT NULL", nativeQuery = true)
     Integer countHistoryExam(int id);
     
+    @Query(value = "SELECT score FROM exam WHERE code = ?1", nativeQuery = true)
+    String getScore(String code);
+    
+    @Query(value = "SELECT grade FROM exam WHERE code = ?1", nativeQuery = true)
+    String getGrade(String code);
+    
+    @Query(value = "SELECT has_passed FROM exam WHERE code = ?1", nativeQuery = true)
+    Boolean getHasPassed(String code);
 }
