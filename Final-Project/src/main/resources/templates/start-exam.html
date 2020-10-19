@@ -85,7 +85,12 @@ and open the template in the editor.
                                 </form>
                             </div>
                         </div>
-                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary d-flex align-items-center btn-danger" type="button" onclick="prevQuestion()"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button><button class="btn btn-primary border-success align-items-center btn-success" onclick="nextQuestion()" type="button">Next<i class="fa fa-angle-right ml-2"></i></button></div>
+                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
+                            <!--<button id="btn" class="btn btn-primary d-flex align-items-center btn-danger" onclick="prevQuestion()" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button>-->
+                            <button id="prev" class="btn btn-primary border-success align-items-center btn-danger" onclick="prevQuestion()" type="button">Previous<i class="fa fa-angle-left ml-2"></i></button>
+                            <button id="next" class="btn btn-primary border-success align-items-center btn-success" onclick="nextQuestion()" type="button">Next<i class="fa fa-angle-right ml-2"></i></button>
+                            <button id="submit" class="btn btn-primary border-success align-items-center btn-primary" type="button">Finish <i class="fa fa-check ml-2"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,8 +137,8 @@ and open the template in the editor.
                                     $("#" + p + "").prop("checked", true);
                                 }
                                 renderQuestion();
-                            }
-                            ;
+                                btn(currentQuestion);
+                            };
                             function prevQuestion() {
                                 var radioValue = $("input[name='materialExampleRadios']:checked").val();
                                 if (radioValue) {
@@ -150,10 +155,24 @@ and open the template in the editor.
                                     $("#" + localStorage.getItem(currentQuestion) + "").prop("checked", true);
                                 }
                                 renderQuestion();
+                                btn(currentQuestion);
+                            };
+                            function btn(currentQuestion){
+                                if(currentQuestion === 0){
+                                    $("#prev").hide();
+                                }else{
+                                    $("#prev").show();
+                                }
+                                if(currentQuestion + 1 === questions.length){
+                                    $("#next").hide();
+                                    $("#submit").show();
+                                }else{
+                                    $("#next").show();
+                                    $("#submit").hide();
+                                }
                             }
-                            ;
                             renderQuestion();
-
+                            btn(currentQuestion);
                             function renderQuestion() {
                                 for (var i = currentQuestion; i < currentQuestion + 1; i++) {
                                     var j = 1 + i;
@@ -165,37 +184,7 @@ and open the template in the editor.
                                     $('#pilc').text("C. " + questions[i].c);
                                     $('#pild').text("D. " + questions[i].d);
                                 }
-
                             }
-//        function renderQuestion(){
-//            for (var i = currentQuestion; i < currentQuestion+1; i++) {
-//                    var j = 1+i;
-//                $('#showQuestions').html(
-//                '<div class="d-flex flex-row align-items-center question-title mb-1">\n\
-//                    <h3 class="text-danger">'+j+'.</h3>\n\
-//                    <h5 class="mt-1 ml-2">' + questions[i].question + '</h5>\n\
-//                </div>\n\
-//                <form action="" method="POST" class="was - validated">\n\
-//                    <div class="form-check ml-3 mt-1">\n\
-//                      <input type="radio" value="a" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">\n\
-//                      <label class="form-check-label" for="materialUnchecked"><b>A. </b>' + questions[i].a + '</label>\n\
-//                    </div>\n\
-//                    <div class="form-check ml-3  mt-1">\n\
-//                      <input type="radio" value="b" class="form-check-input" id="materialChecked" name="materialExampleRadios">\n\
-//                      <label class="form-check-label" for="materialChecked"><b>B. </b>' + questions[i].b + '</label>\n\
-//                    </div>\n\
-//                    <div class="form-check ml-3 mt-1">\n\
-//                      <input type="radio" value="c" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">\n\
-//                      <label class="form-check-label" for="materialUnchecked"><b>C. </b>' + questions[i].c + '</label>\n\
-//                    </div>\n\
-//                    <div class="form-check ml-3 mt-1">\n\
-//                      <input type="radio" value="d" class="form-check-input" id="materialChecked" name="materialExampleRadios">\n\
-//                      <label class="form-check-label" for="materialChecked"><b>D. </b>' + questions[i].d + '</label>\n\
-//                    </div>\n\
-//                </form>');
-//                }
-//        }
-
     </script>
     <script>
         // Set the date we're counting down to
