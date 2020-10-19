@@ -13,8 +13,9 @@ import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
 import com.MII.FinalProject.services.ModuleService;
 import com.MII.FinalProject.services.QuestionService;
+import com.MII.FinalProject.services.UserAnswerService;
 import com.MII.FinalProject.services.UserService;
-import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -51,6 +51,9 @@ public class UserController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    UserAnswerService userAnswerService;
 
     //Kok Error
     @GetMapping("/user-dashboard")//url or path
@@ -178,4 +181,44 @@ public class UserController {
     public List<Question> getById(@PathVariable("id") String id) {
         return questionService.getQuestionsWhere(id);
     }
+
+    @GetMapping("/submit")
+    public String calculateScore(Model model, String code) {
+//        code = "JAVozAWdJNAqeZtCPgFJ";
+
+        DecimalFormat df = new DecimalFormat("#");
+        df.setMaximumFractionDigits(2);
+        String codeId = code.substring(0, 3);
+//        System.out.println(userAnswerService.calculateScore(userAnswerService.getExamId(code)));
+
+        //scoring system
+        float userScore = userAnswerService.calculateScore(userAnswerService.getExamId(code));
+        float numberOfQuestions = moduleService.getNumberOfQuestions(codeId);
+        float score = Float.parseFloat(df.format(userScore / numberOfQuestions * 100));
+//        System.out.println(score);
+
+        String grade = "";
+        if (score >= 0 && score < 50) {
+            grade = "F";
+        } else if (score >= 50 && score < 60) {
+            grade = "D";
+        } else if (score >= 60 && score < 70) {
+            grade = "C";
+        } else if (score >= 70 && score < 90) {
+            grade = "B";
+        } else if (score >= 90 && score <= 100) {
+            grade = "A";
+        }
+
+        if (score >= 70) {
+            userAnswerService.updateHasPassed(1, code);
+        } else {
+            userAnswerService.updateHasPassed(0, code);
+        }
+
+        userAnswerService.updateExam(score, grade, code);
+
+        return checkRole(model, "redirect:/history-exam");
+    }
+
 }

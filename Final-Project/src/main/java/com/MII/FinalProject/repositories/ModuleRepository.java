@@ -7,6 +7,7 @@ package com.MII.FinalProject.repositories;
 
 import com.MII.FinalProject.entities.Module;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,4 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ModuleRepository extends JpaRepository<Module, String>{
     
+    @Query(value = "SELECT number_of_question FROM module WHERE id = ?1", nativeQuery= true)
+    Integer getNumberOfQuestions(String id);
 }
