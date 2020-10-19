@@ -65,21 +65,22 @@ and open the template in the editor.
                                     <h5 class="mt-1 ml-2" id="question"></h5>
                                 </div>
                                 <form id="frm" action="" method="POST" class="was - validated">
+                                    <input type="hidden" class="form-check-input" id="id">
                                     <div class="form-check ml-3 mt-1">
-                                        <input type="radio" value="a" class="form-check-input" id="inputa" name="materialExampleRadios">
-                                        <label class="form-check-label" for="materialUnchecked" id="a"><b>A. </b></label>
+                                        <input type="radio" value="a" class="form-check-input" id="a" name="materialExampleRadios">
+                                        <label class="form-check-label" for="materialUnchecked" id="pila"><b>A. </b></label>
                                     </div>
                                     <div class="form-check ml-3  mt-1">
-                                        <input type="radio" value="b" class="form-check-input" id="inputb" name="materialExampleRadios">
-                                        <label class="form-check-label" for="materialChecked" id="b"><b>B. </b>' + questions[i].b + '</label>
+                                        <input type="radio" value="b" class="form-check-input" id="b" name="materialExampleRadios">
+                                        <label class="form-check-label" for="materialChecked" id="pilb"><b>B. </b>' + questions[i].b + '</label>
                                     </div>
                                     <div class="form-check ml-3 mt-1">
-                                        <input type="radio" value="c" class="form-check-input" id="inputc" name="materialExampleRadios">
-                                        <label class="form-check-label" for="materialUnchecked" id="c"><b>C. </b>' + questions[i].c + '</label>
+                                        <input type="radio" value="c" class="form-check-input" id="c" name="materialExampleRadios">
+                                        <label class="form-check-label" for="materialUnchecked" id="pilc"><b>C. </b>' + questions[i].c + '</label>
                                     </div>
                                     <div class="form-check ml-3 mt-1">
-                                        <input type="radio" value="d" class="form-check-input" id="inputd" name="materialExampleRadios">
-                                        <label class="form-check-label" for="materialChecked"  id="d"><b>D. </b>' + questions[i].d + '</label>
+                                        <input type="radio" value="d" class="form-check-input" id="d" name="materialExampleRadios">
+                                        <label class="form-check-label" for="materialChecked"  id="pild"><b>D. </b>' + questions[i].d + '</label>
                                     </div>
                                 </form>
                             </div>
@@ -109,14 +110,32 @@ and open the template in the editor.
                                 return tmp;
                             }();
                             var currentQuestion = 0;
+                            var userAnswer = new Object();
+                            var answer = new Array();
                             function nextQuestion() {
                                 currentQuestion++;
-                                $("#inputa").prop("checked", false);
+                                var radioValue = $("input[name='materialExampleRadios']:checked").val();
+                                if (radioValue) {
+                                    localStorage.setItem(currentQuestion, radioValue);
+                                    console.log(localStorage.getItem(currentQuestion));
+                                }
+                                $(".materialExampleRadios").prop("checked", false);
+                                //SET UNCHECK
+                                $("#a").prop("checked", false);
+                                $("#b").prop("checked", false);
+                                $("#c").prop("checked", false);
+                                $("#d").prop("checked", false);
+                                //SET CHECK
+                                $("#" + localStorage.getItem(currentQuestion) + "").prop("checked", true);
                                 renderQuestion();
                             }
                             ;
                             function prevQuestion() {
                                 currentQuestion--;
+                                $("#a").prop("checked", false);
+                                $("#b").prop("checked", false);
+                                $("#c").prop("checked", false);
+                                $("#d").prop("checked", false);
                                 renderQuestion();
                             }
                             ;
@@ -126,11 +145,12 @@ and open the template in the editor.
                                 for (var i = currentQuestion; i < currentQuestion + 1; i++) {
                                     var j = 1 + i;
                                     $('#number').text(j + ".");
+                                    $('#id').val(questions[i].id);
                                     $('#question').text(questions[i].question);
-                                    $('#a').text("A. "+questions[i].a);
-                                    $('#b').text("B. "+questions[i].b);
-                                    $('#c').text("C. "+questions[i].c);
-                                    $('#d').text("D. "+questions[i].d);
+                                    $('#pila').text("A. " + questions[i].a);
+                                    $('#pilb').text("B. " + questions[i].b);
+                                    $('#pilc').text("C. " + questions[i].c);
+                                    $('#pild').text("D. " + questions[i].d);
                                 }
                             }
 //        function renderQuestion(){

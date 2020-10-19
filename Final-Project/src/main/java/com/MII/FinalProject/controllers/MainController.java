@@ -95,6 +95,7 @@ public class MainController {
             user.setId(userService.getId(input.getEmail()));
             user.setName(input.getName());
             user.setEmail(input.getEmail());
+            user.setIsActive(true);
             userService.save(user);
             return "redirect:/login";
         } else {
