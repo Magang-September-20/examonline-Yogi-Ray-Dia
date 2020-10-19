@@ -112,9 +112,8 @@ and open the template in the editor.
                             var currentQuestion = 0;
                             var userAnswer = new Object();
                             var answer = new Array();
-                            localStorage.removeItem(-2);
-                            localStorage.removeItem(-1);
-                            localStorage.removeItem(-0);
+                            //SET CHECK
+                            $("#" + localStorage.getItem(1) + "").prop("checked", true);
                             function nextQuestion() {
                                 var radioValue = $("input[name='materialExampleRadios']:checked").val();
                                 if (radioValue) {
@@ -165,12 +164,8 @@ and open the template in the editor.
                                     $('#pilb').text("B. " + questions[i].b);
                                     $('#pilc').text("C. " + questions[i].c);
                                     $('#pild').text("D. " + questions[i].d);
-                                    //SET CHECK
-                                    if (localStorage.getItem(currentQuestion) !== null) {
-                                        var p = localStorage.getItem(currentQuestion);
-                                        $("#" + p + "").prop("checked", true);
-                                    }
                                 }
+
                             }
 //        function renderQuestion(){
 //            for (var i = currentQuestion; i < currentQuestion+1; i++) {
