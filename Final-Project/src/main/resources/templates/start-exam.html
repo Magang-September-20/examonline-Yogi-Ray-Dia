@@ -65,7 +65,7 @@ and open the template in the editor.
                                     <h5 class="mt-1 ml-2" id="question"></h5>
                                 </div>
                                 <form id="frm" action="" method="POST" class="was - validated">
-                                    <input type="hidden" class="form-check-input" id="id">
+                                    <input type="hidden" class="form-check-input" id="id" th:field="*{code}" th:value="${code}">
                                     <div class="form-check ml-3 mt-1">
                                         <input type="radio" value="a" class="form-check-input" id="a" name="materialExampleRadios">
                                         <label class="form-check-label" for="materialUnchecked" id="pila"><b>A. </b></label>

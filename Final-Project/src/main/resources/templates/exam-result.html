@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Pre - Start Exam</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel="stylesheet" media="all">
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel="stylesheet" media="all">
+        <link href='../css/exam.css' rel="stylesheet" media="all">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="border">
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row justify-content-center align-items-center mcq">
+                                <img src="../images/mii_land.png"  height="69" width="300" /></span>
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom">
+                            <div>
+                                <div class="d-flex flex-row align-items-center question-title mb-3">
+                                    <input type="hidden" id="module" th:value="${id}">
+                                    <h3 class="ml-5 pl-4 text-danger"></h3>
+                                    <h5 class="mt-1 ml-2">Congratulations!</h5>
+                                </div>
+                                <form class="was-validated ml-5">
+                                    <div class="form-check ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios1">You have successfully completed the <b th:text="${module}"></b> Exam.</label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios2">Your name: <b th:text="${name}"></b></label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios2">Questions correct: <b th:text="${correct}"></b> / <b th:text="${numberOfQuestions}"></b></label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios2">Your score: <b th:text="${score}"></b></label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios2">Your grade: <b th:text="${grade}"></b></label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios2">You have <b th:class = "${hasPassed} ? 'text-success' : 'text-danger'"  th:text = "${hasPassed} ? 'PASSED' : 'FAILED'"></b> the exam.</label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios2">The history of this exam has been saved and could be viewed again at the History Exam menu.</label>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios2">Thank you for taking your exam with us!</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center align-items-center p-3 bg-white"><a class="btn btn-primary border-success align-items-center btn-success text-white" type="button" th:href='@{/history-exam}' >View Exam History<i class="fa fa-angle-right ml-2"></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+</html>

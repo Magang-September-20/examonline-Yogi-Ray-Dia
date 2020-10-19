@@ -37,7 +37,7 @@ public class ExamService {
     public Exam getById(Integer id) {
         return er.findById(id).get();
     }
-
+    
     public List<Exam> getAllPerId(Integer id) {
         return er.getPerId(id);
     }
@@ -81,4 +81,15 @@ public class ExamService {
         return er.countHistoryExam(id);
     }
     
+    public String getScore(String code) {
+        return er.getScore(code);
+    }
+    
+    public String getGrade(String code) {
+        return er.getGrade(code);
+    }
+    
+    public Boolean getHasPassed(String code) {
+        return er.getHasPassed(code);
+    }
 }

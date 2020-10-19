@@ -6,6 +6,7 @@
 package com.MII.FinalProject.controllers;
 
 import com.MII.FinalProject.entities.Code;
+import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.Module;
 import com.MII.FinalProject.entities.Question;
 import com.MII.FinalProject.entities.UserLocal;
@@ -183,9 +184,9 @@ public class UserController {
     }
 
     @GetMapping("/submit")
-    public String calculateScore(Model model, String code) {
-//        code = "JAVozAWdJNAqeZtCPgFJ";
-
+    public String calculateScore(Model model, @Validated Exam exam) {
+        String code = exam.getCode() + "";
+//        code = "CPPcX1pgETeeCFVeFVMf";
         DecimalFormat df = new DecimalFormat("#");
         df.setMaximumFractionDigits(2);
         String codeId = code.substring(0, 3);
@@ -218,7 +219,22 @@ public class UserController {
 
         userAnswerService.updateExam(score, grade, code);
 
-        return checkRole(model, "redirect:/history-exam");
+        return checkRole(model, "redirect:/exam-result/" + code);
+    }
+
+    @GetMapping("/exam-result/{code}")//url or path
+    public String examResult(@PathVariable("code") String code, Model model) {
+//        code = "CPPcX1pgETeeCFVeFVMf";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
+        model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
+        model.addAttribute("correct", userAnswerService.calculateScore(userAnswerService.getExamId(code)));
+        model.addAttribute("score", examService.getScore(code));
+        model.addAttribute("numberOfQuestions", questionService.countByModule(new String(code).substring(0, 3)));
+        model.addAttribute("grade", examService.getGrade(code));
+        model.addAttribute("hasPassed", examService.getHasPassed(code));
+//        model.addAttribute("duration", moduleService.getById(new String(code).substring(0, 3)).getDuration());
+        return checkRole(model, "exam-result");
     }
 
 }
