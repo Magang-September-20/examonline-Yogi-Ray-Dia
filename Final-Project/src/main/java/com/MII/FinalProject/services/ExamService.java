@@ -96,6 +96,8 @@ public class ExamService {
     
     public Exam getExam (String code) {
         return er.getExam(code);
+    }
+    
     public Integer getDuration(String start, String end) {
         return er.getDuration(start, end);
     }
