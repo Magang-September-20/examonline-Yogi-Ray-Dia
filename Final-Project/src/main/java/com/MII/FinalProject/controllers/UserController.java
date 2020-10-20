@@ -18,8 +18,6 @@ import com.MII.FinalProject.services.QuestionService;
 import com.MII.FinalProject.services.UserAnswerService;
 import com.MII.FinalProject.services.UserService;
 import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.http.HttpMethod.POST;
@@ -74,6 +72,7 @@ public class UserController {
     @GetMapping("/history-exam")//url or path
     public String historyExam(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        model.addAttribute("exam", examService.getAll());
         model.addAttribute("exam", examService.getAllPerId(Integer.parseInt(auth.getName())));
         model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
         return checkRole(model, "history-exam");
@@ -92,7 +91,6 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())) == 1) {
             codeService.updateUseCode(code.getCode());
-            examService.updateUseCode(code.getCode());
             model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
             return checkRole(model, "redirect:/pre-exam/" + code);
         } else {
@@ -115,6 +113,7 @@ public class UserController {
     @GetMapping("/start-exam/{code}")//url or path
     public String startExam(@PathVariable("code") String code, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        examService.updateUseCode(code);
         model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
         model.addAttribute("countques", questionService.countByModule(new String(code).substring(0, 3)));
         model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
@@ -145,32 +144,46 @@ public class UserController {
     public String registerExam(Model model, @Validated Module module) {
         Code code = new Code();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String userId = String.format("%03d", Integer.parseInt(auth.getName()));    //3 digit id
-
+        
+        String uniqueCode;
         //random string generator
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789"
                 + "abcdefghijklmnopqrstuvxyz";
         StringBuilder sb = new StringBuilder();
         int n = 17;
+        int character;
         while (n-- != 0) {
-            int character = (int) (Math.random() * AlphaNumericString.length());
+            character = (int) (Math.random() * AlphaNumericString.length());
             sb.append(AlphaNumericString.charAt(character));
         }
+        uniqueCode = module.getId() + sb.toString();
 
+        
+//        uniqueCode = "JAVB9Vaf5YsXBdLdVAzP";
+        while(codeService.checkCode(uniqueCode) >= 1) {
+            while (n-- != 0) {
+                character = (int) (Math.random() * AlphaNumericString.length());
+                sb.append(AlphaNumericString.charAt(character));
+            }
+            uniqueCode = module.getId() + sb.toString();
+            break;
+            
+        }
+        
         //tomorrow's date
-        Date dt = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(dt);
-        c.add(Calendar.DATE, 1);
-        dt = c.getTime();
+//        Date dt = new Date();
+//        Calendar c = Calendar.getInstance();
+//        c.setTime(dt);
+//        c.add(Calendar.DATE, 1);
+//        dt = c.getTime();
 
         //user id
         UserLocal user = new UserLocal();
         user.setId(Integer.parseInt(auth.getName()));
 
         //table Code
-        code.setCode(module.getId() + sb.toString());
+        code.setCode(uniqueCode);
         code.setModule(module);
         code.setIsSent(false);
         code.setIsUsed(false);
@@ -229,9 +242,10 @@ public class UserController {
         } else {
             userAnswerService.updateHasPassed(0, code);
         }
-
+        
         userAnswerService.updateExam(score, grade, code);
-
+        
+        
         return checkRole(model, "redirect:/exam-result/" + code);
     }
 
@@ -246,7 +260,16 @@ public class UserController {
         model.addAttribute("numberOfQuestions", questionService.countByModule(new String(code).substring(0, 3)));
         model.addAttribute("grade", examService.getGrade(code));
         model.addAttribute("hasPassed", examService.getHasPassed(code));
-//        model.addAttribute("duration", moduleService.getById(new String(code).substring(0, 3)).getDuration());
+        String start = examService.getStart(code);
+        String startSubbed = examService.subTime(start);
+        
+        String end = examService.getEnd(code);
+        String endSubbed = examService.subTime(end);
+        model.addAttribute("duration", examService.getDuration(startSubbed, endSubbed));
+        
+//        System.out.println(startSubbed);
+//        System.out.println(endSubbed);
+//        System.out.println(examService.getDuration(startSubbed, endSubbed));
         return checkRole(model, "exam-result");
     }
 

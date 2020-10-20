@@ -44,4 +44,7 @@ public interface CodeRepository extends JpaRepository<Code, String>{
     @Transactional
     @Query(value = "UPDATE code SET is_used=1 WHERE code=?1", nativeQuery = true)
     void updateUseCode(String code);
+    
+    @Query(value ="SELECT COUNT(*) FROM code WHERE code=?1", nativeQuery = true)
+    Integer checkCode(String code);
 }

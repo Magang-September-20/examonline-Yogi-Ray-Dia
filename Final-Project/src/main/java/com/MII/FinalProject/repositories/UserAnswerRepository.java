@@ -27,7 +27,7 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Integer>
     
     @Modifying
     @Transactional
-    @Query(value = "UPDATE exam SET score = ?1, grade = ?2 WHERE exam.code = ?3", nativeQuery = true)
+    @Query(value = "UPDATE exam SET score = ?1, grade = ?2, end = DATE_ADD(NOW(), INTERVAL 0 DAY) WHERE exam.code = ?3", nativeQuery = true)
     void updateExam(Float score, String grade, String code);
     
     @Modifying

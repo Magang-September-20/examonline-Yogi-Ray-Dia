@@ -47,4 +47,9 @@ public class CodeService {
     public void updateUseCode(String code){
        repository.updateUseCode(code);
     }
+    
+    public Integer checkCode(String code) {
+        return repository.checkCode(code);
+    }
+    
 }
