@@ -138,19 +138,33 @@ public class UserController {
     public String registerExam(Model model, @Validated Module module) {
         Code code = new Code();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String userId = String.format("%03d", Integer.parseInt(auth.getName()));    //3 digit id
-
+        
+        String uniqueCode;
         //random string generator
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789"
                 + "abcdefghijklmnopqrstuvxyz";
         StringBuilder sb = new StringBuilder();
         int n = 17;
+        int character;
         while (n-- != 0) {
-            int character = (int) (Math.random() * AlphaNumericString.length());
+            character = (int) (Math.random() * AlphaNumericString.length());
             sb.append(AlphaNumericString.charAt(character));
         }
+        uniqueCode = module.getId() + sb.toString();
 
+        
+//        uniqueCode = "JAVB9Vaf5YsXBdLdVAzP";
+        while(codeService.checkCode(uniqueCode) >= 1) {
+            while (n-- != 0) {
+                character = (int) (Math.random() * AlphaNumericString.length());
+                sb.append(AlphaNumericString.charAt(character));
+            }
+            uniqueCode = module.getId() + sb.toString();
+            break;
+            
+        }
+        
         //tomorrow's date
 //        Date dt = new Date();
 //        Calendar c = Calendar.getInstance();
@@ -163,7 +177,7 @@ public class UserController {
         user.setId(Integer.parseInt(auth.getName()));
 
         //table Code
-        code.setCode(module.getId() + sb.toString());
+        code.setCode(uniqueCode);
         code.setModule(module);
         code.setIsSent(false);
         code.setIsUsed(false);
