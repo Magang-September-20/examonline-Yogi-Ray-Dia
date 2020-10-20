@@ -64,7 +64,7 @@ and open the template in the editor.
                                     <h3 class="text-danger" id="number">.</h3>
                                     <h5 class="mt-1 ml-2" id="question"></h5>
                                 </div>
-                                <form id="frm" action="" method="POST" class="was - validated">
+                                <form id="frm" th:action="@{/submit}" method="POST" class="was - validated">
                                     <input type="hidden" class="form-check-input" id="id" th:field="*{code}" th:value="${code}">
                                     <div class="form-check ml-3 mt-1">
                                         <input type="radio" value="a" class="form-check-input" id="a" name="materialExampleRadios">
@@ -89,7 +89,7 @@ and open the template in the editor.
                             <!--<button id="btn" class="btn btn-primary d-flex align-items-center btn-danger" onclick="prevQuestion()" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button>-->
                             <button id="prev" class="btn btn-primary border-success align-items-center btn-danger" onclick="prevQuestion()" type="button">Previous<i class="fa fa-angle-left ml-2"></i></button>
                             <button id="next" class="btn btn-primary border-success align-items-center btn-success" onclick="nextQuestion()" type="button">Next<i class="fa fa-angle-right ml-2"></i></button>
-                            <button id="submit" class="btn btn-primary border-success align-items-center btn-primary" type="button">Finish <i class="fa fa-check ml-2"></i></button>
+                            <button id="submit" class="btn btn-primary border-success align-items-center btn-primary" type="submit" >Finish <i class="fa fa-check ml-2"></i></button>
                         </div>
                     </div>
                 </div>
@@ -190,7 +190,7 @@ and open the template in the editor.
         // Set the date we're counting down to
         var d = new Date();
         var v = new Date();
-        v.setMinutes(d.getMinutes() + 40);
+        v.setMinutes(d.getMinutes() + 1);
         // Update the count down every 1 second
         var x = setInterval(function () {
 
@@ -207,6 +207,7 @@ and open the template in the editor.
             if (distance < 0) {
                 clearInterval(x);
                 document.getElementById("demo").innerHTML = "EXPIRED";
+                window.location("/exam-result/JAV"); //uji coba
             }
         }, 1000);
     </script>
