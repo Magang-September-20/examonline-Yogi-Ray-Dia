@@ -67,8 +67,8 @@ public class UserController {
     @GetMapping("/history-exam")//url or path
     public String historyExam(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("exam", examService.getAll());
-//        model.addAttribute("exam", examService.getAllPerId(Integer.parseInt(auth.getName())));
+//        model.addAttribute("exam", examService.getAll());
+        model.addAttribute("exam", examService.getAllPerId(Integer.parseInt(auth.getName())));
         model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
         return checkRole(model, "history-exam");
     }
