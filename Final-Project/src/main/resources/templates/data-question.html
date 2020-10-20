@@ -171,7 +171,7 @@
                 } else {
                     Simpan = 'Updated';
                 }
-
+                console.log(JSON.stringify(question));
                 $.ajax({
 
                     url: "/saveQuestion",
@@ -185,7 +185,8 @@
                             title: 'Data successfull ' + Simpan,
                             showConfirmButton: false,
                             timer: 1500
-                        })
+                        });
+                         $('#questionModal').modal('toggle');
                         document.getElementById('insertForm').reset();
                     },
                     error: function (errormessage) {

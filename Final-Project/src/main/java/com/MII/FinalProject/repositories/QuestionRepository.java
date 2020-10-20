@@ -27,7 +27,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Integer countByModule(String module);
     
     @Transactional
-    @Query(value = "SELECT * FROM question WHERE module=?1 AND is_active=1", nativeQuery = true)
+    @Query(value = "SELECT * FROM question WHERE module=?1 AND is_active=1 ORDER BY RAND() LIMIT 20;", nativeQuery = true)
     public List<Question> getQuestionWhere(String id);
     
     @Transactional

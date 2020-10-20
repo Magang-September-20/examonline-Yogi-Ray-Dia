@@ -58,6 +58,8 @@ and open the template in the editor.
                             </div>
                         </div>
                         <input type="hidden" id="module" th:value="${id}">
+                        <input type="hidden" id="exam" th:value="${exam}">
+                        <input type="hidden" id="code" th:value="${code}">
                         <div class="question bg-white p-3 border-bottom">
                             <div id="showQuestions">
                                 <div class="d-flex flex-row align-items-center question-title mb-1">
@@ -65,7 +67,6 @@ and open the template in the editor.
                                     <h5 class="mt-1 ml-2" id="question"></h5>
                                 </div>
                                 <form id="frm" action="" method="POST" class="was - validated">
-                                    <input type="hidden" class="form-check-input" id="id" th:field="*{code}" th:value="${code}">
                                     <div class="form-check ml-3 mt-1">
                                         <input type="radio" value="a" class="form-check-input" id="a" name="materialExampleRadios">
                                         <label class="form-check-label" for="materialUnchecked" id="pila"><b>A. </b></label>
@@ -86,8 +87,7 @@ and open the template in the editor.
                             </div>
                         </div>
                         <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
-                            <!--<button id="btn" class="btn btn-primary d-flex align-items-center btn-danger" onclick="prevQuestion()" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button>-->
-                            <button id="prev" class="btn btn-primary border-success align-items-center btn-danger" onclick="prevQuestion()" type="button">Previous<i class="fa fa-angle-left ml-2"></i></button>
+                            <button id="prev" class="btn btn-primary border-success align-items-center btn-danger" onclick="prevQuestion()" type="button"><i class="fa fa-angle-left ml-2"></i>&nbsp;Previous</button>
                             <button id="next" class="btn btn-primary border-success align-items-center btn-success" onclick="nextQuestion()" type="button">Next<i class="fa fa-angle-right ml-2"></i></button>
                             <button id="submit" class="btn btn-primary border-success align-items-center btn-primary" type="button">Finish <i class="fa fa-check ml-2"></i></button>
                         </div>
@@ -98,93 +98,174 @@ and open the template in the editor.
     </body>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script type="text/javascript">
-                            var id = document.getElementById("module").value;
-                            var questions = function () {
-                                var tmp = null;
-                                $.ajax({
-                                    'async': false,
-                                    'type': "GET",
-                                    'global': false,
-                                    'url': "../getQuestionById/" + id,
-                                    'data': {id: id},
-                                    'success': function (data) {
-                                        tmp = data;
+                                localStorage.clear();
+                                function disableF5(e) {
+                                    if ((e.which || e.keyCode) === 116)
+                                        e.preventDefault();
+                                }
+                                ;
+                                /* jQuery < 1.7 */
+                                $(document).bind("keydown", disableF5);
+                                /* OR jQuery >= 1.7 */
+                                $(document).on("keydown", disableF5);
+                                var module = document.getElementById("module").value;
+                                var code = document.getElementById("code").value;
+                                var questions = function () {
+                                    var tmp = null;
+                                    $.ajax({
+                                        'async': false,
+                                        'type': "GET",
+                                        'global': false,
+                                        'url': "../getQuestionById/" + module,
+                                        'data': {id: module},
+                                        'success': function (data) {
+                                            tmp = data;
+                                        }
+                                    });
+                                    return tmp;
+                                }();
+                                var currentQuestion = 0;
+                                var userAnswer = [];
+                                //SET CHECK
+                                $("#" + localStorage.getItem(0) + "").prop("checked", true);
+                                function nextQuestion() {
+                                    var radioValue = $("input[name='materialExampleRadios']:checked").val();
+                                    var i = currentQuestion;
+                                    if (radioValue) {
+                                        localStorage.setItem(i, radioValue);
+                                        userAnswer.push({
+                                            "userAnswer": radioValue,
+                                            "question": questions[i].id,
+                                            "exam": parseInt($("#exam").val())
+                                        });
+                                    } else {
+                                        localStorage.setItem(i, radioValue);
+                                        userAnswer.push({
+                                            "userAnswer": null,
+                                            "question": questions[i].id,
+                                            "exam": parseInt($("#exam").val())
+                                        });
                                     }
+                                    currentQuestion++;
+                                    //SET UNCHECK
+                                    $("#a").prop("checked", false);
+                                    $("#b").prop("checked", false);
+                                    $("#c").prop("checked", false);
+                                    $("#d").prop("checked", false);
+                                    //SET CHECK
+                                    if (localStorage.getItem(currentQuestion) !== null) {
+                                        var p = localStorage.getItem(currentQuestion);
+                                        $("#" + p + "").prop("checked", true);
+                                    }
+                                    renderQuestion();
+                                    btn(currentQuestion);
+                                }
+                                ;
+                                function prevQuestion() {
+                                    var radioValue = $("input[name='materialExampleRadios']:checked").val();
+                                    var i = currentQuestion;
+                                    if (radioValue) {
+                                        localStorage.setItem(i, radioValue);
+                                        userAnswer.push({
+                                            "userAnswer": radioValue,
+                                            "question": questions[i].id,
+                                            "exam": parseInt($("#exam").val())
+                                        });
+//                                        console.log(JSON.stringify(userAnswer));
+                                    } else {
+                                        localStorage.setItem(i, radioValue);
+                                        userAnswer.push({
+                                            "userAnswer": null,
+                                            "question": questions[i].id,
+                                            "exam": parseInt($("#exam").val())
+                                        });
+                                    }
+                                    currentQuestion--;
+                                    $("#a").prop("checked", false);
+                                    $("#b").prop("checked", false);
+                                    $("#c").prop("checked", false);
+                                    $("#d").prop("checked", false);
+                                    //SET CHECK
+                                    if (localStorage.getItem(currentQuestion) !== null) {
+                                        $("#" + localStorage.getItem(currentQuestion) + "").prop("checked", true);
+                                    }
+                                    renderQuestion();
+                                    btn(currentQuestion);
+                                }
+                                ;
+                                function btn(currentQuestion) {
+                                    if (currentQuestion === 0) {
+                                        $("#prev").hide();
+                                    } else {
+                                        $("#prev").show();
+                                    }
+                                    if (currentQuestion + 1 === questions.length) {
+                                        $("#next").hide();
+                                        $("#submit").show();
+                                    } else {
+                                        $("#next").show();
+                                        $("#submit").hide();
+                                    }
+                                }
+                                renderQuestion();
+                                btn(currentQuestion);
+                                function renderQuestion() {
+                                    for (var i = currentQuestion; i < currentQuestion + 1; i++) {
+                                        var j = 1 + i;
+                                        $('#number').text(j + ".");
+                                        $('#question').text(questions[i].question);
+                                        $('#pila').text("A. " + questions[i].a);
+                                        $('#pilb').text("B. " + questions[i].b);
+                                        $('#pilc').text("C. " + questions[i].c);
+                                        $('#pild').text("D. " + questions[i].d);
+                                    }
+                                }
+                                $("#submit").click(function () {
+                                    var radioValue = $("input[name='materialExampleRadios']:checked").val();
+                                    var i = currentQuestion;
+                                    if (radioValue) {
+                                        localStorage.setItem(i, radioValue);
+                                        userAnswer.push({
+                                            "userAnswer": radioValue,
+                                            "question": questions[i].id,
+                                            "exam": parseInt($("#exam").val())
+                                        });
+                                    } else {
+                                        userAnswer.push({
+                                            "userAnswer": null,
+                                            "question": questions[i].id,
+                                            "exam": parseInt($("#exam").val())
+                                        });
+                                    }
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "You want be finish the exam!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes'
+                                    }).then((result) => {
+                                        for (var j = 0; j < questions.length; j++) {
+                                            $.ajax({
+                                                url: "/saveAnswer",
+                                                method: "POST",
+                                                data: JSON.stringify(userAnswer[j]),
+                                                contentType: "application/json; charset=utf-8",
+                                                success: function () {
+                                                },
+                                                error: function (errormessage) {
+                                                    console.log(errormessage.responseText);
+                                                }
+                                            });
+                                            console.log(JSON.stringify(userAnswer[j]));
+                                            window.location.replace("/exam-result/" + code);
+                                        }
+                                    });
                                 });
-                                return tmp;
-                            }();
-                            var currentQuestion = 0;
-                            var userAnswer = new Object();
-                            var answer = new Array();
-                            //SET CHECK
-                            $("#" + localStorage.getItem(0) + "").prop("checked", true);
-                            function nextQuestion() {
-                                var radioValue = $("input[name='materialExampleRadios']:checked").val();
-                                if (radioValue) {
-                                    var i = currentQuestion;
-                                    localStorage.setItem(i, radioValue);
-                                }
-                                currentQuestion++;
-                                //SET UNCHECK
-                                $("#a").prop("checked", false);
-                                $("#b").prop("checked", false);
-                                $("#c").prop("checked", false);
-                                $("#d").prop("checked", false);
-                                //SET CHECK
-                                if (localStorage.getItem(currentQuestion) !== null) {
-                                    var p = localStorage.getItem(currentQuestion);
-                                    $("#" + p + "").prop("checked", true);
-                                }
-                                renderQuestion();
-                                btn(currentQuestion);
-                            };
-                            function prevQuestion() {
-                                var radioValue = $("input[name='materialExampleRadios']:checked").val();
-                                if (radioValue) {
-                                    var i = currentQuestion;
-                                    localStorage.setItem(i, radioValue);
-                                }
-                                currentQuestion--;
-                                $("#a").prop("checked", false);
-                                $("#b").prop("checked", false);
-                                $("#c").prop("checked", false);
-                                $("#d").prop("checked", false);
-                                //SET CHECK
-                                if (localStorage.getItem(currentQuestion) !== null) {
-                                    $("#" + localStorage.getItem(currentQuestion) + "").prop("checked", true);
-                                }
-                                renderQuestion();
-                                btn(currentQuestion);
-                            };
-                            function btn(currentQuestion){
-                                if(currentQuestion === 0){
-                                    $("#prev").hide();
-                                }else{
-                                    $("#prev").show();
-                                }
-                                if(currentQuestion + 1 === questions.length){
-                                    $("#next").hide();
-                                    $("#submit").show();
-                                }else{
-                                    $("#next").show();
-                                    $("#submit").hide();
-                                }
-                            }
-                            renderQuestion();
-                            btn(currentQuestion);
-                            function renderQuestion() {
-                                for (var i = currentQuestion; i < currentQuestion + 1; i++) {
-                                    var j = 1 + i;
-                                    $('#number').text(j + ".");
-                                    $('#id').val(questions[i].id);
-                                    $('#question').text(questions[i].question);
-                                    $('#pila').text("A. " + questions[i].a);
-                                    $('#pilb').text("B. " + questions[i].b);
-                                    $('#pilc').text("C. " + questions[i].c);
-                                    $('#pild').text("D. " + questions[i].d);
-                                }
-                            }
     </script>
     <script>
         // Set the date we're counting down to
@@ -208,6 +289,7 @@ and open the template in the editor.
                 clearInterval(x);
                 document.getElementById("demo").innerHTML = "EXPIRED";
             }
-        }, 1000);
+        }
+        , 1000);
     </script>
 </html>

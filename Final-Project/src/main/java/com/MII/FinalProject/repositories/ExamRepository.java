@@ -52,4 +52,7 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     
     @Query(value = "SELECT has_passed FROM exam WHERE code = ?1", nativeQuery = true)
     Boolean getHasPassed(String code);
+    
+    @Query(value = "SELECT * FROM exam WHERE code = ?1", nativeQuery = true)
+    Exam getExam(String code);
 }

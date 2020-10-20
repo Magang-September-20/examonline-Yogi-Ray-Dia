@@ -92,4 +92,8 @@ public class ExamService {
     public Boolean getHasPassed(String code) {
         return er.getHasPassed(code);
     }
+    
+    public Exam getExam (String code) {
+        return er.getExam(code);
+    }
 }

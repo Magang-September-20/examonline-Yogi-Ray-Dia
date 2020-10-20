@@ -25,8 +25,8 @@ public class UserAnswerService {
         return uaR.findAll();
     }
 
-    public void save(UserAnswer answer) {
-        uaR.save(answer);
+    public UserAnswer save(UserAnswer answer) {
+        return uaR.save(answer);
     }
     
     public Integer calculateScore(Integer exam) {

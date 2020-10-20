@@ -36,7 +36,7 @@ and open the template in the editor.
                                         <label class="form-check-label" for="exampleRadios1">Welcome to online exam, please read exam instructions below :</label>
                                     </div>
                                     <div class="form-check ml-3 mb-3">
-                                        <label class="form-check-label" for="exampleRadios2">1. Exam has total <b th:text="${countques}"></b> questions</label>
+                                        <label class="form-check-label" for="exampleRadios2">1. Exam has total <b>20</b> questions</label>
                                     </div>
                                     <div class="form-check ml-3 mb-3">
                                         <label class="form-check-label" for="exampleRadios2">2. Total time for exam is <b th:text="${duration}"></b> minutes</label>
@@ -61,4 +61,7 @@ and open the template in the editor.
     </body>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+    <script type="text/javascript">
+        localStorage.clear();
+    </script>
 </html>

@@ -9,6 +9,7 @@ import com.MII.FinalProject.entities.Code;
 import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.Module;
 import com.MII.FinalProject.entities.Question;
+import com.MII.FinalProject.entities.UserAnswer;
 import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
@@ -21,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.http.HttpMethod.POST;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -116,6 +121,7 @@ public class UserController {
         model.addAttribute("duration", moduleService.getById(new String(code).substring(0, 3)).getDuration());
         model.addAttribute("questions", questionService.getQuestionsWhere(new String(code).substring(0, 3)));
         model.addAttribute("id", new String(code).substring(0, 3));
+        model.addAttribute("exam", examService.getExam(code).getId());
         model.addAttribute("code", code);
         return checkRole(model, "start-exam");
     }
@@ -181,6 +187,13 @@ public class UserController {
     @GetMapping("getQuestionById/{id}")
     public List<Question> getById(@PathVariable("id") String id) {
         return questionService.getQuestionsWhere(id);
+    }
+
+    @ResponseBody
+//    @RequestMapping( value ="/saveAnswer", method = RequestMethod.POST)
+    @PostMapping("/saveAnswer")
+    public UserAnswer saveQuestion(@RequestBody UserAnswer userAnswer) {
+            return userAnswerService.save(userAnswer);
     }
 
     @GetMapping("/submit")
