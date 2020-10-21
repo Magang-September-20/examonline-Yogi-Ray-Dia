@@ -55,3 +55,7 @@ label.radio input:checked+span {
     outline: 0 !important;
     box-shadow: none !important
 }
+
+.custom {
+    width:35px !important;
+}

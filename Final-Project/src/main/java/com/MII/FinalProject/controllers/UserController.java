@@ -152,25 +152,17 @@ public class UserController {
                 + "abcdefghijklmnopqrstuvxyz";
         StringBuilder sb = new StringBuilder();
         int n = 17;
-        int character;
-        while (n-- != 0) {
-            character = (int) (Math.random() * AlphaNumericString.length());
-            sb.append(AlphaNumericString.charAt(character));
-        }
-        uniqueCode = module.getId() + sb.toString();
-
-        
-//        uniqueCode = "JAVB9Vaf5YsXBdLdVAzP";
-        while(codeService.checkCode(uniqueCode) >= 1) {
+        do {
             while (n-- != 0) {
-                character = (int) (Math.random() * AlphaNumericString.length());
+                int character = (int) (Math.random() * AlphaNumericString.length());
                 sb.append(AlphaNumericString.charAt(character));
             }
             uniqueCode = module.getId() + sb.toString();
-            break;
-            
         }
+        while (codeService.checkCode(uniqueCode) >= 1);
         
+        
+//        uniqueCode = "JAVB9Vaf5YsXBdLdVAzP";
         //tomorrow's date
 //        Date dt = new Date();
 //        Calendar c = Calendar.getInstance();
