@@ -9,6 +9,9 @@ and open the template in the editor.
         <title>Start Exam</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Favicons -->
+        <link href="../assets/img/mii.png" rel="icon">
+        <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
         <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel="stylesheet" media="all">
         <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel="stylesheet" media="all">
         <link href='../css/exam.css' rel="stylesheet" media="all">
@@ -16,7 +19,7 @@ and open the template in the editor.
     <body>
         <div class="container mt-5">
             <div class="row">
-                <div class="fixed-top mt-3 ml-3 col-md-3 col-lg-3">
+                <div class="col-md-3 col-lg-3">
                     <div class="border">
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row align-items-center question-title mb-1">
@@ -24,7 +27,7 @@ and open the template in the editor.
                                 <h5 class="mt-1 ml-2">Information</h5>
                             </div>
                         </div>
-                        <div class="question bg-white p-3 border-bottom">
+                        <div class="question bg-white p-2 border-bottom">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="input-group">
@@ -47,10 +50,17 @@ and open the template in the editor.
                                 </div>
                             </div>
                         </div>
+                        <div class="bg-white p-3 mt-2 border-bottom">
+                            <div id="navigation">
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title mb-1">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-lg-3"><</div>
-                <div class="col-md-8 col-lg-8">
+                <div class="col-md-9 col-lg-9">
                     <div class="border">
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row justify-content-between align-items-center mcq">
@@ -130,39 +140,28 @@ var userAnswer = [];
 //SET CHECK
 $("#" + localStorage.getItem(0) + "").prop("checked", true);
 function nextQuestion() {
-    var radioValue = $("input[name='materialExampleRadios']:checked").val();
-    var i = currentQuestion;
-    if (radioValue) {
-        localStorage.setItem(i, radioValue);
-        userAnswer.push({
-            "userAnswer": radioValue,
-            "question": questions[i].id,
-            "exam": parseInt($("#exam").val())
-        });
-    } else {
-        localStorage.setItem(i, radioValue);
-        userAnswer.push({
-            "userAnswer": null,
-            "question": questions[i].id,
-            "exam": parseInt($("#exam").val())
-        });
-    }
+    setlocalStorage();
+    var i = currentQuestion + 1;
+    $("#" + i + "").removeClass('btn-success text-white');
+    var number = currentQuestion + 2;
+    $("#" + number + "").addClass('btn-success text-white');
     currentQuestion++;
-    //SET UNCHECK
-    $("#a").prop("checked", false);
-    $("#b").prop("checked", false);
-    $("#c").prop("checked", false);
-    $("#d").prop("checked", false);
-    //SET CHECK
-    if (localStorage.getItem(currentQuestion) !== null) {
-        var p = localStorage.getItem(currentQuestion);
-        $("#" + p + "").prop("checked", true);
-    }
+    renderRadio();
     renderQuestion();
     btn(currentQuestion);
 }
 ;
 function prevQuestion() {
+    setlocalStorage();
+    var i = currentQuestion + 1;
+    $("#" + i + "").removeClass('btn-success text-white');
+    $("#" + currentQuestion + "").addClass('btn-success text-white');
+    currentQuestion--;
+    renderRadio();
+    renderQuestion();
+    btn(currentQuestion);
+};
+function setlocalStorage(){
     var radioValue = $("input[name='materialExampleRadios']:checked").val();
     var i = currentQuestion;
     if (radioValue) {
@@ -181,7 +180,9 @@ function prevQuestion() {
             "exam": parseInt($("#exam").val())
         });
     }
-    currentQuestion--;
+}
+
+function renderRadio(){
     $("#a").prop("checked", false);
     $("#b").prop("checked", false);
     $("#c").prop("checked", false);
@@ -190,10 +191,7 @@ function prevQuestion() {
     if (localStorage.getItem(currentQuestion) !== null) {
         $("#" + localStorage.getItem(currentQuestion) + "").prop("checked", true);
     }
-    renderQuestion();
-    btn(currentQuestion);
 }
-;
 function btn(currentQuestion) {
     if (currentQuestion === 0) {
         $("#prev").hide();
@@ -210,6 +208,7 @@ function btn(currentQuestion) {
 }
 renderQuestion();
 btn(currentQuestion);
+renderNavigation();
 function renderQuestion() {
     for (var i = currentQuestion; i < currentQuestion + 1; i++) {
         var j = 1 + i;
@@ -222,24 +221,28 @@ function renderQuestion() {
     }
 }
 
-function finishExam(){
-    var radioValue = $("input[name='materialExampleRadios']:checked").val();
-    var i = currentQuestion;
-    if (radioValue) {
-        localStorage.setItem(i, radioValue);
-        userAnswer.push({
-            "userAnswer": radioValue,
-            "question": questions[i].id,
-            "exam": parseInt($("#exam").val())
-        });
-    } else {
-        userAnswer.push({
-            "userAnswer": null,
-            "question": questions[i].id,
-            "exam": parseInt($("#exam").val())
-        });
+function renderNavigation(){
+     for (var i = currentQuestion; i < questions.length; i++) {
+         var j = i + 1;
+         $("#1").addClass('btn-success text-white');
+        $('#navigation').append('<a class="btn btn-sm border border-success rounded-lg custom ml-3 mt-3" id="'+j+'" onclick="navigation('+j+')">'+j+'</a>');
     }
-    for (var j = 0; j < questions.length; j++) {
+}
+
+function navigation(number){
+    var i = currentQuestion + 1;
+    $("#" + i + "").removeClass('btn-success text-white');
+    setlocalStorage();
+    currentQuestion = number - 1;
+    $("#" + number + "").addClass('btn-success text-white');
+    renderRadio();
+    renderQuestion();
+    btn(currentQuestion);
+}
+
+function finishExam(){
+    setlocalStorage();
+    for (var j = 0; j < userAnswer.length; j++) {
         $.ajax({
             url: "/saveAnswer",
             method: "POST",
@@ -251,7 +254,7 @@ function finishExam(){
                 console.log(errormessage.responseText);
             }
         });
-//        console.log(JSON.stringify(userAnswer[j]));
+        console.log(JSON.stringify(userAnswer[j]));
     }
             $.ajax({
                 url: "/getCode/" + code,
