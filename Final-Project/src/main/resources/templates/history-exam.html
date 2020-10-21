@@ -1,94 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<div th:replace="fragments/user-header :: head(title='History Exam')"></div>
+    <div th:replace="fragments/user-header :: head(title='History Exam')"></div>
 
-<body class="animsition">
-    <div class="page-wrapper">
-        <div th:replace="fragments/user-header :: header(title='History Exam')"></div>
-        <!-- PAGE CONTENT-->
-        <div class="page-container3">
-            <section class="alert-wrap p-t-10 p-b-10">
-                <div class="container">
-                </div>
-            </section>
-            <section class="m-t-60">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-3">
-                            <div th:replace="fragments/user-header :: sidebar"></div>
-                        </div>
-                        <div class="col-xl-9">
-                            <!-- PAGE CONTENT-->
-                            <div class="page-content">
-                                <div class="row">
-                                    <center>
-                                        <div class="flex-container">
-                                            <div>
-                                                <img class="logo-container" src="images/logo-CPP.png">
+    <body class="animsition">
+        <div class="page-wrapper">
+            <div th:replace="fragments/user-header :: header(title='History Exam')"></div>
+            <!-- PAGE CONTENT-->
+            <div class="page-container3">
+                <section class="alert-wrap p-t-10 p-b-10">
+                    <div class="container">
+                    </div>
+                </section>
+                <section class="m-t-60">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-3">
+                                <div th:replace="fragments/user-header :: sidebar"></div>
+                            </div>
+                            <div class="col-xl-9">
+                                <!-- PAGE CONTENT-->
+                                <div class="page-content">
+                                    <div class="row">
+                                        <center>
+                                            <div class="flex-container">
+                                                <button onclick="getModule('cpp')">
+                                                    <img class="logo-container" src="images/logo-CPP.png" style="heigth: 80px; width: 80px;">
+                                                </button>
+                                                <div>
+                                                    <hr class="line-dashed">
+                                                </div>
+                                                <button onclick="getModule('DOT')">
+                                                    <img class="logo-container" src="images/logo-NET.png" style="heigth: 80px; width: 80px;">
+                                                </button>
+                                                <div>
+                                                    <hr class="line-dashed">
+                                                </div>
+                                                <button onclick="getModule('HTM')">
+                                                    <img class="logo-container" src="images/logo-HTML.png" style="heigth: 80px; width: 80px;">
+                                                 </button>
+                                                <div>
+                                                    <hr class="line-dashed">
+                                                </div>
+                                                <button onclick="getModule('JAV')">
+                                                    <img class="logo-container" src="images/logo-java.png" style="heigth: 80px; width: 80px;">
+                                                 </button>
+                                                <div>
+                                                    <hr class="line-dashed">
+                                                </div>
+                                                <button onclick="getModule('REA')">
+                                                    <img class="logo-container" src="images/logo-REACT.png" style="heigth: 80px; width: 80px;">
+                                                 </button>
                                             </div>
-                                            <div>
-                                                <hr class="line-dashed">
-                                            </div>
-                                            <div>
-                                                <img class="logo-container" src="images/logo-NET.png">
-                                            </div>
-                                            <div>
-                                                <hr class="line-dashed">
-                                            </div>
-                                            <div>
-                                                <img class="logo-container" src="images/logo-HTML.png">
-                                            </div>
-                                            <div>
-                                                <hr class="line-dashed">
-                                            </div>
-                                            <div>
-                                                <img class="logo-container" src="images/logo-java.png">
-                                            </div>
-                                            <div>
-                                                <hr class="line-dashed">
-                                            </div>
-                                            <div>
-                                                <img class="logo-container" src="images/logo-REACT.png">
-                                            </div>
-                                        </div>
-                                    </center>
-                                </div>
-                                <div class="row">
-                                    <div class="flex-container-2" th:each="history : ${exam}">
-                                        <div th:text="${history.date}"></div>
-                                        <div class="line-dashed-vertical" style="width: 50px"></div>
-                                        <div style="width: 500px">
-                                            <table>
-                                                <tr><td th:text="${history.code}"></td></tr>
-                                                <tr><td th:text="${history.start}"></td></tr>
-                                                <tr><td th:text="${history.end}"></td></tr>
-                                                <tr><td th:text="${history.score}"></td></tr>
-                                                <tr><td th:text="${history.grade}"></td></tr>
-                                                <tr><td th:class="${history.hasPassed} ? 'text-success' : 'text-danger'"
-                                                    th:text="${history.hasPassed} ? 'Passed' : 'Failed'"></td></tr>
-                                            </table>
-                                        </div>
+                                        </center>
                                     </div>
-                                </div>
+                                    <div class="row" id="module">
+                                        
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
+                        <div th:replace="fragments/user-footer :: footer"> </div>
                     </div>
-                    <div th:replace="fragments/user-footer :: footer"> </div>
-                </div>
-                <!-- END PAGE CONTENT-->
+                    <!-- END PAGE CONTENT-->
 
 
 
 
-            </section>
+                </section>
+            </div>
+            <!-- END PAGE CONTENT  -->
         </div>
-        <!-- END PAGE CONTENT  -->
-    </div>
-    <div th:replace="fragments/user-footer :: script"></div>
+        <div th:replace="fragments/user-footer :: script"></div>
 
-</body>
-
+    </body>
+    <script>
+//        getModule('CPP');
+        function getModule(id){
+            $("#module").html("");
+            $.ajax({
+                'async': false,
+                'type': "GET",
+                'global': false,
+                'url': "/historyExam/" + id,
+                'data': {id: id},
+                'success': function (data) {
+                    for(var i = 0; i<data.length; i++){
+                        $("#module").append('\
+                                    <table>\
+                                        <tr>\
+                                            <div class="flex-container-2">\
+                                                <div>'+data[i].date+'</div>\
+                                                <div class="line-dashed-vertical" style="width: 50px"></div>\
+                                                <div style="width: 500px">\
+                                                    <table>\
+                                                        <tr>'+data[i].score+' ('+data[i].grade+')</tr><br>\
+                                                        <tr>'+data[i].hasPassed+'</tr>\
+                                                    </table>\
+                                                </div>\
+                                            </div>\
+                                        </tr>\
+                                    </table>');
+                    }
+                }
+            });
+        };
+        
+    </script>
 </html>
 <!-- end document-->

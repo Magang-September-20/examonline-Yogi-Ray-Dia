@@ -39,8 +39,8 @@ public class ExamService {
         return er.findById(id).get();
     }
     
-    public List<Exam> getAllPerId(Integer id) {
-        return er.getPerId(id);
+    public List<Exam> getAllPerId(Integer id, String module) {
+        return er.getPerId(id,module);
     }
 
     //create/update
