@@ -224,24 +224,23 @@ function renderQuestion() {
     }
 }
 
-var radioValue = $("input[name='materialExampleRadios']:checked").val();
-var i = currentQuestion;
-if (radioValue) {
-    localStorage.setItem(i, radioValue);
-    userAnswer.push({
-        "userAnswer": radioValue,
-        "question": questions[i].id,
-        "exam": parseInt($("#exam").val())
-    });
-} else {
-    userAnswer.push({
-        "userAnswer": null,
-        "question": questions[i].id,
-        "exam": parseInt($("#exam").val())
-    });
-}
 function finishExam(){
-    
+    var radioValue = $("input[name='materialExampleRadios']:checked").val();
+    var i = currentQuestion;
+    if (radioValue) {
+        localStorage.setItem(i, radioValue);
+        userAnswer.push({
+            "userAnswer": radioValue,
+            "question": questions[i].id,
+            "exam": parseInt($("#exam").val())
+        });
+    } else {
+        userAnswer.push({
+            "userAnswer": null,
+            "question": questions[i].id,
+            "exam": parseInt($("#exam").val())
+        });
+    }
     for (var j = 0; j < questions.length; j++) {
         $.ajax({
             url: "/saveAnswer",

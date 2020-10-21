@@ -208,10 +208,13 @@ public class UserController {
     public UserAnswer saveQuestion(@RequestBody UserAnswer userAnswer) {
             return userAnswerService.save(userAnswer);
     }
-
-    @GetMapping("/submit")
-    public String calculateScore(Model model, @Validated Exam exam) {
-        String code = exam.getCode() + "";
+    
+    @ResponseBody
+    @GetMapping("/submit/{code}")
+    public String calculateScore(@PathVariable("code") String code) {
+        System.out.println(code);
+        Model model = null;
+//        String code = exam.getCode() + "";
 //        code = "CPPcX1pgETeeCFVeFVMf";
         DecimalFormat df = new DecimalFormat("#");
         df.setMaximumFractionDigits(2);
