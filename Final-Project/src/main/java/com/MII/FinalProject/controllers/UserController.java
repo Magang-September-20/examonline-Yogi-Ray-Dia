@@ -242,7 +242,7 @@ public class UserController {
             grade = "A";
         }
 
-        if (score >= 70) {
+        if (score >= moduleService.getPassingScore(codeId)) {
             userAnswerService.updateHasPassed(1, code);
         } else {
             userAnswerService.updateHasPassed(0, code);
@@ -273,7 +273,7 @@ public class UserController {
         String end = examService.getEnd(code);
         String endSubbed = examService.subTime(end);
         model.addAttribute("duration", examService.getDuration(startSubbed, endSubbed));
-        
+
 //        System.out.println(startSubbed);
 //        System.out.println(endSubbed);
 //        System.out.println(examService.getDuration(startSubbed, endSubbed));

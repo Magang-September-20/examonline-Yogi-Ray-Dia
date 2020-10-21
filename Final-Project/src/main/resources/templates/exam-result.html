@@ -48,7 +48,7 @@ and open the template in the editor.
                                         <label class="form-check-label" for="exampleRadios2">Your score: <b th:text="${score}"></b></label>
                                     </div>
                                     <div class="form-check ml-3 mb-3">
-                                        <label class="form-check-label" for="exampleRadios2">Your grade: <b>20</b></label>
+                                        <label class="form-check-label" for="exampleRadios2">Your grade: <b th:text="${grade}"></b></label>
                                     </div>
                                     <div class="form-check ml-3 mb-3">
                                         <label class="form-check-label" for="exampleRadios2">You have <b th:class = "${hasPassed} ? 'text-success' : 'text-danger'"  th:text = "${hasPassed} ? 'PASSED' : 'FAILED'"></b> the exam.</label>

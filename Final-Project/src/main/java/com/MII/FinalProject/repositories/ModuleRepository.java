@@ -19,4 +19,7 @@ public interface ModuleRepository extends JpaRepository<Module, String>{
     
     @Query(value = "SELECT number_of_question FROM module WHERE id = ?1", nativeQuery= true)
     Integer getNumberOfQuestions(String id);
+    
+    @Query(value = "SELECT module.passing_score FROM `module` WHERE id = ?1", nativeQuery = true)
+    Integer getPassingScore(String id);
 }
