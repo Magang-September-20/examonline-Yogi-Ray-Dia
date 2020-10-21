@@ -257,17 +257,18 @@ function finishExam(){
         console.log(JSON.stringify(userAnswer[j]));
     }
             $.ajax({
-            url: "/submit/" + code,
-            type: "GET",
-            data: "",
-            contentType: "application/json; charset=utf-8",
-            success: function () {
+                url: "/getCode/" + code,
+                type: "GET",
+                data: "",
+                contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                window.location.replace(data);
             },
             error: function (errormessage) {
                 console.log(errormessage.responseText);
             }
         });
-        //        window.location.replace("/exam-result/" + code);
+
 }
 
 $("#submit").click(function () {
