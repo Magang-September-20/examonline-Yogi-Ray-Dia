@@ -212,13 +212,11 @@ public class UserController {
     @ResponseBody
     @GetMapping("/getCode/{code}")
     public String getCode(@PathVariable("code") String code) {
-        
-        return "redirect:/submit/" + code;
+        return "/submit/" + code;
     }
     
     @GetMapping("/submit/{code}")
     public String calculateScore(@PathVariable("code") String code) {
-        Model model = null;
 //        code = "CPPcX1pgETeeCFVeFVMf";
         DecimalFormat df = new DecimalFormat("#");
         df.setMaximumFractionDigits(2);
@@ -253,7 +251,7 @@ public class UserController {
         userAnswerService.updateExam(score, grade, code);
         
         
-        return checkRole(model, "redirect:/exam-result/" + code);
+        return "redirect:/exam-result/" + code;
     }
     
 
