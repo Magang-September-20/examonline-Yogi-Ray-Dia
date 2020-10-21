@@ -255,8 +255,19 @@ function finishExam(){
             }
         });
         console.log(JSON.stringify(userAnswer[j]));
-        window.location.replace("/exam-result/" + code);
     }
+            $.ajax({
+            url: "/submit/" + code,
+            type: "GET",
+            data: "",
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+            },
+            error: function (errormessage) {
+                console.log(errormessage.responseText);
+            }
+        });
+        //        window.location.replace("/exam-result/" + code);
 }
 
 $("#submit").click(function () {
