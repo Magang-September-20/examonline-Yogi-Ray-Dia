@@ -89,6 +89,10 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a th:href="@{../data-page}">
+                            <i class="fas fa-bookmark"></i>Data Landing Page</a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -133,6 +137,10 @@
                                 <a th:href="@{../data-candidate/{id} (id=${as.id})}" th:text='${as.name}'></a>
                             </li>
                         </ul>
+                    </li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/data-page' ? 'active':''}">
+                        <a th:href="@{../data-page}">
+                            <i class="far fa-bookmark"></i>Data Landing Page</a>
                     </li>
                 </ul>
             </nav>

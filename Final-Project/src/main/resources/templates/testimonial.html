@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Testimonial Survey</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Favicons -->
+        <link href="../assets/img/mii.png" rel="icon">
+        <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel="stylesheet" media="all">
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel="stylesheet" media="all">
+        <link href='../css/exam.css' rel="stylesheet" media="all">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="border">
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row justify-content-center align-items-center mcq">
+                                <img src="../images/mii_land.png"  height="69" width="300" /></span>
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom">
+                            <div>
+                                <div class="d-flex flex-row align-items-center question-title mb-3">
+                                    <h3 class="ml-5 pl-4 text-danger">Q.</h3>
+                                    <h5 class="mt-1 ml-2">how about the exam?</h5>
+                                </div>
+                                <form class="ml-5 mr-5" th:object="${testimonial}" th:action="@{saveTestimonial}" method="POST">
+                                    <div class="form-check mr-3 ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios1">Name :</label>
+                                        <input th:field="*{name}" type="text" class="form-control" id="exampleRadios1" placeholder="Enter your name">
+                                    </div>
+                                    <div class="form-check mr-3 ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios2">Profession :</label>
+                                        <input th:field="*{profession}" type="text" class="form-control" id="exampleRadios2" placeholder="Enter your profession">
+                                    </div>
+                                    <div class="form-check mr-3  ml-3 mb-3">
+                                        <label class="form-check-label" for="exampleRadios3">Comment :</label>
+                                        <textarea style="height: 100px;" th:field="*{subtext}" type="text" class="form-control" id="exampleRadios2" placeholder="Enter your profession"></textarea>
+                                    </div>
+                                    <div class="form-check ml-3 mb-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>                                   </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-end align-items-center p-3 bg-white">
+                            <a class="btn btn-primary border-success align-items-right btn-success text-white" type="button" th:href='@{/history-exam}' >Skip<i class="fa fa-angle-right ml-2"></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+    <script type="text/javascript">
+        localStorage.clear();
+    </script>
+</html>

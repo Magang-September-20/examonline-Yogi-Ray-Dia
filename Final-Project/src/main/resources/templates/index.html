@@ -66,8 +66,8 @@
         <!-- ======= Hero Section ======= -->
         <section id="hero">
             <div class="hero-container">
-                <h1>Easy start your exam</h1>
-                <h2>best exam online service in the world</h2>
+                <div th:remove="tag" th:utext='${jumbotron}'></div>
+                <div th:remove="tag" th:utext='${jumbotronSub}'></div>
                 <a href="#about" class="btn-get-started scrollto">Get Started</a>
             </div>
         </section><!-- End Hero -->
@@ -80,22 +80,15 @@
 
                     <div class="row content">
                         <div class="col-lg-6">
-                            <h2>Online Exam</h2>
-                            <h3>Prepare candidates to perform extraordinarily with an easy to use highly interactive platform and
-                                simplify the assessment cycle.</h3>
+                            <div th:remove="tag" th:utext='${aboutTitle}'></div>
+                            <div th:remove="tag" th:utext='${aboutSub}'></div>
                         </div>
                         <div class="col-lg-6 pt-4 pt-lg-0">
-                            <p>
-                                One-stop-destination for examination, preparation, recruitment, and more. Specially designed online examination system to solve all your preparation worries. The platform is smooth to use with a translational flow of information.
-                            </p>
+                            <div th:remove="tag" th:utext='${aboutRightSub}'></div>
                             <ul>
-                                <li><i class="ri-check-double-line"></i> Highly Interactive Interface</li>
-                                <li><i class="ri-check-double-line"></i> Advanced Reporting System</li>
-                                <li><i class="ri-check-double-line"></i> Easy to Learn and Use</li>
+                                <div th:remove="tag" th:utext='${aboutRightPoint}'></div>
                             </ul>
-                            <p class="font-italic">
-                                Go wherever you want to and practice whenever you want, using the next level online exam platform. Create & assign tests and quiz from anywhere at any time. Experience a lag-free synchronized performance of think exam on your mobile devices.
-                            </p>
+                            <i th:remove="tag" th:utext='${aboutRightItalic}'></i>
                         </div>
                     </div>
 
@@ -108,40 +101,52 @@
 
                     <div class="section-title">
                         <h2>Category</h2>
-                        <p>information about the categories in the exam</p>
+                        <div th:remove="tag" th:utext='${categorySub}'></div>
                     </div>
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-4 col-md-6 icon-box">
                             <div class="icon"><i class="icofont-brand-java"></i></div>
                             <h4 class="title"><a href="">Java</a></h4>
-                            <p class="description">Java is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.</p>
+                            <p class="description">
+                                <span th:remove="tag" th:utext='${java}'></span>
+                            </p>
                         </div>
                         <div class="col-lg-4 col-md-6 icon-box">
                             <div class="icon"><i class="icofont-file-html5"></i></div>
                             <h4 class="title"><a href="">HTML</a></h4>
-                            <p class="description">Hypertext Markup Language (HTML) is the standard markup language for documents designed to be displayed in a web browser.</p>
-                        </div>
+                            <p class="description">
+                                <span th:remove="tag" th:utext='${html}'></span>
+                            </p>
+                       </div>
                         <div class="col-lg-4 col-md-6 icon-box">
                             <div class="icon"><i class="icofont-code"></i></div>
                             <h4 class="title"><a href="">C++</a></h4>
-                            <p class="description">C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or "C with Classes".</p>
+                            <p class="description">
+                                <span th:remove="tag" th:utext='${cpp}'></span>
+                            </p>
                         </div>
                         <div class="col-lg-4 col-md-6 icon-box">
                             <div class="icon"><i class="icofont-file-javascript"></i></div>
                             <h4 class="title"><a href="">React</a></h4>
-                            <p class="description">React is a declarative, efficient, and flexible JavaScript library for building user interfaces.</p>
-                        </div>
+                            <p class="description">
+                                <span th:remove="tag" th:utext='${react}'></span>
+                            </p>
+                       </div>
                         <div class="col-lg-4 col-md-6 icon-box">
                             <div class="icon"><i class="icofont-brand-microsoft"></i></div>
                             <h4 class="title"><a href="">.NET</a></h4>
-                            <p class="description">NET is a free, cross-platform, open-source developer platform. .NET has languages, editors, and libraries to build for web, mobile, desktop, games, and IoT.</p>
-                        </div>
+                            <p class="description">
+                                <span th:remove="tag" th:utext='${net}'></span>
+                            </p>
+                       </div>
                         <div class="col-lg-4 col-md-6 icon-box">
                             <div class="icon"><i class="icofont-snake"></i></div>
                             <h4 class="title"><a href="">Phyton</a></h4>
-                            <p class="description">Python is an interpreted, object-oriented, high-level programming language with dynamic semantics.</p>
-                        </div>
+                            <p class="description">
+                                <span th:remove="tag" th:utext='${phyton}'></span>
+                            </p>
+                       </div>
                     </div>
 
                 </div>
@@ -153,57 +158,13 @@
 
                     <div class="owl-carousel testimonials-carousel">
 
-                        <div class="testimonial-item">
-                            <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                            <h3>Saul Goodman</h3>
-                            <h4>Ceo &amp; Founder</h4>
+                        <div class="testimonial-item" th:each="as : ${testimonials}">
+                            <img src="assets/img/testimonials/images.png" class="testimonial-img" alt="">
+                            <h3 th:text="${as.name}"></h3>
+                            <h4 th:text="${as.profession}"></h4>
                             <p>
                                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
-                        </div>
-
-                        <div class="testimonial-item">
-                            <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                            <h3>Sara Wilsson</h3>
-                            <h4>Designer</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
-                        </div>
-
-                        <div class="testimonial-item">
-                            <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                            <h3>Jena Karlis</h3>
-                            <h4>Store Owner</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
-                        </div>
-
-                        <div class="testimonial-item">
-                            <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                            <h3>Matt Brandon</h3>
-                            <h4>Freelancer</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
-                        </div>
-
-                        <div class="testimonial-item">
-                            <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                            <h3>John Larson</h3>
-                            <h4>Entrepreneur</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                                <span th:text="${as.subtext}"></span>
                                 <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                             </p>
                         </div>
@@ -219,7 +180,7 @@
 
                     <div class="section-title">
                         <h2>Team</h2>
-                        <p>Sit sint consectetur velit. Quisquam quos quisquam cupiditate</p>
+                        <div th:remove="tag" th:utext='${teamSub}'></div>
                     </div>
 
                     <div class="row d-flex justify-content-center">
@@ -289,11 +250,11 @@
 
                     <div class="section-title">
                         <h2>Contact</h2>
-                        <p>For more information please contact us</p>
+                        <div th:remove="tag" th:utext='${contactSub}'></div>
                     </div>
                 </div>
                 <div class="map">
-                    <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.6585499598164!2d106.78967721449278!3d-6.176443862242118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f6f57e3ddf7f%3A0xe62a21d1026c1635!2sPT.%20Mitra%20Integrasi%20Informatika!5e0!3m2!1sen!2sid!4v1602435540929!5m2!1sen!2sid" width="600" height="450" frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>" frameborder="0" allowfullscreen></iframe>
+                    <iframe style="border:0; width: 100%; height: 350px;" src="http://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.6585499598164!2d106.78967721449278!3d-6.176443862242118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f6f57e3ddf7f%3A0xe62a21d1026c1635!2sPT.%20Mitra%20Integrasi%20Informatika!5e0!3m2!1sen!2sid!4v1602435540929!5m2!1sen!2sid" width="600" height="450" frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                 </div>
                 <div class="container">
                     <div class="row mt-5 justify-content-center">
@@ -305,19 +266,19 @@
                                     <div class="col-lg-4 info">
                                         <i class="icofont-google-map"></i>
                                         <h4>Location:</h4>
-                                        <p>PT. Mitra Integrasi Informatika<br>Kota Jakarta Barat 11470</p>
+                                        <div th:remove="tag" th:utext='${location}'></div>
                                     </div>
 
                                     <div class="col-lg-4 info mt-4 mt-lg-0">
                                         <i class="icofont-envelope"></i>
                                         <h4>Email:</h4>
-                                        <p>info@metrodata.com<br>mii@metrodata.com</p>
+                                        <div th:remove="tag" th:utext='${email}'></div>
                                     </div>
 
                                     <div class="col-lg-4 info mt-4 mt-lg-0">
                                         <i class="icofont-phone"></i>
                                         <h4>Call:</h4>
-                                        <p>+622129345777<br>+6287880783139</p>
+                                        <div th:remove="tag" th:utext='${call}'></div>
                                     </div>
                                 </div>
                             </div>
@@ -340,8 +301,8 @@
 
                     <div class="row  justify-content-center">
                         <div class="col-lg-6">
-                            <h3>PT. Mitra Integrasi Informatika</h3>
-                            <p>If you believe you can do anything, we're here to help you do it</p>
+                            <div th:remove="tag" th:utext='${footerTitle}'></div>
+                            <div th:remove="tag" th:utext='${footerSub}'></div>
                         </div>
                     </div>
 
