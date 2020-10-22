@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -57,7 +58,7 @@ public class UserController {
 
     @Autowired
     UserAnswerService userAnswerService;
-    
+
     @Autowired
     TestimonialService testimonialService;
 
@@ -71,7 +72,6 @@ public class UserController {
         return checkRole(model, "user-dashboard");
     }
 
-    
     @GetMapping("/history-exam")//url or path
     public String historyExam(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -127,9 +127,9 @@ public class UserController {
         model.addAttribute("code", code);
         return checkRole(model, "start-exam");
     }
-    
+
     @GetMapping("/testimonial")
-    public String testimonial(Model model){
+    public String testimonial(Model model) {
         model.addAttribute("testimonial", new Testimonial());
         return checkRole(model, "testimonial");
     }
@@ -154,12 +154,13 @@ public class UserController {
         testimonialService.save(testimonial);
         return checkRole(model, "redirect:history-exam");
     }
-    
+
     @PostMapping("/exam-registeration")
-    public String registerExam(Model model, @Validated Module module) {
+    public String registerExam(Model model, @Validated Module module, RedirectAttributes attributes) {
+        attributes.addFlashAttribute("message", "This is message from flash");
         Code code = new Code();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
+
         String uniqueCode;
         //random string generator
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -173,10 +174,8 @@ public class UserController {
                 sb.append(AlphaNumericString.charAt(character));
             }
             uniqueCode = module.getId() + sb.toString();
-        }
-        while (codeService.checkCode(uniqueCode) >= 1);
-        
-        
+        } while (codeService.checkCode(uniqueCode) >= 1);
+
 //        uniqueCode = "JAVB9Vaf5YsXBdLdVAzP";
         //tomorrow's date
 //        Date dt = new Date();
@@ -184,7 +183,6 @@ public class UserController {
 //        c.setTime(dt);
 //        c.add(Calendar.DATE, 1);
 //        dt = c.getTime();
-
         //user id
         UserLocal user = new UserLocal();
         user.setId(Integer.parseInt(auth.getName()));
@@ -213,15 +211,15 @@ public class UserController {
 //    @RequestMapping( value ="/saveAnswer", method = RequestMethod.POST)
     @PostMapping("/saveAnswer")
     public UserAnswer saveQuestion(@RequestBody UserAnswer userAnswer) {
-            return userAnswerService.save(userAnswer);
+        return userAnswerService.save(userAnswer);
     }
-    
+
     @ResponseBody
     @GetMapping("/getCode/{code}")
     public String getCode(@PathVariable("code") String code) {
         return "/submit/" + code;
     }
-    
+
     @GetMapping("/submit/{code}")
     public String calculateScore(@PathVariable("code") String code) {
 //        code = "CPPcX1pgETeeCFVeFVMf";
@@ -254,13 +252,12 @@ public class UserController {
         } else {
             userAnswerService.updateHasPassed(0, code);
         }
-        
+
         userAnswerService.updateExam(score, grade, code);
-        
-        
+
         return "redirect:/exam-result/" + code;
     }
-   
+
     @GetMapping("/exam-result/{code}")//url or path
     public String examResult(@PathVariable("code") String code, Model model) {
 //        code = "CPPcX1pgETeeCFVeFVMf";
@@ -274,7 +271,7 @@ public class UserController {
         model.addAttribute("hasPassed", examService.getHasPassed(code));
         String start = examService.getStart(code);
         String startSubbed = examService.subTime(start);
-        
+
         String end = examService.getEnd(code);
         String endSubbed = examService.subTime(end);
         model.addAttribute("duration", examService.getDuration(startSubbed, endSubbed));
@@ -285,11 +282,10 @@ public class UserController {
         return checkRole(model, "exam-result");
     }
 
-    
     @ResponseBody
     @GetMapping("/historyExam/{id}")
-    public List<Exam> getHistory(@PathVariable("id") String id){
+    public List<Exam> getHistory(@PathVariable("id") String id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return examService.getAllPerId(Integer.parseInt(auth.getName()),id);
+        return examService.getAllPerId(Integer.parseInt(auth.getName()), id);
     }
 }
