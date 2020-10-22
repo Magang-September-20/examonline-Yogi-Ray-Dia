@@ -22,56 +22,104 @@
                                 <!-- PAGE CONTENT-->
                                 <div class="page-content">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <!-- DATA TABLE-->
-                                            <div class="table-responsive m-b-40">
-                                                <table class="table table-borderless table-data3" id="examHistory">
-                                                    <thead>
-                                                        <tr>
-                                                            <!--<th>User_ID</th>-->
-                                                            <th>Code</th>
-                                                            <th>Date</th>
-                                                            <th>Start</th>
-                                                            <th>End</th>
-                                                            <th>Score</th>
-                                                            <th>Grade</th>
-                                                            <th>Status</th>
-                                                            <th style="width: 10;">Option</th>
-                                                        </tr>
-                                                    </thead> 
-                                                    <tbody>
-                                                        <tr th:each = "history : ${exam}">
-<!--                                                            <td th:text = "${history.user}"></td>-->
-                                                            <td th:text = "${history.code}"></td>
-                                                            <td th:text = "${history.date}"></td>
-                                                            <td th:text = "${history.start}"></td>
-                                                            <td th:text = "${history.end}"></td>
-                                                            <td th:text = "${history.score}"></td>
-                                                            <td th:text = "${history.grade}"></td>
-                                                            <td th:class="${history.hasPassed} ? 'text-success' : 'text-danger'" th:text = "${history.hasPassed} ? 'Passed' : 'Failed'"></td>
-                                                            <td><a href="#"><span class="fas fa-eye"></span></a></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                        <center>
+                                            <div class="flex-container">
+                                                <button onclick="getModule('cpp')">
+                                                    <img class="logo-container" src="images/logo-CPP.png" style="heigth: 80px; width: 80px;">
+                                                </button>
+                                                <div>
+                                                    <hr class="line-dashed">
+                                                </div>
+                                                <button onclick="getModule('DOT')">
+                                                    <img class="logo-container" src="images/logo-NET.png" style="heigth: 80px; width: 80px;">
+                                                </button>
+                                                <div>
+                                                    <hr class="line-dashed">
+                                                </div>
+                                                <button onclick="getModule('HTM')">
+                                                    <img class="logo-container" src="images/logo-HTML.png" style="heigth: 80px; width: 80px;">
+                                                </button>
+                                                <div>
+                                                    <hr class="line-dashed">
+                                                </div>
+                                                <button onclick="getModule('JAV')">
+                                                    <img class="logo-container" src="images/logo-java.png" style="heigth: 80px; width: 80px;">
+                                                </button>
+                                                <div>
+                                                    <hr class="line-dashed">
+                                                </div>
+                                                <button onclick="getModule('REA')">
+                                                    <img class="logo-container" src="images/logo-REACT.png" style="heigth: 80px; width: 80px;">
+                                                </button>
                                             </div>
-                                            <!-- END DATA TABLE                  -->
+                                        </center>
+                                    </div>
+                                    <div class="row">
+                                        <div class="container">
+                                            <div class="timeline">
+                                                <div class="timeline-month">
+                                                </div>
+                                                <div id="module">
+                                                    
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div th:replace="fragments/user-footer :: footer"> </div>
                                 </div>
-                                <!-- END PAGE CONTENT-->
                             </div>
                         </div>
+                        <div th:replace="fragments/user-footer :: footer"> </div>
                     </div>
+                    <!-- END PAGE CONTENT-->
+
+
+
+
                 </section>
             </div>
             <!-- END PAGE CONTENT  -->
-
         </div>
-
         <div th:replace="fragments/user-footer :: script"></div>
 
     </body>
+    <script>
+//        getModule('CPP');
+        function getModule(id) {
+            $("#module").html("");
+            $.ajax({
+                'async': false,
+                'type': "GET",
+                'global': false,
+                'url': "/historyExam/" + id,
+                'data': {id: id},
+                'success': function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $("#module").append('\<div class="timeline-section">\
+                                                <div class="timeline-date">\
+                                                    '+data[i].date+'\
+                                                 </div>\
+                                                    <div class="row">\
+                                                        <div class="col-sm-4">\
+                                                            <div class="timeline-box">\
+                                                            <div class="box-title">\
+                                                                <i class="fa fa-asterisk text-success" aria-hidden="true"></i> '+data[i].user+'\
+                                                            </div>\
+                                                            <div class="box-content">\
+                                                                <div class="box-item"><strong>Score</strong>: '+data[i].score+'</div>\
+                                                                <div class="box-item"><strong>Score</strong>: '+data[i].grade+'</div>\
+                                                                <div class="box-item"><strong>Status</strong>: '+data[i].hasPassed+'</div>\
+                                                            </div>\
+                                                            <div class="box-footer">'+data[i].user+'</div>\
+                                                        </div>\
+                                                    </div>\
+                                                </div>\
+                                            </div>');
+                    }
+                }
+            });
+        }
+        ;
 
+    </script>
 </html>
 <!-- end document-->

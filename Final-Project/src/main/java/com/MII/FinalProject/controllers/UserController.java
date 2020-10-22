@@ -22,7 +22,6 @@ import com.MII.FinalProject.services.UserService;
 import java.text.DecimalFormat;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.http.HttpMethod.POST;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,8 +31,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -74,11 +71,12 @@ public class UserController {
         return checkRole(model, "user-dashboard");
     }
 
+    
     @GetMapping("/history-exam")//url or path
     public String historyExam(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        model.addAttribute("exam", examService.getAll());
-        model.addAttribute("exam", examService.getAllPerId(Integer.parseInt(auth.getName())));
+//        model.addAttribute("exam", examService.getAllPerId(Integer.parseInt(auth.getName())));
         model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
         return checkRole(model, "history-exam");
     }
@@ -262,9 +260,7 @@ public class UserController {
         
         return "redirect:/exam-result/" + code;
     }
-    
-
-
+   
     @GetMapping("/exam-result/{code}")//url or path
     public String examResult(@PathVariable("code") String code, Model model) {
 //        code = "CPPcX1pgETeeCFVeFVMf";
@@ -289,4 +285,11 @@ public class UserController {
         return checkRole(model, "exam-result");
     }
 
+    
+    @ResponseBody
+    @GetMapping("/historyExam/{id}")
+    public List<Exam> getHistory(@PathVariable("id") String id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return examService.getAllPerId(Integer.parseInt(auth.getName()),id);
+    }
 }
