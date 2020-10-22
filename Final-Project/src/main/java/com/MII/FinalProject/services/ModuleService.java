@@ -41,4 +41,7 @@ public class ModuleService {
         return moduleService.getIdModule();
     }
     
+    public String getModuleName(String id) {
+        return moduleService.getModuleName(id);
+    }
 }
