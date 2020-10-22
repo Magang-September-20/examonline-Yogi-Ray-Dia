@@ -265,6 +265,7 @@ and open the template in the editor.
                                         contentType: "application/json; charset=utf-8",
                                         success: function (data) {
                                             setTimeout(function () {
+                                                window.onbeforeunload = null;
                                                 window.location.href = data;
                                             }, 2000);
                                         },
