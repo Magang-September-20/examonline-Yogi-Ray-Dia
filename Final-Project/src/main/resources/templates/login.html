@@ -15,7 +15,7 @@
         <!-- Favicons -->
         <link href="assets/img/mii.png" rel="icon">
         <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-        
+
         <!-- Fontfaces CSS-->
         <link href="css/font-face.css" rel="stylesheet" media="all">
         <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -51,6 +51,12 @@
                                 </a>
                             </div>
                             <div class="login-form">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if='${success}'>
+                                    <strong>Success!</strong><span th:text='${success}'></span>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                                 <form th:action="@{/verification}" method="POST">
                                     <div class="form-group">
                                         <label>Username</label>

@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -119,7 +120,7 @@ public class MainController {
     }
 
     @PostMapping("/registration")
-    public String registration(RegisterInput input) {
+    public String registration(RegisterInput input, RedirectAttributes attributes) {
         RegisterOutput output = registerService.Register(input);
         if (output.getStatus().equalsIgnoreCase("success")) {
             UserLocal user = new UserLocal();
@@ -128,6 +129,7 @@ public class MainController {
             user.setEmail(input.getEmail());
             user.setIsActive(true);
             userService.save(user);
+            attributes.addFlashAttribute("success", " Your account has been successfully registered!");
             return "redirect:/login";
         } else {
             return "redirect:/register";
