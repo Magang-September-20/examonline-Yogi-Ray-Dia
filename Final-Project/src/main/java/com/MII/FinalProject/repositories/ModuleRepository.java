@@ -26,4 +26,7 @@ public interface ModuleRepository extends JpaRepository<Module, String> {
 
     @Query(value = "SELECT id FROM module", nativeQuery = true)
     String[] getIdModule();
+    
+    @Query(value = "SELECT name FROM module WHERE id = ?1", nativeQuery = true)
+    String getModuleName(String id);
 }

@@ -157,10 +157,9 @@ public class UserController {
 
     @PostMapping("/exam-registeration")
     public String registerExam(Model model, @Validated Module module, RedirectAttributes attributes) {
-        attributes.addFlashAttribute("message", "This is message from flash");
+        attributes.addFlashAttribute("message", moduleService.getModuleName(module.getId()));
         Code code = new Code();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         String uniqueCode;
         //random string generator
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
