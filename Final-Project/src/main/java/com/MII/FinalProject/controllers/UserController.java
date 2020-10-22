@@ -9,12 +9,14 @@ import com.MII.FinalProject.entities.Code;
 import com.MII.FinalProject.entities.Exam;
 import com.MII.FinalProject.entities.Module;
 import com.MII.FinalProject.entities.Question;
+import com.MII.FinalProject.entities.Testimonial;
 import com.MII.FinalProject.entities.UserAnswer;
 import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
 import com.MII.FinalProject.services.ModuleService;
 import com.MII.FinalProject.services.QuestionService;
+import com.MII.FinalProject.services.TestimonialService;
 import com.MII.FinalProject.services.UserAnswerService;
 import com.MII.FinalProject.services.UserService;
 import java.text.DecimalFormat;
@@ -55,6 +57,9 @@ public class UserController {
 
     @Autowired
     UserAnswerService userAnswerService;
+    
+    @Autowired
+    TestimonialService testimonialService;
 
     //Kok Error
     @GetMapping("/user-dashboard")//url or path
@@ -122,6 +127,12 @@ public class UserController {
         model.addAttribute("code", code);
         return checkRole(model, "start-exam");
     }
+    
+    @GetMapping("/testimonial")
+    public String testimonial(Model model){
+        model.addAttribute("testimonial", new Testimonial());
+        return checkRole(model, "testimonial");
+    }
 
     public String checkRole(Model model, String page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -138,6 +149,12 @@ public class UserController {
         }
     }
 
+    @PostMapping("/saveTestimonial")
+    public String saveTestimonial(Model model, @Validated Testimonial testimonial) {
+        testimonialService.save(testimonial);
+        return checkRole(model, "redirect:history-exam");
+    }
+    
     @PostMapping("/exam-registeration")
     public String registerExam(Model model, @Validated Module module) {
         Code code = new Code();

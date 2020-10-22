@@ -6,10 +6,12 @@
 package com.MII.FinalProject.controllers;
 
 import com.MII.FinalProject.entities.Exam;
+import com.MII.FinalProject.entities.LandingPage;
 import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.entities.Question;
 import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
+import com.MII.FinalProject.services.LandingPageServices;
 import com.MII.FinalProject.services.ModuleService;
 import com.MII.FinalProject.services.QuestionService;
 import com.MII.FinalProject.services.UserLocalService;
@@ -52,6 +54,9 @@ public class AdminController {
 
     @Autowired
     UserLocalService userLocalService;
+    
+    @Autowired
+    LandingPageServices landingPageServices;
 
     @GetMapping("/dashboard")//url or path
     public String dashboard(Model model) {
@@ -106,6 +111,13 @@ public class AdminController {
         model.addAttribute("id", moduleService.getById(id).getId());
         return checkRole(model, "data-candidate");
     }
+    
+    @GetMapping("/data-page")
+    public String page(Model model) {
+        model.addAttribute("notif", codeService.notif());
+        model.addAttribute("notifCount", codeService.notifCount());
+        return checkRole(model, "data-page");
+    }
 
     public String checkRole(Model model, String page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -145,7 +157,6 @@ public class AdminController {
     @ResponseBody
     @GetMapping("/getQuestionById")
     public Question getQuestionById(int id) {
-//        System.out.println(questionService.getById(id).getModule());
         return questionService.getById(id);
     }
     
@@ -162,4 +173,22 @@ public class AdminController {
         userLocalService.updateUser(local.getIsActive(), local.getId());
     }
     
+    //CRUD PAGE
+    @ResponseBody
+    @GetMapping("/landing-page/getAll")
+    public List<LandingPage> getAllLandingPage() {
+        return landingPageServices.getAll();
+    }
+    
+    @ResponseBody
+    @GetMapping("/landing-page/getById")
+    public LandingPage getByIdLandingPage(int id) {
+        return landingPageServices.getById(id);
+    }
+    
+    @ResponseBody
+    @PostMapping("/landing-page/save")
+    public LandingPage saveLandingPage(@RequestBody LandingPage landingPage) {
+        return landingPageServices.save(landingPage);
+    }
 }
