@@ -95,9 +95,27 @@
                 'data': {id: id},
                 'success': function (data) {
                     for (var i = 0; i < data.length; i++) {
+                        var dt = data[i].date;
+                        function formatDate(t) {
+                            var d = new Date(t),
+                                    month = '' + (d.getMonth() + 1),
+                                    day = '' + d.getDate(),
+                                    year = d.getFullYear();
+
+                            if (month.length < 2)
+                                month = '0' + month;
+                            if (day.length < 2)
+                                day = '0' + day;
+
+                            return [year, month, day].join('-');
+                        }
+                        var classPassed = '';
+                        (data[i].hasPassed) ? classPassed = 'text-success' : classPassed = 'text-danger'
+                        var passed = '';
+                        (data[i].hasPassed) ? passed = 'Passed' : passed = 'Failed'
                         $("#module").append('\<div class="timeline-section">\
                                                 <div class="timeline-date">\
-                                                    '+data[i].date+'\
+                                                    ' + formatDate(dt) + '\
                                                  </div>\
                                                     <div class="row">\
                                                         <div class="col-sm-4">\
@@ -106,9 +124,9 @@
                                                                 <i class="fa fa-asterisk text-success" aria-hidden="true"></i>\
                                                             </div>\
                                                             <div class="box-content">\
-                                                                <div class="box-item text-white"><strong>Score</strong>: '+data[i].score+'</div>\
-                                                                <div class="box-item text-white"><strong>Grade</strong>: '+data[i].grade+'</div>\
-                                                                <div class="box-item text-white"><strong>Status</strong>: '+ if(data[i].hasPassed == true) "Passed" else "Failed"  data[i].hasPassed+'? 'text-success' : 'text-danger' '+data[i].hasPassed+'? 'Passed' : 'Failed'</div>\
+                                                                <div class="box-item text-white"><strong>Score</strong>: ' + data[i].score + '</div>\
+                                                                <div class="box-item text-white"><strong>Grade</strong>: ' + data[i].grade + '</div>\
+                                                                <div class="box-item text-white ' + classPassed + '"><strong>Status :</strong> ' + passed + '</div>\
                                                             </div>\
                                                             <div class="box-footer"></div>\
                                                         </div>\
