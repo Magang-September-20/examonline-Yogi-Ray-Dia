@@ -24,7 +24,7 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     @Query(value = "SELECT COUNT(*) FROM exam WHERE has_passed=1", nativeQuery = true)
     Integer countCandidate();
 
-    @Query(value = "SELECT * FROM exam WHERE start IS NOT NULL AND exam.user LIKE ?1 AND exam.code LIKE ?2% ", nativeQuery = true)
+    @Query(value = "SELECT exam.id, exam.start, exam.end, exam.score, exam.grade, exam.has_passed, date, exam.code, exam.user FROM exam WHERE start IS NOT NULL AND exam.user LIKE ?1 AND exam.code LIKE ?2%", nativeQuery = true)
     public List<Exam> getPerId(Integer id, String module);
 
     @Transactional
