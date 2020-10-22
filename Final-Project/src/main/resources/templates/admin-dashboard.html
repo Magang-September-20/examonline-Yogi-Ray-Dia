@@ -127,14 +127,14 @@
                                     <div class="au-card chart-percent-card">
                                         <div class="au-card-inner">
                                             <h3 class="title-2 tm-b-5 mb-4">graduated candidate by %</h3>
-                                            <div th:each='as : ${modules}'>
+                                            <div th:each='as : ${map}'>
                                                 <div class="task__title mt-3 mb-2">
-                                                    <span th:text='${as.name}'></span>
+                                                    <span th:text='${as.key}'></span>
                                                 </div>
                                                 <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="75"
-                                                         aria-valuemin="0" aria-valuemax="100" style="width:75%">
-                                                        <p>75% Graduated</p>
+                                                    <div class="progress-bar progress-bar-success" role="progressbar" th:aria-valuenow="${as.value}"
+                                                         aria-valuemin="0" aria-valuemax="100" th:style="|width:${as.value}%|">
+                                                        <p>[[${as.value}]]% Graduated</p>
                                                     </div>
                                                 </div>
                                             </div>

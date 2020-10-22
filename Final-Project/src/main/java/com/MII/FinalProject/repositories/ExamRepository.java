@@ -68,4 +68,11 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
     
     @Query(value = "SELECT TIMESTAMPDIFF(Minute, ?1, ?2)", nativeQuery = true)
     Integer getDuration(String start, String end);
+    
+    @Query(value = "SELECT COUNT(*) FROM exam WHERE has_passed=1 AND code LIKE ?1%", nativeQuery = true)
+    Integer getPassed(String code);
+    
+    @Query(value = "SELECT COUNT(*) FROM exam WHERE has_passed=0 AND start IS NOT NULL AND code LIKE ?1%", nativeQuery = true)
+    Integer getFailed(String code);
+    
 }

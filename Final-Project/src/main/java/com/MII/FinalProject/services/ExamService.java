@@ -38,9 +38,9 @@ public class ExamService {
     public Exam getById(Integer id) {
         return er.findById(id).get();
     }
-    
+
     public List<Exam> getAllPerId(Integer id, String module) {
-        return er.getPerId(id,module);
+        return er.getPerId(id, module);
     }
 
     //create/update
@@ -57,7 +57,7 @@ public class ExamService {
     }
 
     public void sendEmail(Exam exam) throws MessagingException, ParseException {
-        cr.sendMail(exam.getCode()+"");
+        cr.sendMail(exam.getCode() + "");
 //        er.save(exam);
         ns.sendEmail(exam);
     }
@@ -65,52 +65,60 @@ public class ExamService {
     public Integer countCandidate() {
         return er.countCandidate();
     }
-    
+
     public List<Exam> getAllCandidate(String id) {
         return er.getAllCondidate(id);
     }
-    
+
     public void registerExam(String code, String user) {
         er.registerExam(code, user);
     }
-    
-    public void updateUseCode(String code){
-       er.updateUseCode(code);
+
+    public void updateUseCode(String code) {
+        er.updateUseCode(code);
     }
-    
-    public int countHistoryExam(int id){
+
+    public int countHistoryExam(int id) {
         return er.countHistoryExam(id);
     }
-    
+
     public String getScore(String code) {
         return er.getScore(code);
     }
-    
+
     public String getGrade(String code) {
         return er.getGrade(code);
     }
-    
+
     public Boolean getHasPassed(String code) {
         return er.getHasPassed(code);
     }
-    
-    public Exam getExam (String code) {
+
+    public Exam getExam(String code) {
         return er.getExam(code);
     }
-    
+
     public Integer getDuration(String start, String end) {
         return er.getDuration(start, end);
     }
-    
+
     public String getStart(String code) {
         return er.getStart(code);
     }
-    
+
     public String getEnd(String code) {
         return er.getEnd(code);
     }
-    
+
     public String subTime(String time) {
         return er.subTime(time);
+    }
+    
+    public int getPassed(String code){
+        return er.getPassed(code);
+    }
+    
+    public int getFailed(String code){
+        return er.getFailed(code);
     }
 }
