@@ -321,5 +321,10 @@ and open the template in the editor.
                                     }
                                 }
                                 , 1000);
+                                
+                                window.onbeforeunload = function () {
+                                    return "Questions that are already answered will not be saved and exam will reset!";
+                                };
+
     </script>
 </html>
