@@ -17,6 +17,7 @@ import com.MII.FinalProject.services.QuestionService;
 import com.MII.FinalProject.services.UserLocalService;
 import com.MII.FinalProject.services.UserService;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class AdminController {
 
     @Autowired
     UserLocalService userLocalService;
-    
+
     @Autowired
     LandingPageServices landingPageServices;
 
@@ -67,7 +68,11 @@ public class AdminController {
         model.addAttribute("recentRegister", codeService.recentRegister());
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
-        model.addAttribute("modules", moduleService.getAll());
+        HashMap<String, Float> map = new HashMap<String, Float>();
+        for (int i = 0; i < moduleService.getAll().size(); i++) {
+            map.put(moduleService.getIdModule()[i], percentage()[i]);
+        }
+        model.addAttribute("map", map);
         return checkRole(model, "admin-dashboard");
     }
 
@@ -90,7 +95,7 @@ public class AdminController {
         model.addAttribute("id", moduleService.getById(id).getId());
         return checkRole(model, "data-question");
     }
-    
+
     @GetMapping("/data-registration")
     public String exam(Model model) {
         model.addAttribute("notif", codeService.notif());
@@ -111,7 +116,7 @@ public class AdminController {
         model.addAttribute("id", moduleService.getById(id).getId());
         return checkRole(model, "data-candidate");
     }
-    
+
     @GetMapping("/data-page")
     public String page(Model model) {
         model.addAttribute("notif", codeService.notif());
@@ -140,55 +145,72 @@ public class AdminController {
         examService.sendEmail(examService.getById(id));
         return "redirect:/data-registration";
     }
-    
+
     //CRUD QUESTION
     @ResponseBody
     @GetMapping("question/get-where-module/{id}")
     public List<Question> getByIdQuestion(@PathVariable("id") String id) {
         return questionService.getQuestionWhere(id);
     }
-    
+
     @ResponseBody
     @PostMapping("/saveQuestion")
     public Question saveQuestion(@RequestBody Question question) {
         return questionService.save(question);
     }
-    
+
     @ResponseBody
     @GetMapping("/getQuestionById")
     public Question getQuestionById(int id) {
         return questionService.getById(id);
     }
-    
+
     @ResponseBody
     @PostMapping("/deleteQuestionById")
     public void deleteQuestionById(int id) {
         questionService.deleteQuestionById(id);
     }
-    
+
     //CRUD User
     @ResponseBody
     @PostMapping("/updateUser")
     public void updateUser(@RequestBody UserLocal local) {
         userLocalService.updateUser(local.getIsActive(), local.getId());
     }
-    
+
     //CRUD PAGE
     @ResponseBody
     @GetMapping("/landing-page/getAll")
     public List<LandingPage> getAllLandingPage() {
         return landingPageServices.getAll();
     }
-    
+
     @ResponseBody
     @GetMapping("/landing-page/getById")
     public LandingPage getByIdLandingPage(int id) {
         return landingPageServices.getById(id);
     }
-    
+
     @ResponseBody
     @PostMapping("/landing-page/save")
     public LandingPage saveLandingPage(@RequestBody LandingPage landingPage) {
         return landingPageServices.save(landingPage);
+    }
+
+    public float[] percentage() {
+        String[] mod = moduleService.getIdModule();
+        float p[];
+        p = new float[moduleService.getAll().size()];
+        for (int i = 0; i < moduleService.getAll().size(); i++) {
+            int pass = examService.getPassed(mod[i]);
+            int fail = examService.getFailed(mod[i]);
+            int total = fail + pass;
+            try {
+                float percent = pass * 100 / total;
+                p[i] = percent;
+            } catch (Exception e) {
+            }
+        }
+        return p;
     }
 }

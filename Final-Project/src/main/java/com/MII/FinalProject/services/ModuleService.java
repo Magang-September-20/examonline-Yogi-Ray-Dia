@@ -37,4 +37,8 @@ public class ModuleService {
         return moduleService.getPassingScore(id);
     }
     
+    public String[] getIdModule() {
+        return moduleService.getIdModule();
+    }
+    
 }
