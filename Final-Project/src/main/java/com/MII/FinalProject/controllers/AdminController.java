@@ -6,12 +6,12 @@
 package com.MII.FinalProject.controllers;
 
 import com.MII.FinalProject.entities.Exam;
-import com.MII.FinalProject.entities.LandingPage;
+import com.MII.FinalProject.entities.Parameter;
 import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.entities.Question;
 import com.MII.FinalProject.services.CodeService;
 import com.MII.FinalProject.services.ExamService;
-import com.MII.FinalProject.services.LandingPageServices;
+import com.MII.FinalProject.services.ParameterServices;
 import com.MII.FinalProject.services.ModuleService;
 import com.MII.FinalProject.services.QuestionService;
 import com.MII.FinalProject.services.UserLocalService;
@@ -57,7 +57,7 @@ public class AdminController {
     UserLocalService userLocalService;
 
     @Autowired
-    LandingPageServices landingPageServices;
+    ParameterServices parameterServices;
 
     @GetMapping("/dashboard")//url or path
     public String dashboard(Model model) {
@@ -67,6 +67,7 @@ public class AdminController {
         model.addAttribute("candidate", examService.countCandidate());
         model.addAttribute("recentRegister", codeService.recentRegister());
         model.addAttribute("notif", codeService.notif());
+        model.addAttribute("modules", moduleService.getAll());
         model.addAttribute("notifCount", codeService.notifCount());
         HashMap<String, Float> map = new HashMap<String, Float>();
         for (int i = 0; i < moduleService.getAll().size(); i++) {
@@ -119,6 +120,7 @@ public class AdminController {
 
     @GetMapping("/data-page")
     public String page(Model model) {
+        model.addAttribute("modules", moduleService.getAll());
         model.addAttribute("notif", codeService.notif());
         model.addAttribute("notifCount", codeService.notifCount());
         return checkRole(model, "data-page");
@@ -181,20 +183,20 @@ public class AdminController {
     //CRUD PAGE
     @ResponseBody
     @GetMapping("/landing-page/getAll")
-    public List<LandingPage> getAllLandingPage() {
-        return landingPageServices.getAll();
+    public List<Parameter> getAllLandingPage() {
+        return parameterServices.getAll();
     }
 
     @ResponseBody
     @GetMapping("/landing-page/getById")
-    public LandingPage getByIdLandingPage(int id) {
-        return landingPageServices.getById(id);
+    public Parameter getByIdLandingPage(int id) {
+        return parameterServices.getById(id);
     }
 
     @ResponseBody
     @PostMapping("/landing-page/save")
-    public LandingPage saveLandingPage(@RequestBody LandingPage landingPage) {
-        return landingPageServices.save(landingPage);
+    public Parameter saveLandingPage(@RequestBody Parameter parameter) {
+        return parameterServices.save(parameter);
     }
 
     public float[] percentage() {

@@ -10,6 +10,7 @@
     <class>com.MII.FinalProject.entities.Question</class>
     <class>com.MII.FinalProject.entities.LandingPage</class>
     <class>com.MII.FinalProject.entities.Testimonial</class>
+    <class>com.MII.FinalProject.entities.Parameter</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_examonline?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

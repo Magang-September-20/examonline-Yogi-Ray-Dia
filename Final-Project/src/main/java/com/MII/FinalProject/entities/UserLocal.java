@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -30,6 +31,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "UserLocal.findAll", query = "SELECT u FROM UserLocal u")})
 public class UserLocal implements Serializable {
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userLocal", fetch = FetchType.LAZY)
+    private Testimonial testimonial;
 
     private static final long serialVersionUID = 1L;
     
@@ -137,6 +141,14 @@ public class UserLocal implements Serializable {
     @Override
     public String toString() {
         return "com.MII.FinalProject.entities.UserLocal[ id=" + id + " ]";
+    }
+
+    public Testimonial getTestimonial() {
+        return testimonial;
+    }
+
+    public void setTestimonial(Testimonial testimonial) {
+        this.testimonial = testimonial;
     }
     
 }

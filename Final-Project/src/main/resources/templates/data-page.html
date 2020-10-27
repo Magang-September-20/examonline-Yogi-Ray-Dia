@@ -40,9 +40,17 @@
         </div>
         <div th:insert="component/modal :: modal2"></div>
         <div th:replace="fragments/footer-uri :: script"></div>
-        <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+        <script src="/ckeditor/ckeditor.js"></script>
         <script type="text/javascript">
-            var editor = CKEDITOR.replace( 'editor' );
+            var editor = CKEDITOR.replace('editor', {
+                height: 250,
+                extraPlugins: 'colorbutton'
+            });
+            CKEDITOR.editorConfig = function (config)
+            {
+                config.language = 'en';
+                enterMode : CKEDITOR.ENTER_BR;
+            };
             $(document).ready(function () {
                 var table = $('#table').DataTable({
                     "ajax": {

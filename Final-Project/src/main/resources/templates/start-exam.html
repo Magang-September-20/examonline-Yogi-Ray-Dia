@@ -55,7 +55,14 @@ and open the template in the editor.
                             </div>
                         </div>
                         <div class="question bg-white p-3 border-bottom">
-                            <div class="d-flex flex-row align-items-center question-title mb-1">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <label class="col-md-12 control-label"><i class="btn btn-success btn-sm border border-success rounded-lg"></i>&nbsp; : Current Question</label>  
+                            </div>
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <label class="col-md-12 control-label"><i class="btn btn-primary btn-sm border border-success rounded-lg"></i>&nbsp; : Answered</label>  
+                            </div>
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <label class="col-md-12 control-label"><i class="btn btn-warning btn-sm border border-success rounded-lg"></i>&nbsp; : Doubt</label>  
                             </div>
                         </div>
                     </div>
@@ -97,9 +104,10 @@ and open the template in the editor.
                             </div>
                         </div>
                         <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
-                            <button id="prev" class="btn btn-primary border-success align-items-center btn-danger" onclick="prevQuestion()" type="button"><i class="fa fa-angle-left ml-2"></i>&nbsp;Previous</button>
-                            <button id="next" class="btn btn-primary border-success align-items-center btn-success" onclick="nextQuestion()" type="button">Next<i class="fa fa-angle-right ml-2"></i></button>
-                            <button id="submit" class="btn btn-primary border-success align-items-center btn-primary" type="submit">Finish <i class="fa fa-check ml-2"></i></button>
+                            <button id="prev" class="btn btn-danger align-items-center" onclick="prevQuestion()" type="button"><i class="fa fa-angle-left ml-2"></i>&nbsp;Previous</button>
+                            <button id="doubt" class="btn btn-warning align-items-center text-white" onclick="doubt()" type="button">Doubt</button>
+                            <button id="next" class="btn btn-success align-items-center" onclick="nextQuestion()" type="button">Next<i class="fa fa-angle-right ml-2"></i></button>
+                            <button id="submit" class="btn btn-primary align-items-center" type="submit">Finish <i class="fa fa-check ml-2"></i></button>
                         </div>
                     </div>
                 </div>
@@ -141,9 +149,9 @@ and open the template in the editor.
                                 //SET CHECK
                                 $("#" + localStorage.getItem(0) + "").prop("checked", true);
                                 function nextQuestion() {
-                                    setlocalStorage();
                                     var i = currentQuestion + 1;
                                     $("#" + i + "").removeClass('btn-success text-white');
+                                    setlocalStorage();
                                     var number = currentQuestion + 2;
                                     $("#" + number + "").addClass('btn-success text-white');
                                     currentQuestion++;
@@ -153,9 +161,9 @@ and open the template in the editor.
                                 }
                                 ;
                                 function prevQuestion() {
-                                    setlocalStorage();
                                     var i = currentQuestion + 1;
                                     $("#" + i + "").removeClass('btn-success text-white');
+                                    setlocalStorage();
                                     $("#" + currentQuestion + "").addClass('btn-success text-white');
                                     currentQuestion--;
                                     renderRadio();
@@ -165,20 +173,21 @@ and open the template in the editor.
                                 ;
                                 function setlocalStorage() {
                                     var radioValue = $("input[name='materialExampleRadios']:checked").val();
-                                    var i = currentQuestion;
+                                    var k = currentQuestion;
+                                    var j = currentQuestion + 1;
                                     if (radioValue) {
-                                        localStorage.setItem(i, radioValue);
+                                        $("#" + j + "").addClass('btn-primary text-white');
+                                        localStorage.setItem(k, radioValue);
                                         userAnswer.push({
                                             "userAnswer": radioValue,
-                                            "question": questions[i].id,
+                                            "question": questions[k].id,
                                             "exam": parseInt($("#exam").val())
                                         });
-                                        //                                        console.log(JSON.stringify(userAnswer));
                                     } else {
-                                        localStorage.setItem(i, radioValue);
+                                        localStorage.setItem(k, null);
                                         userAnswer.push({
                                             "userAnswer": null,
-                                            "question": questions[i].id,
+                                            "question": questions[k].id,
                                             "exam": parseInt($("#exam").val())
                                         });
                                     }
@@ -231,6 +240,20 @@ and open the template in the editor.
                                     }
                                 }
 
+                                function doubt() {
+                                    var i = currentQuestion + 1;
+                                    var radioValue = $("input[name='materialExampleRadios']:checked").val();
+//                                    $("#" + i + "").removeClass('btn-primary text-white');
+                                    if (radioValue) {
+                                        if ($("#" + i + "").hasClass("btn-warning")) {
+                                            $("#" + i + "").removeClass('btn-warning');
+                                        } else {
+                                            $("#" + i + "").addClass('btn-warning text-white');
+
+                                        }
+                                    }
+                                }
+
                                 function navigation(number) {
                                     var i = currentQuestion + 1;
                                     $("#" + i + "").removeClass('btn-success text-white');
@@ -256,7 +279,6 @@ and open the template in the editor.
                                                 console.log(errormessage.responseText);
                                             }
                                         });
-                                        console.log(JSON.stringify(userAnswer[j]));
                                     }
                                     $.ajax({
                                         url: "/getCode/" + code,
@@ -277,6 +299,7 @@ and open the template in the editor.
                                 }
 
                                 $("#submit").click(function () {
+                                    setlocalStorage();
                                     Swal.fire({
                                         title: 'Are you sure?',
                                         text: "You want be finish the exam!",
@@ -300,7 +323,6 @@ and open the template in the editor.
                                 // Set the date we're counting down to
                                 var d = new Date();
                                 var v = new Date();
-                                console.log("[[${duration}]]");
                                 v.setMinutes(d.getMinutes() + parseInt("[[${duration}]]"));
                                 // Update the count down every 1 second
                                 var x = setInterval(function () {
@@ -322,7 +344,7 @@ and open the template in the editor.
                                     }
                                 }
                                 , 1000);
-                                
+
                                 window.onbeforeunload = function () {
                                     return "Questions that are already answered will not be saved and exam will reset!";
                                 };

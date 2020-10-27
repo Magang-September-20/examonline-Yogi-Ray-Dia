@@ -35,10 +35,6 @@ and open the template in the editor.
                                 </div>
                                 <form class="ml-5 mr-5" th:object="${testimonial}" th:action="@{saveTestimonial}" method="POST">
                                     <div class="form-check mr-3 ml-3 mb-3">
-                                        <label class="form-check-label" for="exampleRadios1">Name :</label>
-                                        <input th:field="*{name}" type="text" class="form-control" id="exampleRadios1" placeholder="Enter your name">
-                                    </div>
-                                    <div class="form-check mr-3 ml-3 mb-3">
                                         <label class="form-check-label" for="exampleRadios2">Profession :</label>
                                         <input th:field="*{profession}" type="text" class="form-control" id="exampleRadios2" placeholder="Enter your profession">
                                     </div>

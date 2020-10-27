@@ -11,7 +11,7 @@ import com.MII.FinalProject.entities.rest.LoginOutput;
 import com.MII.FinalProject.entities.rest.RegisterOutput;
 import com.MII.FinalProject.entities.UserLocal;
 import com.MII.FinalProject.services.ExamService;
-import com.MII.FinalProject.services.LandingPageServices;
+import com.MII.FinalProject.services.ParameterServices;
 import com.MII.FinalProject.services.LoginService;
 import com.MII.FinalProject.services.QuestionService;
 import java.util.Collection;
@@ -55,7 +55,7 @@ public class MainController {
     QuestionService questionService;
     
     @Autowired
-    LandingPageServices landingPageServices;
+    ParameterServices landingPageServices;
     
     @Autowired
     TestimonialService testimonialService;

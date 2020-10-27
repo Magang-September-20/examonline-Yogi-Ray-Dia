@@ -131,7 +131,12 @@ public class UserController {
     @GetMapping("/testimonial")
     public String testimonial(Model model) {
         model.addAttribute("testimonial", new Testimonial());
-        return checkRole(model, "testimonial");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (testimonialService.check(Integer.parseInt(auth.getName())) > 0) {
+            return checkRole(model, "redirect:history-exam");
+        } else {
+            return checkRole(model, "testimonial");
+        }
     }
 
     public String checkRole(Model model, String page) {
@@ -151,6 +156,8 @@ public class UserController {
 
     @PostMapping("/saveTestimonial")
     public String saveTestimonial(Model model, @Validated Testimonial testimonial) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        testimonial.setUser(Integer.parseInt(auth.getName()));
         testimonialService.save(testimonial);
         return checkRole(model, "redirect:history-exam");
     }
@@ -175,13 +182,6 @@ public class UserController {
             uniqueCode = module.getId() + sb.toString();
         } while (codeService.checkCode(uniqueCode) >= 1);
 
-//        uniqueCode = "JAVB9Vaf5YsXBdLdVAzP";
-        //tomorrow's date
-//        Date dt = new Date();
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(dt);
-//        c.add(Calendar.DATE, 1);
-//        dt = c.getTime();
         //user id
         UserLocal user = new UserLocal();
         user.setId(Integer.parseInt(auth.getName()));
@@ -207,7 +207,6 @@ public class UserController {
     }
 
     @ResponseBody
-//    @RequestMapping( value ="/saveAnswer", method = RequestMethod.POST)
     @PostMapping("/saveAnswer")
     public UserAnswer saveQuestion(@RequestBody UserAnswer userAnswer) {
         return userAnswerService.save(userAnswer);
@@ -221,17 +220,14 @@ public class UserController {
 
     @GetMapping("/submit/{code}")
     public String calculateScore(@PathVariable("code") String code) {
-//        code = "CPPcX1pgETeeCFVeFVMf";
         DecimalFormat df = new DecimalFormat("#");
         df.setMaximumFractionDigits(2);
         String codeId = code.substring(0, 3);
-//        System.out.println(userAnswerService.calculateScore(userAnswerService.getExamId(code)));
 
         //scoring system
         float userScore = userAnswerService.calculateScore(userAnswerService.getExamId(code));
         float numberOfQuestions = moduleService.getNumberOfQuestions(codeId);
         float score = Float.parseFloat(df.format(userScore / numberOfQuestions * 100));
-//        System.out.println(score);
 
         String grade = "";
         if (score >= 0 && score < 50) {
@@ -259,7 +255,6 @@ public class UserController {
 
     @GetMapping("/exam-result/{code}")//url or path
     public String examResult(@PathVariable("code") String code, Model model) {
-//        code = "CPPcX1pgETeeCFVeFVMf";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("module", moduleService.getById(new String(code).substring(0, 3)).getName());
         model.addAttribute("name", userService.getById(Integer.parseInt(auth.getName())).getName());
@@ -275,9 +270,6 @@ public class UserController {
         String endSubbed = examService.subTime(end);
         model.addAttribute("duration", examService.getDuration(startSubbed, endSubbed));
 
-//        System.out.println(startSubbed);
-//        System.out.println(endSubbed);
-//        System.out.println(examService.getDuration(startSubbed, endSubbed));
         return checkRole(model, "exam-result");
     }
 

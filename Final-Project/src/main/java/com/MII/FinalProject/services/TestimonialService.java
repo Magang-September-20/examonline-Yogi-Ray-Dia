@@ -22,10 +22,14 @@ public class TestimonialService {
     TestimonialRepository testimonialRepository;
     
     public List<Testimonial> getAll(){
-        return testimonialRepository.findAll();
+        return testimonialRepository.getAllLimit();
     }
     
     public Testimonial save(Testimonial testimonial){
         return testimonialRepository.save(testimonial);
+    }
+    
+    public int check(int user){
+        return testimonialRepository.check(user);
     }
 }

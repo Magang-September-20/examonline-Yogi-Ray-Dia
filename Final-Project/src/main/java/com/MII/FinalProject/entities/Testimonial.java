@@ -9,11 +9,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -28,48 +29,38 @@ public class Testimonial implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "user")
+    private Integer user;
     @Basic(optional = false)
     @Column(name = "profession")
     private String profession;
     @Basic(optional = false)
     @Column(name = "subtext")
     private String subtext;
+    @JoinColumn(name = "user", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = true, fetch = FetchType.LAZY)
+    private UserLocal userLocal;
 
     public Testimonial() {
     }
 
-    public Testimonial(Integer id) {
-        this.id = id;
+    public Testimonial(Integer user) {
+        this.user = user;
     }
 
-    public Testimonial(Integer id, String name, String profession, String subtext) {
-        this.id = id;
-        this.name = name;
+    public Testimonial(Integer user, String profession, String subtext) {
+        this.user = user;
         this.profession = profession;
         this.subtext = subtext;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUser() {
+        return user;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(Integer user) {
+        this.user = user;
     }
 
     public String getProfession() {
@@ -88,10 +79,18 @@ public class Testimonial implements Serializable {
         this.subtext = subtext;
     }
 
+    public UserLocal getUserLocal() {
+        return userLocal;
+    }
+
+    public void setUserLocal(UserLocal userLocal) {
+        this.userLocal = userLocal;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (user != null ? user.hashCode() : 0);
         return hash;
     }
 
@@ -102,7 +101,7 @@ public class Testimonial implements Serializable {
             return false;
         }
         Testimonial other = (Testimonial) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.user == null && other.user != null) || (this.user != null && !this.user.equals(other.user))) {
             return false;
         }
         return true;
@@ -110,7 +109,7 @@ public class Testimonial implements Serializable {
 
     @Override
     public String toString() {
-        return "com.MII.FinalProject.entities.Testimonial[ id=" + id + " ]";
+        return "com.MII.FinalProject.entities.Testimonial[ user=" + user + " ]";
     }
     
 }
