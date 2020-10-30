@@ -90,13 +90,14 @@ public class UserController {
     }
 
     @PostMapping("/verifyExam")//url or path
-    public String verifyExam(Model model, @Validated Code code) {
+    public String verifyExam(Model model, @Validated Code code, RedirectAttributes attributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (codeService.verifyCode(code.getCode(), Integer.parseInt(auth.getName())) == 1) {
             codeService.updateUseCode(code.getCode());
             model.addAttribute("countHistoryExam", examService.countHistoryExam(Integer.parseInt(auth.getName())));
             return checkRole(model, "redirect:/pre-exam/" + code);
         } else {
+            attributes.addFlashAttribute("error", " Verification code failed, please try again!");
             return checkRole(model, "redirect:/exam");
         }
     }

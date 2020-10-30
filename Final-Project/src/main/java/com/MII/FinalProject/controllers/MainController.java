@@ -54,10 +54,10 @@ public class MainController {
 
     @Autowired
     QuestionService questionService;
-    
+
     @Autowired
     ParameterServices landingPageServices;
-    
+
     @Autowired
     TestimonialService testimonialService;
 
@@ -121,23 +121,29 @@ public class MainController {
 
     @PostMapping("/registration")
     public String registration(RegisterInput input, RedirectAttributes attributes) {
-        RegisterOutput output = registerService.Register(input);
-        if (output.getStatus().equalsIgnoreCase("success")) {
-            UserLocal user = new UserLocal();
-            user.setId(userService.getId(input.getEmail()));
-            user.setName(input.getName());
-            user.setEmail(input.getEmail());
-            user.setIsActive(true);
-            userService.save(user);
-            attributes.addFlashAttribute("success", " Your account has been successfully registered!");
-            return "redirect:/login";
-        } else {
+        try {
+            RegisterOutput output = registerService.Register(input);
+            if (output.getStatus().equalsIgnoreCase("success")) {
+                UserLocal user = new UserLocal();
+                user.setId(userService.getId(input.getEmail()));
+                user.setName(input.getName());
+                user.setEmail(input.getEmail());
+                user.setIsActive(true);
+                userService.save(user);
+                attributes.addFlashAttribute("success", " Your account has been successfully registered!");
+                return "redirect:/login";
+            } else {
+                attributes.addFlashAttribute("error", " Username or email already exist!");
+                return "redirect:/register";
+            }
+        } catch (Exception e) {
+            attributes.addFlashAttribute("error", " Username or email already exist!");
             return "redirect:/register";
         }
     }
 
     @PostMapping("/verification")
-    public String verification(LoginInput input) {
+    public String verification(LoginInput input, RedirectAttributes attributes) {
         LoginOutput output = loginService.LoginNew(input);
         if (output.getStatus().equalsIgnoreCase("success")) {
             User user = new User(output.getUser().getId(), "", getAuthorities(output.getUser().getRoles()));
@@ -145,6 +151,7 @@ public class MainController {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             return "redirect:/dashboard";
         } else {
+            attributes.addFlashAttribute("error", " Your username or password do not match!");
             return "redirect:/login";
         }
     }
