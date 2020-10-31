@@ -24,31 +24,31 @@
                                     <div class="row">
                                         <center>
                                             <div class="flex-container">
-                                                <button class="btn btn-light" onclick="getModule('cpp')">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('cpp');showData();">
                                                     <img class="logo-container" src="images/logo-CPP.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button class="btn btn-light" onclick="getModule('DOT')">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('DOT');showData();">
                                                     <img class="logo-container" src="images/logo-NET.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button class="btn btn-light" onclick="getModule('HTM')">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('HTM');showData();">
                                                     <img class="logo-container" src="images/logo-HTML.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button class="btn btn-light" onclick="getModule('JAV')">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('JAV');showData();">
                                                     <img class="logo-container" src="images/logo-java.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button class="btn btn-light" onclick="getModule('REA')">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('REA');showData();">
                                                     <img class="logo-container" src="images/logo-REACT.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                             </div>
@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="container">
-                                            <div class="timeline">
+                                            <div id="testing" class="timeline">
                                                 <div class="timeline-month">
                                                     History Exam
                                                 </div>
@@ -67,6 +67,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <button id="testing">TEST KE</button>
                             </div>
                         </div>
                         <div th:replace="fragments/user-footer :: footer"> </div>
@@ -114,12 +115,12 @@
                         var passed = '';
                         (data[i].hasPassed) ? passed = 'Passed' : passed = 'Failed'
                         $("#module").append('\<div class="timeline-section">\
-                                                <div class="timeline-date">\
+                                                <button id="showDataExam" class="timeline-date">\
                                                     ' + formatDate(dt) + '\
-                                                 </div>\
+                                                 </button>\
                                                     <div class="row">\
                                                         <div class="col-sm-4">\
-                                                            <div class="timeline-box">\
+                                                            <div id="dataExamResult" class="timeline-box">\
                                                             <div class="box-title">\
                                                                 <i class="fa fa-asterisk text-success" aria-hidden="true"></i>\
                                                             </div>\
@@ -133,6 +134,11 @@
                                                     </div>\
                                                 </div>\
                                             </div>');
+
+                        $("#dataExamResult").hide();
+                        $("#showDataExam").click(function () {
+                            $("#dataExamResult").show();
+                        });
                     }
                 }
             });
