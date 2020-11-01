@@ -23,7 +23,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     @Query(value = "SELECT COUNT(*) FROM question", nativeQuery = true)
     Integer countQuestion();
     
-    @Query(value = "SELECT COUNT(*) FROM question WHERE module =?1", nativeQuery = true)
+    @Query(value = "SELECT number_of_question FROM module WHERE id =?1 LIMIT 1", nativeQuery = true)
     Integer countByModule(String module);
     
     @Transactional

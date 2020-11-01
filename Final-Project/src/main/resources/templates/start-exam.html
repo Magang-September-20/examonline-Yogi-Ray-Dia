@@ -271,7 +271,6 @@ and open the template in the editor.
     function doubt() {
         var i = currentQuestion + 1;
         var radioValue = $("input[name='materialExampleRadios']:checked").val();
-        //                                    $("#" + i + "").removeClass('btn-primary text-white');
         if (radioValue) {
             if ($("#" + i + "").hasClass("btn-warning")) {
                 $("#" + i + "").removeClass('btn-warning');
@@ -279,6 +278,8 @@ and open the template in the editor.
                 $("#" + i + "").addClass('btn-warning text-white');
 
             }
+        }else{
+            alert("No answer selected!");
         }
     }
 
