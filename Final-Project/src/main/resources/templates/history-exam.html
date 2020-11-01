@@ -21,28 +21,28 @@
                             <div class="col-xl-9">
                                 <!-- PAGE CONTENT-->
                                 <div class="page-content">
-                                    <div class="row">
+                                    <div class="row pb-2">
                                         <center>
-                                            <div class="flex-container">
-                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('cpp');showData();">
+                                            <div class="flex-container mr-5 pr-5">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('cpp');">
                                                     <img class="logo-container" src="images/logo-CPP.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('DOT');showData();">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('DOT');">
                                                     <img class="logo-container" src="images/logo-NET.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('HTM');showData();">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('HTM');">
                                                     <img class="logo-container" src="images/logo-HTML.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('JAV');showData();">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('JAV');">
                                                     <img class="logo-container" src="images/logo-java.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                                 <div>
@@ -56,27 +56,27 @@
                                     </div>
                                     <div class="row">
                                         <div class="container">
-                                            <div id="testing" class="timeline">
-                                                <div class="timeline-month">
-                                                    History Exam
-                                                </div>
-                                                <div id="module">
-
-                                                </div>
-                                            </div>
+                                            <table id="table" class="table table-striped table-bordered display" style="width:100%">
+                                                <thead class="thead-dark">
+                                                    <tr>    
+                                                        <th style="width:5%"></th>
+                                                        <th style="width:35%" class="text-center">Date</th>
+                                                        <th class="text-center">Time</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                                <button id="testing">TEST KE</button>
+                                <!--<button id="testing">TEST KE</button>-->
                             </div>
                         </div>
                         <div th:replace="fragments/user-footer :: footer"> </div>
                     </div>
                     <!-- END PAGE CONTENT-->
-
-
-
-
                 </section>
             </div>
             <!-- END PAGE CONTENT  -->
@@ -85,66 +85,94 @@
 
     </body>
     <script>
-//        getModule('CPP');
         function getModule(id) {
-            $("#module").html("");
-            $.ajax({
-                'async': false,
-                'type': "GET",
-                'global': false,
-                'url': "/historyExam/" + id,
-                'data': {id: id},
-                'success': function (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        var dt = data[i].date;
-                        function formatDate(t) {
-                            var d = new Date(t),
-                                    month = '' + (d.getMonth() + 1),
-                                    day = '' + d.getDate(),
-                                    year = d.getFullYear();
+            $("#table").dataTable().fnDestroy();
+            $('#example').on('destroy.dt', function (e, settings) {
+                $(this).off('click', 'td');
+            });
+            function format(d) {
+                var passed = '';
+                var color = '';
+                d.hasPassed ? passed = 'Passed' : passed = 'Failed';
+                d.hasPassed ? color = 'text-success' : color = 'text-danger';
+                return '<div class="card">\
+                        <div class="card-body">\
+                          <h3 class="card-title">DETAILS</h3>\
+                          <p class="card-text">Result of your exam.</p>\
+                        </div>\
+                        <ul class="list-group list-group-flush">\
+                          <li class="list-group-item">Score : '+ d.score +'</li>\
+                          <li class="list-group-item">Grade : '+ d.grade +'</li>\
+                          <li class="list-group-item">Status : <span class="'+ color +'">'+ passed +'</span></li>\
+                        </ul>\
+                        <div class="card-body">\
+                        </div>\
+                      </div>';
+            }
 
-                            if (month.length < 2)
-                                month = '0' + month;
-                            if (day.length < 2)
-                                day = '0' + day;
-
-                            return [year, month, day].join('-');
+            $(document).ready(function () {
+                var table = $('#table').DataTable({
+                    "ajax": {
+                        "url": "/historyExam/" + id,
+                        "dataSrc": ""},
+                    "columns": [
+                        {
+                            "className": 'details-control',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ''
+                        },
+                        {"data": "id",
+                            "orderable": false,
+                            "render": function (data, type, row) {
+                                var t = row.start;
+                                var d = new Date(t),
+                                        month = '' + (d.getMonth() + 1),
+                                        day = '' + d.getDate(),
+                                        year = d.getFullYear();
+                                if (month.length < 2)
+                                    month = '0' + month;
+                                if (day.length < 2)
+                                    day = '0' + day;
+                                return [year, month, day].join('-');
+                            }
+                        },
+                        {"data": "id",
+                            "orderable": false,
+                            "render": function (data, type, row) {
+                                var t = row.start;
+                                var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                                var d = new Date(t),
+                                        day = days[d.getDay()];
+                                hour = (d.getHours() < 10 ? '0' : '') + d.getHours();
+                                minute = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+                                var u = row.end;
+                                var e = new Date(u),
+                                        hour2 = (e.getHours() < 10 ? '0' : '') + e.getHours();
+                                minute2 = (e.getMinutes() < 10 ? '0' : '') + e.getMinutes();
+                                return "<span class='bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13'>" + day + "</span>\n\
+                                <div class='margin-10px-top font-size14'>" + hour + ":" + minute + " - " + hour2 + ":" + minute2 + "</div>";
+                            }
                         }
-                        var classPassed = '';
-                        (data[i].hasPassed) ? classPassed = 'text-success' : classPassed = 'text-danger'
-                        var passed = '';
-                        (data[i].hasPassed) ? passed = 'Passed' : passed = 'Failed'
-                        $("#module").append('\<div class="timeline-section">\
-                                                <button id="showDataExam" class="timeline-date">\
-                                                    ' + formatDate(dt) + '\
-                                                 </button>\
-                                                    <div class="row">\
-                                                        <div class="col-sm-4">\
-                                                            <div id="dataExamResult" class="timeline-box">\
-                                                            <div class="box-title">\
-                                                                <i class="fa fa-asterisk text-success" aria-hidden="true"></i>\
-                                                            </div>\
-                                                            <div class="box-content">\
-                                                                <div class="box-item text-white"><strong>Score</strong>: ' + data[i].score + '</div>\
-                                                                <div class="box-item text-white"><strong>Grade</strong>: ' + data[i].grade + '</div>\
-                                                                <div class="box-item text-white ' + classPassed + '"><strong>Status :</strong> ' + passed + '</div>\
-                                                            </div>\
-                                                            <div class="box-footer"></div>\
-                                                        </div>\
-                                                    </div>\
-                                                </div>\
-                                            </div>');
-
-                        $("#dataExamResult").hide();
-                        $("#showDataExam").click(function () {
-                            $("#dataExamResult").show();
-                        });
+                    ],
+                    "order": [1, 'asc']
+                });
+                // Add event listener for opening and closing details
+                $('#table tbody').on('click', 'td.details-control', function () {
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+                    if (row.child.isShown()) {
+                        // This row is already open - close it
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    } else {
+                        // Open this row
+                        row.child(format(row.data())).show();
+                        tr.addClass('shown');
                     }
-                }
+                });
             });
         }
-        ;
-
     </script>
 </html>
 <!-- end document-->
