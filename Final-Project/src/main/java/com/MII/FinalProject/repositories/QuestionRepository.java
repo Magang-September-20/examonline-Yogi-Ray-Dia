@@ -31,6 +31,10 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     public List<Question> getQuestionWhere(String id);
     
     @Transactional
+    @Query(value = "SELECT * FROM question WHERE module=?1 AND is_active=1;", nativeQuery = true)
+    public List<Question> getQuestionModule(String id);
+    
+    @Transactional
     @Modifying
     @Query(value = "UPDATE question SET is_active=0 WHERE id=?1", nativeQuery = true)
     public void deleteQuestionById(int id);
