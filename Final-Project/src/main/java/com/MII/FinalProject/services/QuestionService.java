@@ -64,4 +64,9 @@ public class QuestionService {
     public void deleteQuestionById(int id){
         repository.deleteQuestionById(id);
     }
+    
+    public List<Question> getQuestionModule(String id) {
+        return repository.getQuestionModule(id);
+    }
+    
 }

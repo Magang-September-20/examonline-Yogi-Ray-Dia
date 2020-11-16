@@ -152,7 +152,7 @@ public class AdminController {
     @ResponseBody
     @GetMapping("question/get-where-module/{id}")
     public List<Question> getByIdQuestion(@PathVariable("id") String id) {
-        return questionService.getQuestionWhere(id);
+        return questionService.getQuestionModule(id);
     }
 
     @ResponseBody
