@@ -48,7 +48,7 @@
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('REA');showData();">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('REA');">
                                                     <img class="logo-container" src="images/logo-REACT.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                             </div>
@@ -86,9 +86,11 @@
     </body>
     <script>
         function getModule(id) {
+//            $('#table').dataTable().clear();
+//            $('#table').dataTable().fnClearTable();
             $("#table").dataTable().fnDestroy();
-            $('#example').on('destroy.dt', function (e, settings) {
-                $(this).off('click', 'td');
+            $('#table').on('destroy.dt', function (e, settings) {
+//                $(this).off('click', 'td');
             });
             function format(d) {
                 var passed = '';
@@ -101,9 +103,9 @@
                           <p class="card-text">Result of your exam.</p>\
                         </div>\
                         <ul class="list-group list-group-flush">\
-                          <li class="list-group-item">Score : '+ d.score +'</li>\
-                          <li class="list-group-item">Grade : '+ d.grade +'</li>\
-                          <li class="list-group-item">Status : <span class="'+ color +'">'+ passed +'</span></li>\
+                          <li class="list-group-item">Score : ' + d.score + '</li>\
+                          <li class="list-group-item">Grade : ' + d.grade + '</li>\
+                          <li class="list-group-item">Status : <span class="' + color + '">' + passed + '</span></li>\
                         </ul>\
                         <div class="card-body">\
                         </div>\
