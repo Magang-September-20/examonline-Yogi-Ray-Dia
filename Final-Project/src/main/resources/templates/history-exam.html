@@ -48,7 +48,7 @@
                                                 <div>
                                                     <hr class="line-dashed">
                                                 </div>
-                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('REA');showData();">
+                                                <button id="hideDataExam" class="btn btn-light" onclick="getModule('REA');">
                                                     <img class="logo-container" src="images/logo-REACT.png" style="heigth: 80px; width: 80px;">
                                                 </button>
                                             </div>
@@ -86,9 +86,11 @@
     </body>
     <script>
         function getModule(id) {
+//            $('#table').dataTable().clear();
+//            $('#table').dataTable().fnClearTable();
             $("#table").dataTable().fnDestroy();
-            $('#example').on('destroy.dt', function (e, settings) {
-                $(this).off('click', 'td');
+            $('#table').on('destroy.dt', function (e, settings) {
+//                $(this).off('click', 'td');
             });
             function format(d) {
                 var passed = '';
@@ -159,17 +161,21 @@
                 });
                 // Add event listener for opening and closing details
                 $('#table tbody').on('click', 'td.details-control', function () {
-                    var tr = $(this).closest('tr');
-                    var row = table.row(tr);
-                    if (row.child.isShown()) {
-                        // This row is already open - close it
-                        row.child.hide();
-                        tr.removeClass('shown');
-                    } else {
-                        // Open this row
-                        row.child(format(row.data())).show();
-                        tr.addClass('shown');
+                    try {
+                        var tr = $(this).closest('tr');
+                        var row = table.row(tr);
+                        if (row.child.isShown()) {
+                            // This row is already open - close it
+                            row.child.hide();
+                            tr.removeClass('shown');
+                        } else {
+                            // Open this row
+                            row.child(format(row.data())).show();
+                            tr.addClass('shown');
+                        }
+                    } catch (exception) {
                     }
+
                 });
             });
         }

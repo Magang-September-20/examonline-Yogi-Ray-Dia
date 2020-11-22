@@ -5,7 +5,6 @@
  */
 package com.MII.FinalProject.services;
 
-
 import com.MII.FinalProject.entities.Exam;
 import java.nio.charset.StandardCharsets;
 import javax.mail.MessagingException;
@@ -36,7 +35,7 @@ public class NotificationService {
 
     public void sendEmail(Exam exam) throws MessagingException {
 
-       MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                 StandardCharsets.UTF_8.name());
@@ -54,5 +53,5 @@ public class NotificationService {
         javaMailSender.send(message);
 
     }
-    
+
 }
